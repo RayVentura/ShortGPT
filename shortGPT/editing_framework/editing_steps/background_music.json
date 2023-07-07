@@ -1,0 +1,29 @@
+{
+	"background_music": {
+		"inputs": {
+			"parameters": ["url", "volume_percentage"],
+			"actions":["loop_background_music"]
+		},
+		"type": "audio",
+		"z": -1,
+		"parameters": {
+			"url": "editing_test/music.wav"
+		},
+		"actions": [
+			{
+				"type": "loop_background_music",
+				"param": {
+					"duration": null
+				}
+			},
+			{
+				"type":"normalize_audio",
+				"param":{}
+			},
+			{
+				"type": "volume_percentage",
+				"param": null
+			}
+		]
+	}
+}

@@ -1,0 +1,47 @@
+{
+    "asset_collection": {
+        "1": {
+            "_id": "local_assets",
+            "white_reddit_template": {
+                "path": "public/white_reddit_template.png",
+                "type": "image",
+                "ts": "2023-07-03 19:41:55",
+                "required": true
+            },
+            "subscribe-animation": {
+                "path": "public/subscribe-animation.mp4",
+                "type": "video",
+                "ts": "2023-07-03 21:37:53",
+                "required": true
+            }
+        },
+        "2": {
+            "_id": "remote_assets",
+            "Music joakim karud dreams": {
+                "type": "background music",
+                "url": "https://www.youtube.com/watch?v=p56gqDhUYbU",
+                "ts": "2023-07-05 04:35:03"
+            },
+            "Music dj quads": {
+                "type": "background music",
+                "url": "https://www.youtube.com/watch?v=uUu1NcSHg2E",
+                "ts": "2023-07-05 05:03:44"
+            },
+            "Car race gameplay": {
+                "type": "background video",
+                "url": "https://www.youtube.com/watch?v=gBsJA8tCeyc",
+                "ts": "2023-07-04 23:07:44"
+            },
+            "Minecraft jumping circuit": {
+                "url": "https://www.youtube.com/watch?v=Pt5_GSKIWQM",
+                "type": "background video",
+                "ts": "2023-07-07 04:13:36"
+            },
+            "Ski gameplay": {
+                "url": "https://www.youtube.com/watch?v=8ao1NAOVKTU",
+                "type": "background video",
+                "ts": "2023-07-07 04:54:16"
+            }
+        }
+    }
+}

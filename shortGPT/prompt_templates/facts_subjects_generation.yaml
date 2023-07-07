@@ -1,0 +1,7 @@
+system_prompt: >
+
+chat_prompt: >
+  For a series of <<N>> youtube video about top 10 facts on a certain subject,
+  pick a random subject. Be very original. Put it in the '`Subject` facts' format.
+  Give the output in an array format that's json parseable., like ['Police facts', 'prison facts'].
+  Only give the array and nothing else.

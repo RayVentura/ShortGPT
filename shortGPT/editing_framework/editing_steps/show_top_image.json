@@ -1,0 +1,46 @@
+{
+	"top_image_1": {
+		"type": "image",
+		"inputs":{
+			"parameters": ["url"],
+			"actions": ["set_time_start", "set_time_end"]
+		},
+		"z": 5,
+		"parameters": {
+			"url": null
+		},
+		"actions": [
+			{
+				"type": "set_time_start",
+				"param": null
+			},
+			{
+				"type": "set_time_end",
+				"param": null
+			},
+			{
+				"type": "auto_resize_image",
+				"param":{
+					"maxWidth": 690,
+					"maxHeight": 690
+				}
+			},
+			{
+				"type": "normalize_image",
+				"param":{
+					"maxWidth": 690,
+					"maxHeight": 690
+				}
+			},
+			{
+				"type": "screen_position",
+				"param": {
+					"pos": [
+						"center",
+						50
+					]
+				}
+			}
+		]
+	}
+}

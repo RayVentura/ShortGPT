@@ -1,0 +1,40 @@
+{
+	"background_video": {
+		"type": "video",
+		"z": 0,
+		"inputs":{
+			"parameters": ["url"]
+		},
+		"parameters": {
+			"url": null,
+			"audio": false
+		},
+		"actions": [
+			{
+				"type": "crop",
+				"param": {
+					"x1": 420,
+					"y1": 0,
+					"width": 1080,
+					"height": 1080
+				}
+			},
+			{
+				"type": "resize",
+				"param": {
+					"width": 1920,
+					"height": 1920
+				}
+			},
+			{
+				"type": "crop",
+				"param": {
+					"x1": 420,
+					"y1": 0,
+					"width": 1080,
+					"height": 1920
+				}
+			}
+		]
+	}
+}

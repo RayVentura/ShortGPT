@@ -1,0 +1,34 @@
+{
+	"short_watermark": {
+		"inputs":{
+			"parameters": ["text"]
+		},
+		"type": "text",
+		"z": 3,
+		"parameters": {
+			"text": null,
+			"fontsize": 80,
+			"font": "Berlin-Sans-FB-Demi-Bold",
+			"color": "white",
+			"stroke_width": 1,
+			"stroke_color": "black",
+			"method": "caption",
+			"size": [
+				650,
+				400
+			]
+		},
+		"actions": [
+			{
+				"type": "screen_position",
+				"param": {
+					"pos": [
+						"center",
+						0.7
+					],
+					"relative": true
+				}
+			}
+		]
+	}
+}

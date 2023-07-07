@@ -1,0 +1,42 @@
+{
+	"subscribe_animation": {
+		"type": "video",
+		"z": 6,
+		"inputs":{},
+		"parameters": {
+			"url": "public/subscribe-animation.mp4",
+			"audio": false
+		},
+		"actions": [
+			{
+				"type": "set_time_start",
+				"param": 3.5
+			},
+			{
+				"type": "resize",
+				"param": {
+					"newsize": 0.4
+				}
+			},
+			{
+				"type": "green_screen",
+				"param": {
+					"color": [
+						52,
+						255,
+						20
+					],
+					"thr": 100,
+					"s": 5
+				}
+			},
+			{
+				"type": "screen_position",
+				"param": {
+					"pos": ["center",
+					1160]
+				}
+			}
+		]
+	}
+}

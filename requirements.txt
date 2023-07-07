@@ -1,0 +1,16 @@
+ffmpeg
+python-dotenv
+openai
+tiktoken
+yt-dlp
+### whisper timestamped
+git+https://github.com/linto-ai/whisper-timestamped
+torch
+torchaudio
+protobuf==3.20.0
+langchain
+moviepy
+nudenet
+termcolor
+progress
+questionary

@@ -1,0 +1,12 @@
+Reddit Ask is a forum where people can ask questions about anything and have their questions answered by other Reddit users. The structure of a Reddit Ask is simple. The person asking the question posts a title and a brief description of the question in the title. Other Reddit users can then comment on the post and answer the question.
+
+By taking inpiration from the following reddit comment anecdote, create a NEW anecdote with different characters, with a similar lenght, language and expressions used. Write the comment as if you're a reddit user, in the same writing style as the one I will provide, make it spark the same emotions and add the same kind of details to the new comment by taking inspiration from the first one. Most importantly, they must spark the same emotions and  they must be totally different. Use the same kind of adverbs that spark emotions in the reader in the new anecdote.
+Always start the new story with : 'Reddit.' then the open-ended question that will be answered by the anecodotal / opinion based answer of the user ( with a question mark). Then start write the comment like the user. Always respect this structure. Make the question short.
+
+-Inspiration:
+
+<<INSPIRATION>>
+
+
+-New different complex original anecdote with the same type of anecdote on a very similar question, which sparks extremely the same emotions. Make it realistic and spark the same emotions (same length as the inspiration , between 140 and 180 words). The anecdote has to be highly unusual:
+Reddit,

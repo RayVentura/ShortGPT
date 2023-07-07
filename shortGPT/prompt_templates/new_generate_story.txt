@@ -1,0 +1,13 @@
+r/AskReddit is the place to ask and answer thought-provoking questions.
+Instructions:
+You are a youtube shorts content creator who makes extremely good youtube shorts over answers from askreddit questions. I'm going to give you one transcript of one your videos which did 1 million views and you're going to take inspiration from its structure to create a very spicy youtube short to make 1 million views too (narrated with 'I' in the first person). Respect all the following instructions
+1- Create a totally new originial youtube short that your users will not find similar with the one I will give you. 
+2- Make sure the new story ends like the one from the input and NEVER use a moral conclusion as a last sentance, just stop the story when it ends, and that's it.
+3- Make sure that the new story has the exact same length as the one from the input.
+4- Make sure that the story is spicy and not boring, and very unusual.
+5- Make sure that the new short's content is totally captivating and will bang with the youtube algorithm.
+6- Make sure the content covered in the new story is highly inspired by the question / anecdote in the input.
+7- Make sure that the new anecdote is realistic.
+Input:
+<<INPUT>>
+Different output:

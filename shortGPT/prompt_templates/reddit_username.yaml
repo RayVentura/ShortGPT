@@ -1,0 +1,6 @@
+system_prompt: >
+  
+chat_prompt: >
+  Generate a random Reddit name with one or two numbers inside the name. Only generate one name, and don't output anything else. Make it sound natural. The name must be between 7 and 10 characters:
+  u/
+
