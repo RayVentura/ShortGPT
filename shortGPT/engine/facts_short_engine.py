@@ -1,5 +1,5 @@
 from shortGPT.gpt import facts_gpt
-from shortGPT.engine.abstract_short_engine import  Language
+from shortGPT.engine.abstract_content_engine import  Language
 from shortGPT.engine.content_short_engine import ContentShortEngine
 
 

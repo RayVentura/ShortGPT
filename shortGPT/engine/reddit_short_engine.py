@@ -1,8 +1,8 @@
-from shortGPT.engine.abstract_short_engine import  Language
+from shortGPT.engine.abstract_content_engine import  Language
 from shortGPT.engine.content_short_engine import ContentShortEngine
 from shortGPT.gpt import reddit_gpt
 
-from shortGPT.engine.abstract_short_engine import  Language
+from shortGPT.engine.abstract_content_engine import  Language
 from shortGPT.editing_framework.editing_flow import EditingFlow, EditingStep, Flow
 import os
 
@@ -92,7 +92,7 @@ class RedditShortEngine(ContentShortEngine):
             videoEditor.addEditingStep(EditingStep.ADD_REDDIT_IMAGE, {
                                        'url': self._db_reddit_thread_image})
             
-            caption_type = EditingStep.ADD_CAPTION_ARABIC if self._db_language == Language.ARABIC.value else EditingStep.ADD_CAPTION 
+            caption_type = EditingStep.ADD_CAPTION_SHORT_ARABIC if self._db_language == Language.ARABIC.value else EditingStep.ADD_CAPTION_SHORT 
             for timing, text in self._db_timed_captions:
                 videoEditor.addEditingStep(caption_type, {'text': text.upper(),
                                                                      'set_time_start': timing[0],

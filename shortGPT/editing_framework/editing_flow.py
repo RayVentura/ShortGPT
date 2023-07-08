@@ -16,14 +16,17 @@ def update_dict(d, u):
 
 class EditingStep(Enum):
     CROP_1920x1080 = "crop_1920x1080_to_short.json"
-    ADD_CAPTION = "make_caption.json"
-    ADD_CAPTION_ARABIC = "make_caption_arabic.json"
+    ADD_CAPTION_SHORT = "make_caption.json"
+    ADD_CAPTION_SHORT_ARABIC = "make_caption_arabic.json"
+    ADD_CAPTION_LANDSCAPE = "make_caption_landscape.json"
+    ADD_CAPTION_LANDSCAPE_ARABIC = "make_caption_arabic_landscape.json"
     ADD_WATERMARK = "show_watermark.json"
     ADD_SUBSCRIBE_ANIMATION = "subscribe_animation.json"
     SHOW_IMAGE = "show_top_image.json"
     ADD_VOICEOVER_AUDIO = "add_voiceover.json"
     ADD_BACKGROUND_MUSIC = "background_music.json"
     ADD_REDDIT_IMAGE = "show_reddit_image.json"
+    ADD_BACKGROUND_VIDEO = "add_background_video.json"
 
 class Flow(Enum):
     WHITE_REDDIT_IMAGE_FLOW = "build_reddit_image.json"

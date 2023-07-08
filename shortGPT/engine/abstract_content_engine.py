@@ -16,7 +16,7 @@ class Language(Enum):
 import os
 CONTENT_DB = ContentDatabase()
 
-class AbstractShortEngine(ABC):
+class AbstractContentEngine(ABC):
     def __init__(self, short_id: str, content_type:str, language: Language):
         if short_id:
             self.dataManager = CONTENT_DB.getContentDataManager(

@@ -4,6 +4,7 @@ import gradio as gr
 from shortGPT.config.asset_db import AssetDatabase
 from gui.asset_components import background_video_checkbox, getBackgroundVideoChoices, background_music_checkbox, getBackgroundMusicChoices
 import re
+import shutil
 AssetDatabase().sync_local_assets()
 
 

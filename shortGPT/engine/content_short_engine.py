@@ -3,15 +3,15 @@ from shortGPT.gpt import  gpt_editing, gpt_translate, gpt_yt
 from shortGPT.audio import audio_utils
 from shortGPT.editing_utils import captions, editing_images
 from shortGPT.editing_utils.handle_videos import extract_random_clip_from_video
-from shortGPT.engine.abstract_short_engine import AbstractShortEngine, Language
-from shortGPT.editing_framework.editing_flow import EditingFlow, EditingStep, Flow
+from shortGPT.engine.abstract_content_engine import AbstractContentEngine, Language
+from shortGPT.editing_framework.editing_flow import EditingFlow, EditingStep
 from abc import  abstractmethod
 import re
 import shutil
 import os
 import datetime
 
-class ContentShortEngine(AbstractShortEngine):
+class ContentShortEngine(AbstractContentEngine):
 
     def __init__(self, short_type: str, background_video_name: str, background_music_name: str,short_id="",
                  num_images=None, watermark=None, language:Language = Language.ENGLISH):
@@ -136,7 +136,7 @@ class ContentShortEngine(AbstractShortEngine):
                 videoEditor.addEditingStep(EditingStep.ADD_WATERMARK, {
                                            'text': self._db_watermark})
             
-            caption_type = EditingStep.ADD_CAPTION_ARABIC if self._db_language == Language.ARABIC.value else EditingStep.ADD_CAPTION 
+            caption_type = EditingStep.ADD_CAPTION_SHORT_ARABIC if self._db_language == Language.ARABIC.value else EditingStep.ADD_CAPTION_SHORT 
             for timing, text in self._db_timed_captions:
                 videoEditor.addEditingStep(caption_type, {'text': text.upper(),
                                                                      'set_time_start': timing[0],

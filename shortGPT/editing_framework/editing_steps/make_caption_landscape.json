@@ -1,0 +1,35 @@
+{
+	"caption": {
+		"type": "text",
+		"z": 4,
+		"inputs":{
+			"parameters": ["text"],
+			"actions": ["set_time_start", "set_time_end"]
+		},
+		"parameters": {
+			"text": null,
+			"fontsize": 70,
+			"font": "Berlin-Sans-FB-Demi-Bold",
+			"color": "white",
+			"stroke_width": 3,
+			"stroke_color": "black",
+			"method": "label"
+		},
+		"actions": [
+			{
+				"type": "set_time_start",
+				"param": null
+			},
+			{
+				"type": "set_time_end",
+				"param": null
+			},
+			{
+				"type": "screen_position",
+				"param": {
+					"pos": ["center", 820]
+				}
+			}
+		]
+	}
+}

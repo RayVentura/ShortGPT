@@ -1,5 +1,5 @@
 from shortGPT.gpt import gpt_utils
-
+import json
 def getImageQueryPairs(captions,n=15 ,maxTime=2):
     
     prompt = gpt_utils.open_file('shortGPT/prompt_templates/generate_images.txt').replace('<<CAPTIONS TIMED>>', f"{captions}").replace("<<NUMBER>>", f"{n}")
@@ -24,3 +24,19 @@ def getImageQueryPairs(captions,n=15 ,maxTime=2):
             end = pairs[i][0]+ maxTime if (end_audio - pairs[i][0]) > maxTime else end_audio
         pairs[i] = ((pairs[i][0], end), pairs[i][1])
     return pairs
+
+
+def getVideoSearchQueriesTimed(captions_timed):
+    end = captions_timed[-1][0][1]
+    full_prompt = gpt_utils.load_yaml_file('shortGPT/prompt_templates/video_search_queries.yaml')
+    system = full_prompt['system_prompt']
+    chat = full_prompt['chat_prompt']
+    input = chat.replace("<<TIMED_CAPTIONS>>", f"{captions_timed}")
+    out = [[[0,0],""]]
+    while out[-1][0][1] != end:
+        try:
+            out = json.loads(gpt_utils.gpt3Turbo_completion(prompt=input, system=system, temp=1).replace("'", '"'))
+        except Exception as e:
+            print(e)
+            print("not the right format")
+    return out
