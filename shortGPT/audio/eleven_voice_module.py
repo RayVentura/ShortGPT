@@ -7,7 +7,7 @@ class ElevenLabsVoiceModule(VoiceModule):
         self.remaining_credits = None
         self.update_usage()
         if self.get_remaining_characters() < 1200:
-            raise Exception(f"Your ElevenLabs API KEY doesn't have enough credits ({self.remaining_credits} character remaining). Minimum required: 1000 characters (equivalent to a 45sec short)")
+            raise Exception(f"Your ElevenLabs API KEY doesn't have enough credits ({self.remaining_credits} character remaining). Minimum required: 1200 characters (equivalent to a 45sec short)")
         super().__init__()
 
     def update_usage(self):

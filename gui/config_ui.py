@@ -13,20 +13,16 @@ def verify_eleven_key(eleven_key, remaining_chars):
         except Exception as e:
             raise gr.Error(e.args[0])
     return remaining_chars
-def save_eleven_key(eleven_key):
-    if (eleven_key and get_api_key('ELEVEN LABS') != eleven_key):
-        set_api_key("ELEVEN LABS", eleven_key)
-    return gr.Textbox.update(value=eleven_key)
-
-def save_openai_key(openai_key):
-    if (openai_key and get_api_key('OPENAI') != openai_key):
+def saveKeys(openai_key, eleven_key, pexels_key):
+    if (get_api_key('OPENAI') != openai_key):
         set_api_key("OPENAI", openai_key)
-    return gr.Textbox.update(value=openai_key)
-
-def save_pexels_key(pexels_key):
-    if (pexels_key and get_api_key('PEXELS') != pexels_key):
+    if (get_api_key('ELEVEN LABS') != eleven_key):
+        set_api_key("ELEVEN LABS", eleven_key)
+    if (get_api_key('PEXELS') != pexels_key):
         set_api_key("PEXELS", pexels_key)
-    return gr.Textbox.update(value=pexels_key)
+    return  gr.Textbox.update(value=openai_key),\
+            gr.Textbox.update(value=eleven_key),\
+            gr.Textbox.update(value=pexels_key)
 
 def getElevenRemaining(key):
     if(key):
@@ -56,9 +52,7 @@ def create_config_ui():
                 def back_to_normal():
                     time.sleep(3)
                     return gr.Button.update(value="save")
-                save_button.click(save_openai_key, [openai_textbox], [openai_textbox])
-                save_button.click(save_pexels_key, [pexels_textbox], [pexels_textbox])
-                save_button.click(verify_eleven_key, [eleven_labs_textbox, eleven_characters_remaining], [eleven_characters_remaining]).success(save_eleven_key, [eleven_labs_textbox], [eleven_labs_textbox])
+                save_button.click(verify_eleven_key, [eleven_labs_textbox, eleven_characters_remaining], [eleven_characters_remaining]).success(saveKeys, [openai_textbox, eleven_labs_textbox, pexels_textbox], [openai_textbox, eleven_labs_textbox, pexels_textbox])
                 save_button.click(lambda _ : gr.Button.update(value="Keys Saved !"), [], [save_button])
                 save_button.click(back_to_normal, [], [save_button])
     return config_ui

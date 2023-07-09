@@ -20,8 +20,7 @@ ERROR_TEMPLATE = """<div style='text-align: center; background: #f2dede; color: 
 
 
 def create_short_automation_ui():
-    with gr.Tab("Short Automation") as short_automation_ui:
-        with gr.Row():
+        with gr.Row(visible=False) as short_automation:
             with gr.Column():
                 numShorts = gr.Number(label="Number of shorts", minimum=1, value=1)
                 short_type = gr.Radio(["Reddit Story shorts","Historical Facts shorts", "Scientific Facts shorts", "Custom Facts shorts"], label="Type of shorts generated", value="Custom Facts", interactive=True)
@@ -42,23 +41,23 @@ def create_short_automation_ui():
 
                 createButton = gr.Button(label="Create Shorts")
 
-        generation_error = gr.HTML(visible=False)
-        video_folder = gr.Button("📁", visible=False)
-        output = gr.HTML()
+                generation_error = gr.HTML(visible=False)
+                video_folder = gr.Button("📁", visible=False)
+                output = gr.HTML()
 
-        video_folder.click(lambda _: os.startfile(os.path.abspath("videos/")))
+            video_folder.click(lambda _: os.startfile(os.path.abspath("videos/")))
 
-        createButton.click(inspect_create_inputs, inputs=[background_video_checkbox, background_music_checkbox, watermark,short_type, facts_subject], outputs=[]).success(create_short, inputs=[
-            numShorts,
-            short_type,
-            language,
-            numImages,
-            watermark,
-            background_video_checkbox,
-            background_music_checkbox,
-            facts_subject
-        ], outputs=[output, video_folder, generation_error])
-    return short_automation_ui
+            createButton.click(inspect_create_inputs, inputs=[background_video_checkbox, background_music_checkbox, watermark,short_type, facts_subject], outputs=[]).success(create_short, inputs=[
+                numShorts,
+                short_type,
+                language,
+                numImages,
+                watermark,
+                background_video_checkbox,
+                background_music_checkbox,
+                facts_subject
+            ], outputs=[output, video_folder, generation_error])
+        return short_automation
 
 def inspect_create_inputs(
     background_video_list,
@@ -133,10 +132,10 @@ def create_short(numShorts,
         facts_subject,
         progress=gr.Progress()):
 
-    background_video = random.choice(background_video_list)
-    background_music = random.choice(background_music_list)
     numShorts = int(numShorts)
     numImages = int(numImages) if numImages else None
+    background_videos = (background_video_list * ((numShorts // 3) + 1))[:numShorts]
+    background_musics = (background_music_list * ((numShorts // 3) + 1))[:numShorts]
     language = Language(language.lower())
     embedHTML = '<div style="display: flex;">'
     progress_counter = 0
@@ -145,8 +144,8 @@ def create_short(numShorts,
             shortEngine = create_short_engine(short_type=short_type,
                                               language=language,
                                               numImages=numImages,
-                                            background_video=background_video,
-                                            background_music=background_music,
+                                            background_video=background_videos[i],
+                                            background_music=background_musics[i],
                                             watermark=watermark,
                                             facts_subject=facts_subject
                                             )

@@ -60,9 +60,14 @@ def delete_clicked(button_name):
     asset_store.remove_asset(asset_name)
     data = asset_store.get_df()
     if len(data)> 0:
-         return gr.update(value=data), gr.HTML.update(value=get_asset_embed(data, 0)),  gr.update(value=f"🗑️ Delete {data.iloc[0]['name']}"), gr.CheckboxGroup.update(choices=getBackgroundVideoChoices(), interactive=True)
+         return gr.update(value=data),\
+         gr.HTML.update(value=get_asset_embed(data, 0)),\
+         gr.update(value=f"🗑️ Delete {data.iloc[0]['name']}"),\
+         gr.CheckboxGroup.update(choices=getBackgroundVideoChoices(), interactive=True),\
+         gr.CheckboxGroup.update(choices=getBackgroundMusicChoices(), interactive=True)
     return gr.Dataframe.update(value=data),\
-        gr.HTML.update(visible=True), gr.Button.update(value="🗑️ Delete"),\
+        gr.HTML.update(visible=True),\
+        gr.Button.update(value="🗑️ Delete"),\
         gr.CheckboxGroup.update(choices=getBackgroundVideoChoices(), interactive=True),\
         gr.CheckboxGroup.update(choices=getBackgroundMusicChoices(), interactive=True)
 

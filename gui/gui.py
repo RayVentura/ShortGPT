@@ -1,13 +1,21 @@
 import gradio as gr
 from gui.config_ui import create_config_ui
 from gui.asset_library_ui import create_asset_library_ui
-from gui.short_automation_ui import create_short_automation_ui
+from gui.content_automation_ui import create_content_automation
 max_choices = 20
 ui_asset_dataframe = gr.Dataframe(interactive=False)
-    
+LOGO_PATH = "http://localhost:31415/file=public/logo.png"
+LOGO_DIM = 64 
 def run_app():
-    with gr.Blocks(css="footer {visibility: hidden}", title="shortGPT UI" ) as shortGptUI:
-        short_automation_ui = create_short_automation_ui()
+    with gr.Blocks(css="footer {visibility: hidden}", title="ShortGPT Demo" ) as shortGptUI:
+        with gr.Row(variant='compact'):
+            gr.HTML(f'''
+                <div style="display: flex; align-items: center;">
+                    <img src="{LOGO_PATH}" width="{LOGO_DIM}" height="{LOGO_DIM}">
+                    <h1 style="margin-left: -7px; font-size: 35px;">hortGPT</h1>
+                </div>
+            ''')
+        content_automation = create_content_automation()
         asset_library_ui = create_asset_library_ui()
         config_ui = create_config_ui()
 
