@@ -81,7 +81,7 @@ Follow the instructions below to install ImageMagick, FFmpeg, and clone the shor
 
 1. For `Windows`Download the FFmpeg binaries from the official website and add the executable to your system's PATH. Follow EXACTLY this tutorial. You must have FFmpeg in your environment variables for it to work.
       
-      [[https://ffmpeg.org/download.html](https://www.wikihow.com/Install-FFmpeg-on-Windows)]([https://ffmpeg.org/download.html](https://www.wikihow.com/Install-FFmpeg-on-Windows))
+      [https://www.wikihow.com/Install-FFmpeg-on-Windows](https://www.wikihow.com/Install-FFmpeg-on-Windows)
       
 2. For macOS using Homebrew, use the command:
      ```
