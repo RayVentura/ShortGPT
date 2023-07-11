@@ -1,3 +1,9 @@
+from shortGPT.config.path_utils import get_program_path
+import os
+magick_path = get_program_path("magick")
+if magick_path:
+    os.environ['IMAGEMAGICK_BINARY'] = magick_path
+
 import numpy as np
 import json
 from typing import Any, Dict, List, Union

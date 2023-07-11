@@ -17,12 +17,13 @@ class ContentShortEngine(AbstractContentEngine):
     def __init__(self, short_type: str, background_video_name: str, background_music_name: str,short_id="",
                  num_images=None, watermark=None, language:Language = Language.ENGLISH):
         super().__init__(short_id, short_type, language)
-        if (num_images):
-            self._db_num_images = num_images
-        if (watermark):
-            self._db_watermark = watermark
-        self._db_background_video_name = background_video_name
-        self._db_background_music_name = background_music_name
+        if not short_id:
+            if (num_images):
+                self._db_num_images = num_images
+            if (watermark):
+                self._db_watermark = watermark
+            self._db_background_video_name = background_video_name
+            self._db_background_music_name = background_music_name
         
         self.stepDict = {
             1:  self._generateScript,

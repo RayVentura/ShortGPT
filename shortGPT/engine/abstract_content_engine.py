@@ -1,3 +1,4 @@
+from shortGPT.config.path_utils import get_program_path
 from shortGPT.audio.eleven_voice_module import ElevenLabsVoiceModule
 from shortGPT.config.asset_db import AssetDatabase
 from shortGPT.config.api_db import get_api_key
@@ -81,21 +82,9 @@ class AbstractContentEngine(ABC):
         self.logger = logger
 
     def initializeMagickAndFFMPEG(self):
-        import os
-        import platform
-        import sys
-        import subprocess
-        def search_program(program_name):
-            try: 
-                search_cmd = "where" if platform.system() == "Windows" else "which"
-                return subprocess.check_output([search_cmd, program_name]).decode().strip()
-            except subprocess.CalledProcessError:
-                return None
-
-        def get_program_path(program_name):
-            program_path = search_program(program_name)
-            return program_path
         ffmpeg_path = get_program_path("ffmpeg")
+        if not ffmpeg_path:
+            raise Exception("FFmpeg, a program used for automated editing within ShortGPT was not found on your computer. Please go back to the README and follow the instructions to install FFMPEG")
         ffprobe_path = get_program_path("ffprobe")
         if not ffprobe_path:
             raise Exception("FFProbe, a dependecy of FFmpeg was not found. Please go back to the README and follow the instructions to install FFMPEG")

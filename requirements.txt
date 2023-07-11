@@ -12,6 +12,7 @@ torchaudio
 ### whisper timestamped
 git+https://github.com/linto-ai/whisper-timestamped
 protobuf==3.20.0
+pillow==9.3.0
 langchain
 moviepy
 termcolor
