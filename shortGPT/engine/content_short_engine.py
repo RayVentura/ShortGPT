@@ -5,7 +5,7 @@ from shortGPT.editing_utils import captions, editing_images
 from shortGPT.editing_utils.handle_videos import extract_random_clip_from_video
 from shortGPT.engine.abstract_content_engine import AbstractContentEngine
 from shortGPT.config.languages import Language
-from shortGPT.editing_framework.editing_flow import EditingFlow, EditingStep
+from shortGPT.editing_framework.editing_flow import EditingEngine, EditingStep
 from abc import  abstractmethod
 import re
 import shutil
@@ -123,7 +123,7 @@ class ContentShortEngine(AbstractContentEngine):
         outputPath = self.dynamicAssetDir+"rendered_video.mp4"
         if not (os.path.exists(outputPath)):
             self.logger("Rendering short: Starting automated editing...")
-            videoEditor = EditingFlow()
+            videoEditor = EditingEngine()
             videoEditor.addEditingStep(EditingStep.ADD_VOICEOVER_AUDIO, {
                                        'url': self._db_audio_path})
             videoEditor.addEditingStep(EditingStep.ADD_BACKGROUND_MUSIC, {'url': self._db_background_music_url,

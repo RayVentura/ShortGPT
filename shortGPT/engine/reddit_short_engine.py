@@ -1,6 +1,6 @@
 from shortGPT.config.languages import Language
 from shortGPT.engine.content_short_engine import ContentShortEngine
-from shortGPT.editing_framework.editing_flow import EditingFlow, EditingStep, Flow
+from shortGPT.editing_framework.editing_flow import EditingEngine, EditingStep, Flow
 from shortGPT.gpt import reddit_gpt, gpt_voice
 import os
 
@@ -49,14 +49,14 @@ class RedditShortEngine(ContentShortEngine):
         self.verifyParameters(question=self._db_reddit_question,)
         title, header, n_comments, n_upvotes = reddit_gpt.generateRedditPostMetadata(
             self._db_reddit_question)
-        imageEditingFlow = EditingFlow()
-        imageEditingFlow.ingestFlow(Flow.WHITE_REDDIT_IMAGE_FLOW, {
+        imageEditingEngine = EditingEngine()
+        imageEditingEngine.ingestFlow(Flow.WHITE_REDDIT_IMAGE_FLOW, {
             "username_text": header,
             "ncomments_text": n_comments,
             "nupvote_text": n_upvotes,
             "question_text": title
         })
-        imageEditingFlow.renderImage(
+        imageEditingEngine.renderImage(
             self.dynamicAssetDir+"redditThreadImage.png")
         self._db_reddit_thread_image = self.dynamicAssetDir+"redditThreadImage.png"
     
@@ -72,7 +72,7 @@ class RedditShortEngine(ContentShortEngine):
         outputPath = self.dynamicAssetDir+"rendered_video.mp4"
         if not (os.path.exists(outputPath)):
             self.logger("Rendering short: Starting automated editing...")
-            videoEditor = EditingFlow()
+            videoEditor = EditingEngine()
             videoEditor.addEditingStep(EditingStep.ADD_VOICEOVER_AUDIO, {
                                        'url': self._db_audio_path})
             videoEditor.addEditingStep(EditingStep.ADD_BACKGROUND_MUSIC, {'url': self._db_background_music_url,

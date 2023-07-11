@@ -35,7 +35,7 @@ STEPS_PATH = "shortGPT/editing_framework/editing_steps/"
 FLOWS_PATH = "shortGPT/editing_framework/flows/"
 
 
-class EditingFlow:
+class EditingEngine:
     def __init__(self,):
         self.editing_step_tracker = dict((step, 0) for step in EditingStep)
         self.schema = {'visual_assets': {}, 'audio_assets': {}}
@@ -93,29 +93,3 @@ class EditingFlow:
     def renderImage(self, outputPath):
         engine = CoreEditingEngine()
         engine.generate_image(self.schema, outputPath)
-
-
-
-# editingflow = EditingFlow()
-# editingflow.ingestFlow(Flow.WHITE_REDDIT_IMAGE_FLOW, {
-#     "username_text": "Hello world1",
-#     "ncomments_text": "Hello world2",
-#     "nupvote_text": "Hello world3",
-#     "question_text": "Hello world4"
-# })
-# print(editingflow.dumpEditingSchema())
-# editingflow.addEditingStep(EditingStep.ADD_VOICEOVER_AUDIO, {'url': "editing_test/audio_voice.wav"})
-# editingflow.addEditingStep(EditingStep.ADD_BACKGROUND_MUSIC, {'url': "editing_test/music.wav",
-#                                                               'loop_background_music': 45, "volume_percentage": 0.09})
-# editingflow.addEditingStep(EditingStep.CROP_1920x1080, {'url': 'editing_test/clippedBackground.mp4'})
-# editingflow.addEditingStep(EditingStep.ADD_SUBSCRIBE_ANIMATION)
-# editingflow.addEditingStep(EditingStep.ADD_WATERMARK, {'text': "WRITEPRODIGY"})
-# for i in range(0, 30):
-#     editingflow.addEditingStep(EditingStep.ADD_CAPTION, {'text': f'HELLO{i}',
-#                                                      'set_time_start': i,
-#                                                      'set_time_end': i+1})
-# editingflow.addEditingStep(EditingStep.SHOW_IMAGE, {'url': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMGHxMzcs0p4qEZuhcKVwlcvpb9jC6eyMLcoL2ODo4EQ&usqp=CAU&ec=48600113",
-#                                                     "set_time_start": 3, "set_time_end": 10})
-# with open("shortGPT/editing_framework/temp.json", "w", encoding="utf-8") as f:
-#     f.write(json.dumps(editingflow.dumpEditingSchema()))
-
