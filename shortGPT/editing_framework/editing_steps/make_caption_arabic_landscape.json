@@ -9,7 +9,7 @@
 		"parameters": {
 			"text": null,
 			"fontsize": 105,
-			"font": "Dubai-Bold",
+			"font": "Segoe-UI-Bold",
 			"color": "white",
 			"stroke_width": 2,
 			"stroke_color": "black"
