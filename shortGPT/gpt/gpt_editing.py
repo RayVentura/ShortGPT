@@ -1,9 +1,9 @@
 from shortGPT.gpt import gpt_utils
 import json
 def getImageQueryPairs(captions,n=15 ,maxTime=2):
-    
-    prompt = gpt_utils.open_file('shortGPT/prompt_templates/generate_images.txt').replace('<<CAPTIONS TIMED>>', f"{captions}").replace("<<NUMBER>>", f"{n}")
-    res = gpt_utils.gpt3Turbo_completion(prompt=prompt)
+    chat, _ = gpt_utils.load_yaml_prompt('shortGPT/prompt_templates/editing_generate_images.yaml')
+    prompt = chat.replace('<<CAPTIONS TIMED>>', f"{captions}").replace("<<NUMBER>>", f"{n}")
+    res = gpt_utils.gpt3Turbo_completion(chat_prompt=prompt)
     imagesCouples = ('{'+res).replace('{','').replace('}','').replace('\n', '').split(',')
     pairs = []
     t0 = 0
@@ -28,14 +28,12 @@ def getImageQueryPairs(captions,n=15 ,maxTime=2):
 
 def getVideoSearchQueriesTimed(captions_timed):
     end = captions_timed[-1][0][1]
-    full_prompt = gpt_utils.load_yaml_file('shortGPT/prompt_templates/video_search_queries.yaml')
-    system = full_prompt['system_prompt']
-    chat = full_prompt['chat_prompt']
-    input = chat.replace("<<TIMED_CAPTIONS>>", f"{captions_timed}")
+    chat, system = gpt_utils.load_yaml_prompt('shortGPT/prompt_templates/editing_generate_videos.yaml')
+    chat = chat.replace("<<TIMED_CAPTIONS>>", f"{captions_timed}")
     out = [[[0,0],""]]
     while out[-1][0][1] != end:
         try:
-            out = json.loads(gpt_utils.gpt3Turbo_completion(prompt=input, system=system, temp=1).replace("'", '"'))
+            out = json.loads(gpt_utils.gpt3Turbo_completion(chat_prompt=chat, system=system, temp=1).replace("'", '"'))
         except Exception as e:
             print(e)
             print("not the right format")

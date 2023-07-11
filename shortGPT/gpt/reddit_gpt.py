@@ -1,5 +1,6 @@
-from . import gpt_utils
+from shortGPT.gpt import gpt_utils
 import random
+import json
 def generateRedditPostMetadata(title):
     name = generateUsername()
     if title and title[0] == '"':
@@ -11,59 +12,41 @@ def generateRedditPostMetadata(title):
     return title, header, f"{n_comments:.1f}k", f"{n_upvotes:.1f}k"
 
 
-def getInterestingRedditQuestion(redundant_questions=['']):
-    full_prompt = gpt_utils.load_json_file('shortGPT/prompt_templates/reddit_question.json')
-    last_question = ""
-    for question in redundant_questions:
-        last_question+=question+"\n"
-    system = full_prompt['system']
-    input = full_prompt['input'].replace("<<LAST_QUESTIONS>>", last_question)
-    result = gpt_utils.gpt3Turbo_completion(prompt=input, system=system, temp=2)
-    return result
+def getInterestingRedditQuestion():
+    chat, system = gpt_utils.load_yaml_prompt('shortGPT/prompt_templates/reddit_generate_question.yaml')
+    return gpt_utils.gpt3Turbo_completion(chat_prompt=chat, system=system, temp=1.08)
 
-def createRedditCommentFromQuestion(question):
-    full_prompt = gpt_utils.load_json_file('shortGPT/prompt_templates/reddit_script.json')
-    system = full_prompt['system']
-    input = full_prompt['input'].replace("<<QUESTION>>", question)
-    result = "Reddit, " + question +" "+gpt_utils.gpt3Turbo_completion(prompt=input, system=system, temp=1.3)
+def createRedditScript(question):
+    chat, system = gpt_utils.load_yaml_prompt('shortGPT/prompt_templates/reddit_generate_script.yaml')
+    chat = chat.replace("<<QUESTION>>", question)
+    result = "Reddit, " + question +" "+gpt_utils.gpt3Turbo_completion(chat_prompt=chat, system=system, temp=1.08)
     return result
     
 
 def getRealisticness(text):
-    full_prompt = gpt_utils.load_json_file('shortGPT/prompt_templates/filter_story.json')
-    system = full_prompt['system']
-    input = full_prompt['input'].replace("<<INPUT>>", text)
-    result = gpt_utils.gpt3Turbo_completion(prompt=input, system=system, temp=1)
-    try:
-        dico = gpt_utils.extract_biggest_json(result)
-        if (dico):
-            return dico['score']
-    except:
-        pass
-    return gpt_utils.get_first_number(result)
+    chat, system = gpt_utils.load_yaml_prompt('shortGPT/prompt_templates/reddit_filter_realistic.yaml')
+    chat = chat.replace("<<INPUT>>", text)
+    while True:
+        try:
+            result = gpt_utils.gpt3Turbo_completion(chat_prompt=chat, system=system, temp=1)
+            return json.loads(result)['score']
+        except Exception as e:
+            print("Error in getRealisticness", e.args[0])
 
 
 def getQuestionFromThread(text):
     if ((text.find("Reddit, ") < 15) and (10 < text.find("?") < 100)):
         question = text.split("?")[0].replace("Reddit, ", "").strip().capitalize()
     else:
-        prompt = gpt_utils.open_file('shortGPT/prompt_templates/get_question.txt').replace("<<STORY>>", text)
-        question = gpt_utils.gpt3Turbo_completion(prompt=prompt).replace("\n", "")
+        chat, system = gpt_utils.load_yaml_prompt('shortGPT/prompt_templates/reddit_filter_realistic.yaml')
+        chat = chat.replace("<<STORY>>", text)
+        question = gpt_utils.gpt3Turbo_completion(chat_prompt=chat, system=system).replace("\n", "")
         question = question.replace('"', '').replace("?", "")
     return question
 
 
 def generateUsername():
-    full_prompt = gpt_utils.load_yaml_file('shortGPT/prompt_templates/reddit_username.yaml')
-    system = full_prompt['system_prompt']
-    chat = full_prompt['chat_prompt']
-    return gpt_utils.gpt3Turbo_completion(prompt=chat, system=system, temp=2).replace("u/", "")
+    chat, system = gpt_utils.load_yaml_prompt('shortGPT/prompt_templates/reddit_username.yaml')
+    return gpt_utils.gpt3Turbo_completion(chat_prompt=chat, system=system, temp=1.2).replace("u/", "")
 
-
-def getGenderFromText(text):
-    prompt = gpt_utils.open_file('shortGPT/prompt_templates/identify_gender.txt').replace("<<STORY>>", text)
-    result = gpt_utils.gpt3Turbo_completion(prompt).replace("\n", "").lower()
-    if 'female' in result:
-        return 'female'
-    return 'male'
 

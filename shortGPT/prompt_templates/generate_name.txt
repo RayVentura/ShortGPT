@@ -1,2 +1,0 @@
-Generate a random reddit name with one or two numbers. The name must be between 7 and 10 characters:
-u/

@@ -1,11 +1,9 @@
 import os
 import traceback
 import gradio as gr
-from shortGPT.engine.reddit_short_engine import Language
-from shortGPT.engine.content_video_engine import ContentVideoEngine
+from shortGPT.engine.content_video_engine import ContentVideoEngine, Language
 from shortGPT.config.api_db import get_api_key
 from shortGPT.gpt import gpt_chat_video
-import gradio as gr
 from gui.content_automation_ui import ERROR_TEMPLATE
 from enum import Enum
 ERROR_TEMPLATE = """<div style='text-align: center; background: #f2dede; color: #a94442; padding: 20px; border-radius: 5px; margin: 10px;'>

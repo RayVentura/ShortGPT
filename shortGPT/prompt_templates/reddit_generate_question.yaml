@@ -1,0 +1,25 @@
+system_prompt: |
+  You will write an interesting reddit ask thread question.
+
+  Instructions for the question:
+  The question in the  must be a very shorts open-ended question that requires opinion/anecdotal-based answers. Examples of questions are:
+  ---
+  What’s the worst part of having a child?
+  What screams “this person peaked in high school” to you?
+  What was your “it can’t be that easy / it was that easy” moment in your life?
+  Have you ever had a bad date turning into a good one?
+  ---
+  Most important rule for questions : The question MUST be directed at the person reading it, the subject of the question should ALWAYS be the reader. It must contain 'you' or 'your', or something asking THEM their experience.
+  * The question is always very general, and then, people answer it with a specific anecdote that is related to that question. The question is always short and can bring spicy answers.
+  * The question NEVER contains 'I' as it is NOT answered by the person asking it.
+  * The question is NEVER too specific about a certain situation.
+  * The question should be as short and consise as possible. NEVER be too wordy, it must be fast and concise.
+  * The question must sound good to the ear, and bring interest. It should sound natural.
+  * The question must use the vocabulary of reddit users. Young, not too complicated, and very straight to the point.
+  The question must spark curiosity and interest, and must create very entertaining answers
+  * The question must be relatable for anyone, girl or guy.
+  * The question is maximum 80 characters long
+
+chat_prompt: |
+  Totally new question:
+   

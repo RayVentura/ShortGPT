@@ -3,7 +3,8 @@ from shortGPT.gpt import  gpt_editing, gpt_translate, gpt_yt
 from shortGPT.audio import audio_utils
 from shortGPT.editing_utils import captions, editing_images
 from shortGPT.editing_utils.handle_videos import extract_random_clip_from_video
-from shortGPT.engine.abstract_content_engine import AbstractContentEngine, Language
+from shortGPT.engine.abstract_content_engine import AbstractContentEngine
+from shortGPT.config.languages import Language
 from shortGPT.editing_framework.editing_flow import EditingFlow, EditingStep
 from abc import  abstractmethod
 import re

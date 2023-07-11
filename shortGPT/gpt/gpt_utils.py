@@ -47,11 +47,15 @@ def load_json_file(file_path):
         json_data = json.load(f)
     return json_data
 
+def load_yaml_prompt(file_path):
+    json_template= load_yaml_file(file_path)
+    return json_template['chat_prompt'], json_template['system_prompt']
+
 def open_file(filepath):
     with open(filepath, 'r', encoding='utf-8') as infile:
         return infile.read()
 
-def gpt3Turbo_completion(prompt="", system="You are an AI that can give the answer to anything", temp=0.7, model="gpt-3.5-turbo", conversation=None):
+def gpt3Turbo_completion(chat_prompt="", system="You are an AI that can give the answer to anything", temp=0.7, model="gpt-3.5-turbo", conversation=None):
     openai.api_key = get_api_key("OPENAI")
     max_retry = 5
     retry = 0
@@ -62,7 +66,7 @@ def gpt3Turbo_completion(prompt="", system="You are an AI that can give the answ
             else:
                 messages = [
                 {"role": "system", "content": system},
-                {"role": "user", "content": prompt}
+                {"role": "user", "content": chat_prompt}
                 ]
             response = openai.ChatCompletion.create(
                 model=model,
@@ -75,12 +79,12 @@ def gpt3Turbo_completion(prompt="", system="You are an AI that can give the answ
             if not os.path.exists('.logs/gpt_logs'):
                 os.makedirs('.logs/gpt_logs')
             with open('.logs/gpt_logs/%s' % filename, 'w', encoding='utf-8') as outfile:
-                outfile.write(f"System prompt: ===\n{system}\n===\n"+f"Chat prompt: ===\n{prompt}\n===\n"+ f'RESPONSE:\n====\n{text}\n===\n')
+                outfile.write(f"System prompt: ===\n{system}\n===\n"+f"Chat prompt: ===\n{chat_prompt}\n===\n"+ f'RESPONSE:\n====\n{text}\n===\n')
             return text
         except Exception as oops:
             retry += 1
             if retry >= max_retry:
-                return "GPT3 error: %s" % oops
+                raise Exception("GPT3 error: %s" % oops)
             print('Error communicating with OpenAI:', oops)
             sleep(1)
 

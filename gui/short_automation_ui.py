@@ -1,9 +1,8 @@
 import traceback
 import gradio as gr
 from gui.asset_components import background_video_checkbox, background_music_checkbox
-from shortGPT.engine.reddit_short_engine import Language
 from shortGPT.config.api_db import get_api_key
-from shortGPT.engine.reddit_short_engine import RedditShortEngine
+from shortGPT.engine.reddit_short_engine import RedditShortEngine, Language
 from shortGPT.engine.facts_short_engine import FactsShortEngine
 import time
 language_choices = [lang.value.upper() for lang in Language]
@@ -112,9 +111,10 @@ def create_short_engine(short_type, language, numImages,
                                             watermark=watermark,
                                             language=language)
     if "fact" in  short_type.lower():
-        facts_subject = short_type
         if "custom" in short_type.lower():
             facts_subject = facts_subject
+        else:
+            facts_subject = short_type
         return FactsShortEngine(facts_type=facts_subject, background_video_name=background_video,
                                             background_music_name=background_music,
                                             num_images=50,
@@ -134,8 +134,8 @@ def create_short(numShorts,
 
     numShorts = int(numShorts)
     numImages = int(numImages) if numImages else None
-    background_videos = (background_video_list * ((numShorts // 3) + 1))[:numShorts]
-    background_musics = (background_music_list * ((numShorts // 3) + 1))[:numShorts]
+    background_videos = (background_video_list * ((numShorts // len(background_video_list)) + 1))[:numShorts]
+    background_musics = (background_music_list * ((numShorts // len(background_music_list)) + 1))[:numShorts]
     language = Language(language.lower())
     embedHTML = '<div style="display: flex;">'
     progress_counter = 0

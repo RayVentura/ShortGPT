@@ -3,13 +3,11 @@ import json
 
 def generate_title_description_dict(content):
     out = {"title": "", "description":""}
-    full_prompt = gpt_utils.load_yaml_file('shortGPT/prompt_templates/yt_title_description.yaml')
-    system = full_prompt['system_prompt']
-    chat = full_prompt['chat_prompt']
-    input = chat.replace("<<CONTENT>>", f"{content}")
+    chat, system = gpt_utils.load_yaml_prompt('shortGPT/prompt_templates/yt_title_description.yaml')
+    chat = chat.replace("<<CONTENT>>", f"{content}")
     
     while out["title"] == "" or out["description"] == "":
-        result = gpt_utils.gpt3Turbo_completion(prompt=input, system=system, temp=1)
+        result = gpt_utils.gpt3Turbo_completion(chat_prompt=chat, system=system, temp=1)
         try:
             response = json.loads(result.replace("'", '"'))
             if "title" in response:

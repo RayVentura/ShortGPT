@@ -1,9 +1,7 @@
-from shortGPT.engine.abstract_content_engine import  Language
+from shortGPT.config.languages import Language
 from shortGPT.engine.content_short_engine import ContentShortEngine
-from shortGPT.gpt import reddit_gpt
-
-from shortGPT.engine.abstract_content_engine import  Language
 from shortGPT.editing_framework.editing_flow import EditingFlow, EditingStep, Flow
+from shortGPT.gpt import reddit_gpt, gpt_voice
 import os
 
 
@@ -15,10 +13,8 @@ class RedditShortEngine(ContentShortEngine):
                  num_images=num_images, watermark=watermark, language=language)
     
     def __generateRandomStory(self):
-        TO_AVOID = ["What's the most embarrassing thing you've ever done while on a date?",
-                    "What's the wildest thing you've ever done for love?"]
-        question = reddit_gpt.getInterestingRedditQuestion(TO_AVOID)
-        script = reddit_gpt.createRedditCommentFromQuestion(question)
+        question = reddit_gpt.getInterestingRedditQuestion()
+        script = reddit_gpt.createRedditScript(question)
         return script
 
     def __getRealisticStory(self, max_tries=6):
@@ -43,7 +39,7 @@ class RedditShortEngine(ContentShortEngine):
         self._db_reddit_question = reddit_gpt.getQuestionFromThread(
             self._db_script)
         self.logger("Choosing narration voice gender")
-        self._db_voice_gender = reddit_gpt.getGenderFromText(self._db_script)
+        self._db_voice_gender = gpt_voice.getGenderFromText(self._db_script)
 
     def _prepareCustomAssets(self):
         """

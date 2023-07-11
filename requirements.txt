@@ -1,5 +1,6 @@
 ffmpeg
 python-dotenv
+gradio
 openai
 tiktoken
 yt-dlp
@@ -14,3 +15,4 @@ nudenet
 termcolor
 progress
 questionary
+gradio

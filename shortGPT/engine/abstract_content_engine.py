@@ -2,17 +2,8 @@ from shortGPT.audio.eleven_voice_module import ElevenLabsVoiceModule
 from shortGPT.config.asset_db import AssetDatabase
 from shortGPT.config.api_db import get_api_key
 from shortGPT.database.content_database import ContentDatabase
+from shortGPT.config.languages import Language
 from abc import ABC
-from enum import Enum
-class Language(Enum):
-    ENGLISH = "english"
-    SPANISH = "spanish"
-    ARABIC = "arabic"
-    FRENCH = "french"
-    GERMAN = "german"
-    POLISH = "polish"
-    ITALIAN = "italian"
-    PORTUGUESE = "portuguese"
 import os
 CONTENT_DB = ContentDatabase()
 

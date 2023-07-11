@@ -1,6 +1,0 @@
-for a youtube short called : <<YOUTUBE TITLE>>
-The short contains the comments from a reddit thread about that subject, from redditors and their experience with that question.
-Youtube say:
-Writing descriptions with keywords can help viewers find your videos more easily through search. You can give an overview of your video and place keywords in the beginning of the description.
-
-Generate the description from the title of the 45sec short for getting the most traffict possible. Make it good for the audience watching those videos:

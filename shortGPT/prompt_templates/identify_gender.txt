@@ -1,6 +1,0 @@
-I will give you a narrated transcript and you must identify if it's most probably a male or female. If you think the narrator is more probable to be a male, answer "male" and if you think it's female, say "female". If you don't know, just say male.
-Transcript:
-
-<<STORY>>
-
-Gender of narrator:
