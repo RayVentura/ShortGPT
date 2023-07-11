@@ -17,7 +17,7 @@ class RedditShortEngine(ContentShortEngine):
         script = reddit_gpt.createRedditScript(question)
         return script
 
-    def __getRealisticStory(self, max_tries=6):
+    def __getRealisticStory(self, max_tries=3):
         current_realistic_score = 0
         current_try = 0
         current_generated_script = ""
@@ -35,7 +35,7 @@ class RedditShortEngine(ContentShortEngine):
         Implements Abstract parent method to generate the script for the reddit short
         """
         self.logger("Generating reddit question & entertaining story")
-        self._db_script, _ = self.__getRealisticStory(max_tries=5)
+        self._db_script, _ = self.__getRealisticStory(max_tries=1)
         self._db_reddit_question = reddit_gpt.getQuestionFromThread(
             self._db_script)
         self.logger("Choosing narration voice gender")
