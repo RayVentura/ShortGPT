@@ -32,7 +32,7 @@ ShortGPT is a powerful tool for automating content creation. It simplifies video
 - 🧠 **Memory and persistency**: Ensures long-term persistency of automated editing variables with TinyDB.
 
 
-## Showcase
+## Showcase (full video on https://www.youtube.com/watch?v=hpoSHq-ER8U )
 
 
 https://github.com/RayVentura/ShortGPT/assets/121462835/d357ba50-51d7-4c1c-a7ba-72d8353a804d
