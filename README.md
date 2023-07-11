@@ -118,7 +118,7 @@ Follow the instructions below to install ImageMagick, FFmpeg, and clone the shor
    git clone https://github.com/rayventura/shortgpt.git
    ```
 
-### Step 3: Install Python Dependencies
+### Step 4: Install Python Dependencies
 
 1. Open a terminal or command prompt.
 2. Navigate to the directory where `shortgpt.py` is located (the cloned repo).
