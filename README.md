@@ -23,7 +23,7 @@ ShortGPT is a powerful tool for automating content creation. It simplifies video
 
 - 📃 **Scripts and Prompts**: Provides ready-to-use scripts and prompts for various LLM automated editing processes.
 
-- 🗣️ **Voiceover Creation**: Supports multiple languages including English 🇺🇸, Spanish 🇪🇸, Arabic 🇦🇪, French 🇫🇷, Polish 🇵🇱, German 🇩🇪, Italian 🇮🇹, and Portuguese 🇵🇹.
+- 🗣️ **Voiceover / Content Creation**: Supports multiple languages including English 🇺🇸, Spanish 🇪🇸, Arabic 🇦🇪, French 🇫🇷, Polish 🇵🇱, German 🇩🇪, Italian 🇮🇹, and Portuguese 🇵🇹.
 
 - 🔗 **Caption Generation**: Automates the generation of video captions.
 
