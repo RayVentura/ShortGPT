@@ -13,6 +13,8 @@
 - 🎬 The `ContentShortEngine` is designed for creating shorts, handling tasks from script generation to final rendering, including adding YouTube metadata.
 
 - 🎥 The `ContentVideoEngine` is ideal for longer videos, taking care of tasks like generating audio, automatically sourcing background video footage, timing captions, and preparing background assets.
+  
+- 🎞️ The `EditingFlow` utilizes the Editing Markup Language and JSON, allowing instructions to be usable and customizable by Large Language Models for creative automated editing.
 
 💡 ShortGPT offers customization options to suit your needs, from language selection to watermark addition.
 
