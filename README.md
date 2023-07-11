@@ -14,7 +14,7 @@
 
 - 🎥 The `ContentVideoEngine` is ideal for longer videos, taking care of tasks like generating audio, automatically sourcing background video footage, timing captions, and preparing background assets.
   
-- 🎞️ The `EditingFlow` utilizes the Editing Markup Language and JSON, allowing instructions to be usable and customizable by Large Language Models for creative automated editing.
+- 🎞️ The `EditingFlow`, using Editing Markup Language and JSON, breaks down the editing process into manageable and customizable blocks, comprehensible to Large Language Models.
 
 💡 ShortGPT offers customization options to suit your needs, from language selection to watermark addition.
 
