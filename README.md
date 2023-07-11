@@ -143,6 +143,20 @@ That's it! You have successfully set up your API keys and can now utilize the fu
 
 As an open-source project in a rapidly developing field, we are extremely open to contributions, whether it be in the form of a new feature, improved infrastructure, or better documentation.
 
+## Framework overview
+
+- 🎬 The `ContentShortEngine` is designed for creating shorts, handling tasks from script generation to final rendering, including adding YouTube metadata.
+
+- 🎥 The `ContentVideoEngine` is ideal for longer videos, taking care of tasks like generating audio, automatically sourcing background video footage, timing captions, and preparing background assets.
+  
+- 🎞️ The automated `EditingEngine`, using Editing Markup Language and JSON, breaks down the editing process into manageable and customizable blocks, comprehensible to Large Language Models.
+
+💡 ShortGPT offers customization options to suit your needs, from language selection to watermark addition.
+
+🔧 As a framework, ShortGPT is adaptable and flexible, offering the potential for efficient, creative content creation.
+
+More documentation incomming, please be patient.
+
 ## Technologies Used
 
 ShortGPT utilizes the following technologies to power its functionality:
