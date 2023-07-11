@@ -16,7 +16,7 @@
 
 ⚡ Automating video and short content creation with AI ⚡
 
-## ✨ Introduction to ShortGPT 
+## 📝 Introduction to ShortGPT 
 
 🚀 ShortGPT is an open-source AI framework for automating video and short content creation.
 
