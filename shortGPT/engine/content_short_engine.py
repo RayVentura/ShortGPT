@@ -5,7 +5,7 @@ from shortGPT.editing_utils import captions, editing_images
 from shortGPT.editing_utils.handle_videos import extract_random_clip_from_video
 from shortGPT.engine.abstract_content_engine import AbstractContentEngine
 from shortGPT.config.languages import Language
-from shortGPT.editing_framework.editing_flow import EditingEngine, EditingStep
+from shortGPT.editing_framework.editing_engine import EditingEngine, EditingStep
 from abc import  abstractmethod
 import re
 import shutil
