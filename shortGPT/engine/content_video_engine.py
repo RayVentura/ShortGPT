@@ -5,7 +5,7 @@ from shortGPT.audio import audio_utils
 from shortGPT.editing_utils import captions
 from shortGPT.engine.abstract_content_engine import AbstractContentEngine
 from shortGPT.config.languages import Language
-from shortGPT.editing_framework.editing_flow import EditingEngine, EditingStep
+from shortGPT.editing_framework.editing_engine import EditingEngine, EditingStep
 import re
 import shutil
 import os
