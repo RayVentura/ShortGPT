@@ -17,28 +17,6 @@
 ⚡ Automating video and short content creation with AI ⚡
 
 ## 📝 Introduction to ShortGPT 
-
-🚀 ShortGPT is an open-source AI framework for automating video and short content creation.
-
-- 🎬 The `ContentShortEngine` is designed for creating shorts, handling tasks from script generation to final rendering, including adding YouTube metadata.
-
-- 🎥 The `ContentVideoEngine` is ideal for longer videos, taking care of tasks like generating audio, automatically sourcing background video footage, timing captions, and preparing background assets.
-  
-- 🎞️ The automated `EditingEngine`, using Editing Markup Language and JSON, breaks down the editing process into manageable and customizable blocks, comprehensible to Large Language Models.
-
-💡 ShortGPT offers customization options to suit your needs, from language selection to watermark addition.
-
-🔧 As a framework, ShortGPT is adaptable and flexible, offering the potential for efficient, creative content creation.
-
-## Showcase
-
-
-https://github.com/RayVentura/ShortGPT/assets/121462835/d357ba50-51d7-4c1c-a7ba-72d8353a804d
-
-
-
-## 🚀 ShortGPT Features
-
 ShortGPT is a powerful tool for automating content creation. It simplifies video creation, footage sourcing, voiceover synthesis, and editing tasks.
 
 - 🎞️ **Automated editing framework**: Streamlines the video creation process with an LLM oriented video editing language.
@@ -50,7 +28,15 @@ ShortGPT is a powerful tool for automating content creation. It simplifies video
 - 🔗 **Caption Generation**: Automates the generation of video captions.
 
 - 🌐🎥 **Asset Sourcing**: Sources images and video footage from the internet, connecting with the web and Pexels API as necessary.
+
 - 🧠 **Memory and persistency**: Ensures long-term persistency of automated editing variables with TinyDB.
+
+
+## Showcase
+
+
+https://github.com/RayVentura/ShortGPT/assets/121462835/d357ba50-51d7-4c1c-a7ba-72d8353a804d
+
 
 # Instructions for running shortGPT
 
