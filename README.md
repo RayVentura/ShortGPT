@@ -2,11 +2,12 @@
 # 🎬🚀 ShortGPT
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![](https://dcbadge.vercel.app/api/server/uERx39ru3R?compact=true&style=flat)](https://discord.gg/uERx39ru3R)
-[![GitHub star chart](https://img.shields.io/github/stars/rayventura/shortgpt?style=social)](https://star-history.com/#rayventura/shortgpt)
-[![Twitter](https://img.shields.io/twitter/url/https/twitter.com/rayventurahq.svg?style=social&label=Follow%20%40RayVentura)](https://twitter.com/RayVenturaHQ) 
+[![Twitter](https://img.shields.io/twitter/url/https/twitter.com/rayventurahq.svg?style=social&label=Follow%20%40RayVentura)](https://twitter.com/RayVenturaHQ)
+<!--[![GitHub star chart](https://img.shields.io/github/stars/rayventura/shortgpt?style=social)](https://star-history.com/#rayventura/shortgpt)-->
 <div align="center">
-    <img src="https://github.com/RayVentura/ShortGPT/assets/121462835/d9f87cf2-021d-4b8d-bb86-b3a7af1d80d4" alt="ShortGPT-logo" style="border-radius: 20px;" width="22%"/>
+    <img src="https://github.com/RayVentura/ShortGPT/assets/121462835/083c8dc3-bac5-42c1-a08d-3ff9686d18c5" alt="ShortGPT-logo" style="border-radius: 20px;" width="22%"/>
 </div>
+<!--![android-chrome-192x192](https://github.com/RayVentura/ShortGPT/assets/121462835/083c8dc3-bac5-42c1-a08d-3ff9686d18c5) -->
 
 <div align="center">
   <a href="https://discord.gg/uERx39ru3R">
@@ -17,7 +18,7 @@
 ⚡ Automating video and short content creation with AI ⚡
 
 ## 📝 Introduction to ShortGPT 
-ShortGPT is a powerful tool for automating content creation. It simplifies video creation, footage sourcing, voiceover synthesis, and editing tasks.
+ShortGPT is a powerful framework for automating content creation. It simplifies video creation, footage sourcing, voiceover synthesis, and editing tasks.
 
 - 🎞️ **Automated editing framework**: Streamlines the video creation process with an LLM oriented video editing language.
 
@@ -32,10 +33,11 @@ ShortGPT is a powerful tool for automating content creation. It simplifies video
 - 🧠 **Memory and persistency**: Ensures long-term persistency of automated editing variables with TinyDB.
 
 
-## Showcase
+## Showcase (full video on https://www.youtube.com/watch?v=hpoSHq-ER8U )
 
 
-https://github.com/RayVentura/ShortGPT/assets/121462835/d357ba50-51d7-4c1c-a7ba-72d8353a804d
+https://github.com/RayVentura/ShortGPT/assets/121462835/a802faad-0fd7-4fcb-aa82-6365c27ea5fe
+
 
 
 # Instructions for running shortGPT
