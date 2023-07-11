@@ -2,8 +2,8 @@
 # 🎬🚀 ShortGPT
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![](https://dcbadge.vercel.app/api/server/uERx39ru3R?compact=true&style=flat)](https://discord.gg/uERx39ru3R)
-[![GitHub star chart](https://img.shields.io/github/stars/rayventura/shortgpt?style=social)](https://star-history.com/#rayventura/shortgpt)
-[![Twitter](https://img.shields.io/twitter/url/https/twitter.com/rayventurahq.svg?style=social&label=Follow%20%40RayVentura)](https://twitter.com/RayVenturaHQ) 
+[![Twitter](https://img.shields.io/twitter/url/https/twitter.com/rayventurahq.svg?style=social&label=Follow%20%40RayVentura)](https://twitter.com/RayVenturaHQ)
+<!--[![GitHub star chart](https://img.shields.io/github/stars/rayventura/shortgpt?style=social)](https://star-history.com/#rayventura/shortgpt)-->
 <div align="center">
     <img src="https://github.com/RayVentura/ShortGPT/assets/121462835/d9f87cf2-021d-4b8d-bb86-b3a7af1d80d4" alt="ShortGPT-logo" style="border-radius: 20px;" width="22%"/>
 </div>
