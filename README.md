@@ -9,7 +9,7 @@
 </div>
 
 <div align="center">
-  <a href="https://discord.gg/HUpRgp2HG8">
+  <a href="https://discord.gg/uERx39ru3R">
     <img src="https://img.shields.io/badge/discord-join%20chat-blue.svg" alt="Join our Discord" height="34">
   </a>
 </div>
@@ -153,6 +153,21 @@ That's it! You have successfully set up your API keys and can now utilize the fu
 
 As an open-source project in a rapidly developing field, we are extremely open to contributions, whether it be in the form of a new feature, improved infrastructure, or better documentation.
 
+## Technologies Used
+
+ShortGPT utilizes the following technologies to power its functionality:
+
+- **Moviepy**: Moviepy is used for video editing, allowing ShortGPT to make video editing and rendering
+
+- **Openai**: Openai is used for automating the entire process, including generating scripts and prompts for LLM automated editing processes.
+
+- **ElevenLabs**: ElevenLabs is used for voice synthesis, supporting multiple languages for voiceover creation.
+
+- **Pexels**: Pexels is used for sourcing background footage, allowing ShortGPT to connect with the web and access a wide range of images and videos.
+
+- **Bing Image**: Bing Image is used for sourcing images, providing a comprehensive database for ShortGPT to retrieve relevant visuals.
+
+These technologies work together to provide a seamless and efficient experience in automating video and short content creation with AI.
 
 ## 🔗 Get in touch on Twitter 🐦
 
