@@ -173,7 +173,7 @@ These technologies work together to provide a seamless and efficient experience 
 
 Keep up with the latest happenings, announcements, and insights about Short-GPT by checking out our Twitter accounts. Spark a conversation with our developer and the AI's own account for fascinating dialogues, latest news about the project, and more.
 
-- **Developer**: Stay updated [@RayVentura](https://twitter.com/RayVentura). Deep-dive into behind-the-scenes, project news, and related topics from the brain behind ShortGPT.
+- **Developer**: Stay updated [@RayVentura](https://twitter.com/RayVentura). Deep-dive into behind-the-scenes, project news, and related topics from the person behind ShortGPT.
 
 We're eager to interact with you and listen to your feedback, concepts, and experiences with Auto-GPT. Come on board on Twitter and let's navigate the future of AI as a team! 💡🤖
 
