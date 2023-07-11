@@ -17,36 +17,26 @@
 ⚡ Automating video and short content creation with AI ⚡
 
 ## 📝 Introduction to ShortGPT 
-
-🚀 ShortGPT is an open-source AI framework for automating video and short content creation.
-
-- 🎬 The `ContentShortEngine` is designed for creating shorts, handling tasks from script generation to final rendering, including adding YouTube metadata.
-
-- 🎥 The `ContentVideoEngine` is ideal for longer videos, taking care of tasks like generating audio, automatically sourcing background video footage, timing captions, and preparing background assets.
-  
-- 🎞️ The automated `EditingEngine`, using Editing Markup Language and JSON, breaks down the editing process into manageable and customizable blocks, comprehensible to Large Language Models.
-
-💡 ShortGPT offers customization options to suit your needs, from language selection to watermark addition.
-
-🔧 As a framework, ShortGPT is adaptable and flexible, offering the potential for efficient, creative content creation.
-
-## Showcase
-
-
-## 🚀 ShortGPT Features
-
 ShortGPT is a powerful tool for automating content creation. It simplifies video creation, footage sourcing, voiceover synthesis, and editing tasks.
 
 - 🎞️ **Automated editing framework**: Streamlines the video creation process with an LLM oriented video editing language.
 
 - 📃 **Scripts and Prompts**: Provides ready-to-use scripts and prompts for various LLM automated editing processes.
 
-- 🗣️ **Voiceover Creation**: Supports multiple languages including English 🇺🇸, Spanish 🇪🇸, Arabic 🇦🇪, French 🇫🇷, Polish 🇵🇱, German 🇩🇪, Italian 🇮🇹, and Portuguese 🇵🇹.
+- 🗣️ **Voiceover / Content Creation**: Supports multiple languages including English 🇺🇸, Spanish 🇪🇸, Arabic 🇦🇪, French 🇫🇷, Polish 🇵🇱, German 🇩🇪, Italian 🇮🇹, and Portuguese 🇵🇹.
 
 - 🔗 **Caption Generation**: Automates the generation of video captions.
 
 - 🌐🎥 **Asset Sourcing**: Sources images and video footage from the internet, connecting with the web and Pexels API as necessary.
-- 🧠 **Database Management**: Ensures long-term persistency of automated editing variables with TinyDB.
+
+- 🧠 **Memory and persistency**: Ensures long-term persistency of automated editing variables with TinyDB.
+
+
+## Showcase
+
+
+https://github.com/RayVentura/ShortGPT/assets/121462835/d357ba50-51d7-4c1c-a7ba-72d8353a804d
+
 
 # Instructions for running shortGPT
 
@@ -114,7 +104,7 @@ Follow the instructions below to install ImageMagick, FFmpeg, and clone the shor
    git clone https://github.com/rayventura/shortgpt.git
    ```
 
-### Step 3: Install Python Dependencies
+### Step 4: Install Python Dependencies
 
 1. Open a terminal or command prompt.
 2. Navigate to the directory where `shortgpt.py` is located (the cloned repo).
@@ -142,7 +132,7 @@ The ShortGPT UI needs you to input at least OpenAI and ElevenLabs api keys for r
 
 Follow these steps to add your OpenAI and ElevenLabs API keys:
 
-1. Open [http://localhost:31415](http://localhost:31415) from a web browser. 
+1. Open [http://localhost:31415/?__theme=light](http://localhost:31415/?__theme=light) from a web browser. 
 2. Click on the `config` tab located at the left side bar of the user interface.
 3. Add your `OPENAI API KEY` and `ELEVENLABS API KEY` in the corresponding input fields.
 4. Click `Save` to save your API keys.
@@ -152,6 +142,20 @@ That's it! You have successfully set up your API keys and can now utilize the fu
 ## 💁 Contributing
 
 As an open-source project in a rapidly developing field, we are extremely open to contributions, whether it be in the form of a new feature, improved infrastructure, or better documentation.
+
+## Framework overview
+
+- 🎬 The `ContentShortEngine` is designed for creating shorts, handling tasks from script generation to final rendering, including adding YouTube metadata.
+
+- 🎥 The `ContentVideoEngine` is ideal for longer videos, taking care of tasks like generating audio, automatically sourcing background video footage, timing captions, and preparing background assets.
+  
+- 🎞️ The automated `EditingEngine`, using Editing Markup Language and JSON, breaks down the editing process into manageable and customizable blocks, comprehensible to Large Language Models.
+
+💡 ShortGPT offers customization options to suit your needs, from language selection to watermark addition.
+
+🔧 As a framework, ShortGPT is adaptable and flexible, offering the potential for efficient, creative content creation.
+
+More documentation incomming, please be patient.
 
 ## Technologies Used
 
@@ -173,7 +177,7 @@ These technologies work together to provide a seamless and efficient experience 
 
 Keep up with the latest happenings, announcements, and insights about Short-GPT by checking out our Twitter accounts. Spark a conversation with our developer and the AI's own account for fascinating dialogues, latest news about the project, and more.
 
-- **Developer**: Stay updated [@RayVentura](https://twitter.com/RayVentura). Deep-dive into behind-the-scenes, project news, and related topics from the brain behind ShortGPT.
+- **Developer**: Stay updated [@RayVentura](https://twitter.com/RayVenturaHQ). Deep-dive into behind-the-scenes, project news, and related topics from the person behind ShortGPT.
 
 We're eager to interact with you and listen to your feedback, concepts, and experiences with Auto-GPT. Come on board on Twitter and let's navigate the future of AI as a team! 💡🤖
 
