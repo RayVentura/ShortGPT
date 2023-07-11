@@ -77,11 +77,11 @@ Follow the instructions below to install ImageMagick, FFmpeg, and clone the shor
 
    You should see the ImageMagick version information if the installation was successful.
 
-### Step 2: Install FFmpeg
+### Step 2: Install FFmpeg (REQUIRED FOR SHORTGPT TO WORK)
 
-1. For `Windows`Download the FFmpeg binaries from the official website and add the executable to your system's PATH. Follow EXACTLY this tutorial. You must have FFmpeg in your environment variables for it to work.
+1. For `Windows`Download the FFmpeg binaries from this Windows Installer (It will download ffmpeg, ffprobe and add it to your path).
       
-      [https://www.wikihow.com/Install-FFmpeg-on-Windows](https://www.wikihow.com/Install-FFmpeg-on-Windows)
+      [https://github.com/icedterminal/ffmpeg-installer/releases/tag/6.0.0.20230306](https://github.com/icedterminal/ffmpeg-installer/releases/tag/6.0.0.20230306)
       
 2. For macOS using Homebrew, use the command:
      ```
