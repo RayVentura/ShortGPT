@@ -46,7 +46,7 @@ ShortGPT is a powerful tool for automating content creation. It simplifies video
 - 🔗 **Caption Generation**: Automates the generation of video captions.
 
 - 🌐🎥 **Asset Sourcing**: Sources images and video footage from the internet, connecting with the web and Pexels API as necessary.
-- 🧠 **Database Management**: Ensures long-term persistency of automated editing variables with TinyDB.
+- 🧠 **Memory and persistency**: Ensures long-term persistency of automated editing variables with TinyDB.
 
 # Instructions for running shortGPT
 
