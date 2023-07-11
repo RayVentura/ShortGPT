@@ -11,8 +11,7 @@ def run_app():
         with gr.Row(variant='compact'):
             gr.HTML(f'''
                 <div style="display: flex; align-items: center;">
-                    <img src="{LOGO_PATH}" width="{LOGO_DIM}" height="{LOGO_DIM}">
-                    <h1 style="margin-left: -7px; font-size: 35px;">hortGPT</h1>
+                    <h1 style="margin-left: 0px; font-size: 35px;">ShortGPT</h1>
                 </div>
             ''')
         content_automation = create_content_automation()
