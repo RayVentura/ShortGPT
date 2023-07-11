@@ -33,6 +33,10 @@
 ## Showcase
 
 
+https://github.com/RayVentura/ShortGPT/assets/121462835/d357ba50-51d7-4c1c-a7ba-72d8353a804d
+
+
+
 ## 🚀 ShortGPT Features
 
 ShortGPT is a powerful tool for automating content creation. It simplifies video creation, footage sourcing, voiceover synthesis, and editing tasks.
