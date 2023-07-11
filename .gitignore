@@ -16,3 +16,6 @@ videos/*
 flagged/
 .vscode
 .env
+ShortGPT.egg-info
+dist
+build
