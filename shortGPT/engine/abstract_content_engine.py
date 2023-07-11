@@ -16,6 +16,7 @@ class AbstractContentEngine(ABC):
         else:
             self.dataManager = CONTENT_DB.createContentDataManager(content_type)
         self.id = str(self.dataManager._getId())
+        self.initializeMagickAndFFMPEG()
         self.prepareEditingPaths()
         self._db_language = language.value
         self.voiceModule = ElevenLabsVoiceModule(get_api_key("ELEVEN LABS"))
@@ -78,3 +79,27 @@ class AbstractContentEngine(ABC):
     
     def set_logger(self,logger):
         self.logger = logger
+
+    def initializeMagickAndFFMPEG(self):
+        import os
+        import platform
+        import sys
+        import subprocess
+        def search_program(program_name):
+            try: 
+                search_cmd = "where" if platform.system() == "Windows" else "which"
+                return subprocess.check_output([search_cmd, program_name]).decode().strip()
+            except subprocess.CalledProcessError:
+                return None
+
+        def get_program_path(program_name):
+            program_path = search_program(program_name)
+            return program_path
+        ffmpeg_path = get_program_path("ffmpeg")
+        ffprobe_path = get_program_path("ffprobe")
+        if not ffprobe_path:
+            raise Exception("FFProbe, a dependecy of FFmpeg was not found. Please go back to the README and follow the instructions to install FFMPEG")
+        magick_path = get_program_path("magick")
+        if not magick_path:
+            raise Exception("ImageMagick, a program required for making Captions with ShortGPT was not found on your computer. Please go back to the README and follow the instructions to install ImageMagick")
+        os.environ['IMAGEMAGICK_BINARY'] = magick_path
