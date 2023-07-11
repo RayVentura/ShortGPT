@@ -35,7 +35,8 @@ ShortGPT is a powerful tool for automating content creation. It simplifies video
 ## Showcase (full video on https://www.youtube.com/watch?v=hpoSHq-ER8U )
 
 
-https://github.com/RayVentura/ShortGPT/assets/121462835/d357ba50-51d7-4c1c-a7ba-72d8353a804d
+https://github.com/RayVentura/ShortGPT/assets/121462835/a802faad-0fd7-4fcb-aa82-6365c27ea5fe
+
 
 
 # Instructions for running shortGPT
