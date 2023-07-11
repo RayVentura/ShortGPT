@@ -10,7 +10,7 @@
 
 <div align="center">
   <a href="https://discord.gg/HUpRgp2HG8">
-    <img src="https://img.shields.io/badge/discord-join%20chat-blue.svg" alt="Join our Discord" height="40">
+    <img src="https://img.shields.io/badge/discord-join%20chat-blue.svg" alt="Join our Discord" height="34">
   </a>
 </div>
 
