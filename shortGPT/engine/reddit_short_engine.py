@@ -1,6 +1,6 @@
 from shortGPT.config.languages import Language
 from shortGPT.engine.content_short_engine import ContentShortEngine
-from shortGPT.editing_framework.editing_flow import EditingEngine, EditingStep, Flow
+from shortGPT.editing_framework.editing_engine import EditingEngine, EditingStep, Flow
 from shortGPT.gpt import reddit_gpt, gpt_voice
 import os
 
