@@ -18,7 +18,7 @@
 ⚡ Automating video and short content creation with AI ⚡
 
 ## 📝 Introduction to ShortGPT 
-ShortGPT is a powerful tool for automating content creation. It simplifies video creation, footage sourcing, voiceover synthesis, and editing tasks.
+ShortGPT is a powerful framework for automating content creation. It simplifies video creation, footage sourcing, voiceover synthesis, and editing tasks.
 
 - 🎞️ **Automated editing framework**: Streamlines the video creation process with an LLM oriented video editing language.
 
