@@ -42,7 +42,7 @@ https://github.com/RayVentura/ShortGPT/assets/121462835/a802faad-0fd7-4fcb-aa82-
 
 # Instructions for running shortGPT
 
-This guide provides step-by-step instructions for installing ImageMagick and FFmpeg on your system, which are both required to do automated editing. Once installed, you can proceed to run `shortgptUI.py` successfully.
+This guide provides step-by-step instructions for installing ImageMagick and FFmpeg on your system, which are both required to do automated editing. Once installed, you can proceed to run `runShortGPT.py` successfully.
 
 ## Prerequisites
 
@@ -117,15 +117,15 @@ Follow the instructions below to install ImageMagick, FFmpeg, and clone the shor
 
    This command will install the necessary packages specified in the `requirements.txt` file.
 
-## Running shortgptUI.py Web Interface
+## Running runShortGPT.py Web Interface
 
 Once you have successfully installed ImageMagick, FFmpeg, and the Python dependencies, you can run `shortgpt.py` by following these steps:
 
 1. Open a terminal or command prompt.
-2. Navigate to the directory where `shortgptUI.py` is located (the cloned repo).
+2. Navigate to the directory where `runShortGPT.py` is located (the cloned repo).
 3. Execute the following command to run the script:
    ```
-   python shortgptUI.py
+   python runShortGPT.py
    ```
 4. After running the script, a Gradio interface should open at your local host on port 31415 (http://localhost:31415). 
 
