@@ -4,15 +4,7 @@
 [![](https://dcbadge.vercel.app/api/server/uERx39ru3R?compact=true&style=flat)](https://discord.gg/uERx39ru3R)
 [![GitHub star chart](https://img.shields.io/github/stars/rayventura/shortgpt?style=social)](https://star-history.com/#rayventura/shortgpt)
 [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/rayventurahq.svg?style=social&label=Follow%20%40RayVentura)](https://twitter.com/RayVenturaHQ) 
-<div align="center">
-    <img src="https://github.com/RayVentura/ShortGPT/assets/121462835/d9f87cf2-021d-4b8d-bb86-b3a7af1d80d4" alt="ShortGPT-logo" style="border-radius: 20px;" width="22%"/>
-</div>
 
-<div align="center">
-  <a href="https://discord.gg/uERx39ru3R">
-    <img src="https://img.shields.io/badge/discord-join%20chat-blue.svg" alt="Join our Discord" height="34">
-  </a>
-</div>
 
 ⚡ Automating video and short content creation with AI ⚡
 
