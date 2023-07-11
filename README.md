@@ -142,7 +142,7 @@ The ShortGPT UI needs you to input at least OpenAI and ElevenLabs api keys for r
 
 Follow these steps to add your OpenAI and ElevenLabs API keys:
 
-1. Open [http://localhost:31415](http://localhost:31415) from a web browser. 
+1. Open [http://localhost:31415/?__theme=light](http://localhost:31415/?__theme=light) from a web browser. 
 2. Click on the `config` tab located at the left side bar of the user interface.
 3. Add your `OPENAI API KEY` and `ELEVENLABS API KEY` in the corresponding input fields.
 4. Click `Save` to save your API keys.
@@ -173,7 +173,7 @@ These technologies work together to provide a seamless and efficient experience 
 
 Keep up with the latest happenings, announcements, and insights about Short-GPT by checking out our Twitter accounts. Spark a conversation with our developer and the AI's own account for fascinating dialogues, latest news about the project, and more.
 
-- **Developer**: Stay updated [@RayVentura](https://twitter.com/RayVentura). Deep-dive into behind-the-scenes, project news, and related topics from the person behind ShortGPT.
+- **Developer**: Stay updated [@RayVentura](https://twitter.com/RayVenturaHQ). Deep-dive into behind-the-scenes, project news, and related topics from the person behind ShortGPT.
 
 We're eager to interact with you and listen to your feedback, concepts, and experiences with Auto-GPT. Come on board on Twitter and let's navigate the future of AI as a team! 💡🤖
 
