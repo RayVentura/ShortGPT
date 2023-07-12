@@ -1,21 +1,35 @@
-MIT License
+ShortGPT License
 
-Copyright (c) 2023 Rayventura
+Depending on the type of your legal entity, you are granted permission to use Remotion for your project. Individuals and small companies are allowed to use Remotion to create videos for free (even commercial), while a company license is required for for-profit organizations of a certain size. This two-tier system was designed to ensure funding for this project while still allowing the source code to be available and the program to be free for most. Read below for the exact terms of use.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+    Free license
+    Company license
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Free license
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Copyright © 2023 ShortGPT
+Eligibility
+
+You are eligible to use ShortGPT for free if you are:
+
+    an individual
+    a for-profit organization with a gross revenue up to 314 159$ a year.
+    a non-profit or not-for-profit organization
+    evaluating whether ShortGPT is a good fit, and are not yet using it in a commercial way
+
+Allowed use cases
+
+Permission is hereby granted, free of charge, to any person eligible for the "Free license", to use the software non-commercially or commercially for the purpose of creating videos and images and to modify the software to their own liking, for the purpose of fulfilling their custom use case or to contribute bug fixes or improvements back to Remotion.
+Disallowed use cases
+
+It is not allowed to copy or modify ShortGPT code for the purpose of selling, renting, licensing, relicensing, or sublicensing your own derivate of ShortGPT.
+Warranty notice
+
+The software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and non-infringement. In no event shall the author or copyright holders be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.
+Support
+
+Support is provided on a best-we-can-do basis via GitHub Issues and Discord.
+Company license
+
+You are required to obtain a company license to use ShortGPT if you are not within the group of entities eligible for a free license. This license will enable you to use ShortGPT for the allowed use cases specified in the free license, and give you access to prioritized support.
+We will deduct 10% of the revenue generated from ShortGPT as part of the payment for the company license.
