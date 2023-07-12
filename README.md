@@ -50,6 +50,10 @@ Before you begin, ensure that you have the following prerequisites installed on 
 - Python 3.x
 - Pip (Python package installer)
 
+## Colab Notebook To run on Google Colab for free and no installation setup hassle.
+
+[https://colab.research.google.com/drive/1_2UKdpF6lqxCqWaAcZb3rwMVQqtbisdE?usp=sharing](https://colab.research.google.com/drive/1_2UKdpF6lqxCqWaAcZb3rwMVQqtbisdE?usp=sharing)
+
 ## Installation Steps
 
 Follow the instructions below to install ImageMagick, FFmpeg, and clone the shortGPT repository:
