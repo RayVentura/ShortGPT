@@ -88,7 +88,6 @@ class AbstractContentEngine(ABC):
         ffprobe_path = get_program_path("ffprobe")
         if not ffprobe_path:
             raise Exception("FFProbe, a dependecy of FFmpeg was not found. Please go back to the README and follow the instructions to install FFMPEG")
-        magick_path = get_program_path("magick")
-        if not magick_path:
+        convert_path = get_program_path("convert")
+        if not convert_path:
             raise Exception("ImageMagick, a program required for making Captions with ShortGPT was not found on your computer. Please go back to the README and follow the instructions to install ImageMagick")
-        os.environ['IMAGEMAGICK_BINARY'] = magick_path
