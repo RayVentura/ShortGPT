@@ -68,11 +68,16 @@ Follow the instructions below to install ImageMagick, FFmpeg, and clone the shor
 2. For Ubuntu/Debian-based systems, use the command:
      ```
      sudo apt-get install imagemagick
-     ```   
-    For macOS using Homebrew, use the command:
+     ```
+     Then run the following command to fix a moviepy Imagemagick policy.xml incompatibility problem:
+     ```
+     !sed -i '/<policy domain="path" rights="none" pattern="@\*"/d' /etc/ImageMagick-6/policy.xml
+     ```    
+4. For macOS using Homebrew, use the command:
      ```
      brew install imagemagick
      ```
+     
 
 2. Verify the installation by running the following command:
    ```
