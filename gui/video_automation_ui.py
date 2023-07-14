@@ -94,7 +94,7 @@ def create_video_automation_ui(shortGptUI: gr.Blocks):
                         try:
                             video_path = makeVideo(script, language.value, isVertical, progress=progress)
                             file_name = video_path.split("/")[-1].split("\\")[-1]
-                            current_url = shortGptUI.share_url if shortGptUI.share else shortGptUI.local_url
+                            current_url = shortGptUI.share_url+"/" if shortGptUI.share else shortGptUI.local_url
                             file_url_path = f"{current_url}file={video_path}"
                             video_html = f'''
                             <div style="display: flex; flex-direction: column; align-items: center;">

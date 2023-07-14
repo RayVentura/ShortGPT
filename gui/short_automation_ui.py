@@ -61,7 +61,7 @@ def create_short_automation_ui(shortGptUI: gr.Blocks):
                     progress_counter += 1
 
                 video_path = shortEngine.get_video_output_path()
-                current_url = shortGptUI.share_url if shortGptUI.share else shortGptUI.local_url
+                current_url = shortGptUI.share_url+"/" if shortGptUI.share else shortGptUI.local_url
                 file_url_path = f"{current_url}file={video_path}"
                 file_name = video_path.split("/")[-1].split("\\")[-1]
                 embedHTML += f'''
