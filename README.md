@@ -50,6 +50,10 @@ Before you begin, ensure that you have the following prerequisites installed on 
 - Python 3.x
 - Pip (Python package installer)
 
+## Colab Notebook To run on Google Colab for free and no installation setup hassle.
+
+[https://colab.research.google.com/drive/1_2UKdpF6lqxCqWaAcZb3rwMVQqtbisdE?usp=sharing](https://colab.research.google.com/drive/1_2UKdpF6lqxCqWaAcZb3rwMVQqtbisdE?usp=sharing)
+
 ## Installation Steps
 
 Follow the instructions below to install ImageMagick, FFmpeg, and clone the shortGPT repository:
@@ -64,11 +68,16 @@ Follow the instructions below to install ImageMagick, FFmpeg, and clone the shor
 2. For Ubuntu/Debian-based systems, use the command:
      ```
      sudo apt-get install imagemagick
-     ```   
-    For macOS using Homebrew, use the command:
+     ```
+     Then run the following command to fix a moviepy Imagemagick policy.xml incompatibility problem:
+     ```
+     !sed -i '/<policy domain="path" rights="none" pattern="@\*"/d' /etc/ImageMagick-6/policy.xml
+     ```    
+4. For macOS using Homebrew, use the command:
      ```
      brew install imagemagick
      ```
+     
 
 2. Verify the installation by running the following command:
    ```
@@ -181,10 +190,10 @@ Keep up with the latest happenings, announcements, and insights about Short-GPT 
 
 - **Developer**: Stay updated [@RayVentura](https://twitter.com/RayVenturaHQ). Deep-dive into behind-the-scenes, project news, and related topics from the person behind ShortGPT.
 
-We're eager to interact with you and listen to your feedback, concepts, and experiences with Auto-GPT. Come on board on Twitter and let's navigate the future of AI as a team! 💡🤖
+We're eager to interact with you and listen to your feedback, concepts, and experiences with Short-GPT. Come on board on Twitter and let's navigate the future of AI as a team! 💡🤖
 
 <p align="center">
-  <a href="https://star-history.com/#ReyVentura/ShortGPT&Date">
+  <a href="https://star-history.com/#RayVentura/ShortGPT&Date">
     <img src="https://api.star-history.com/svg?repos=RayVentura/ShortGPT&type=Date" alt="Star History Chart">
   </a>
 </p>
