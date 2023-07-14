@@ -38,7 +38,13 @@ ShortGPT is a powerful framework for automating content creation. It simplifies 
 
 https://github.com/RayVentura/ShortGPT/assets/121462835/a802faad-0fd7-4fcb-aa82-6365c27ea5fe
 
+## 🚀 Quick Start: Run ShortGPT on Google Colab
 
+If you prefer not to install the prerequisites on your local system, you can use the Google Colab notebook. This option is free and requires no installation setup.
+
+1. Click on the link to the Google Colab notebook: [https://colab.research.google.com/drive/1_2UKdpF6lqxCqWaAcZb3rwMVQqtbisdE?usp=sharing](https://colab.research.google.com/drive/1_2UKdpF6lqxCqWaAcZb3rwMVQqtbisdE?usp=sharing)
+
+2. Once you're in the notebook, simply run the cells in order from top to bottom. You can do this by clicking on each cell and pressing the 'Play' button, or by using the keyboard . Enjoy using ShortGPT!
 
 # Instructions for running shortGPT
 
@@ -49,10 +55,6 @@ This guide provides step-by-step instructions for installing ImageMagick and FFm
 Before you begin, ensure that you have the following prerequisites installed on your system:
 - Python 3.x
 - Pip (Python package installer)
-
-## Colab Notebook To run on Google Colab for free and no installation setup hassle.
-
-[https://colab.research.google.com/drive/1_2UKdpF6lqxCqWaAcZb3rwMVQqtbisdE?usp=sharing](https://colab.research.google.com/drive/1_2UKdpF6lqxCqWaAcZb3rwMVQqtbisdE?usp=sharing)
 
 ## Installation Steps
 
