@@ -11,12 +11,12 @@ from gui.short_automation_ui import create_short_automation_ui
 from gui.video_automation_ui import create_video_automation_ui
 
 
-def create_content_automation():
+def create_content_automation(shortGPTUI: gr.Blocks):
     with gr.Tab("Content Automation") as content_automation_ui:
         gr.Markdown("# 🏆 Content Automation 🚀")
         gr.Markdown("## Choose your desired automation task.")
         choice = gr.Radio([ '🎬 Automate the creation of shorts', '🎞️ Automate a video with stock assets'], label="Choose an option")
-        video_automation_ui = create_video_automation_ui()
-        short_automation_ui = create_short_automation_ui()
+        video_automation_ui = create_video_automation_ui(shortGPTUI)
+        short_automation_ui = create_short_automation_ui(shortGPTUI)
         choice.change(lambda x: (gr.update(visible= x == choice.choices[1]), gr.update(visible= x == choice.choices[0])), [choice], [video_automation_ui, short_automation_ui])
     return content_automation_ui

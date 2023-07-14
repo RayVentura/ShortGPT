@@ -18,45 +18,108 @@ ERROR_TEMPLATE = """<div style='text-align: center; background: #f2dede; color: 
 </div>"""
 
 
-def create_short_automation_ui():
-        with gr.Row(visible=False) as short_automation:
-            with gr.Column():
-                numShorts = gr.Number(label="Number of shorts", minimum=1, value=1)
-                short_type = gr.Radio(["Reddit Story shorts","Historical Facts shorts", "Scientific Facts shorts", "Custom Facts shorts"], label="Type of shorts generated", value="Custom Facts", interactive=True)
-                facts_subject = gr.Textbox(label="Write a subject for your facts (example: Football facts)",interactive=True, visible=False)
-                short_type.change(lambda x: gr.update(visible=x=="Custom Facts shorts"),[short_type],[facts_subject] )
-                language = gr.Radio(language_choices, label="Language", value="ENGLISH")
+def create_short_automation_ui(shortGptUI: gr.Blocks):
+    def create_short(numShorts,
+            short_type,
+            language,
+            numImages,
+            watermark,
+            background_video_list,
+            background_music_list,
+            facts_subject,
+            progress=gr.Progress()):
+        
+        numShorts = int(numShorts)
+        numImages = int(numImages) if numImages else None
+        background_videos = (background_video_list * ((numShorts // len(background_video_list)) + 1))[:numShorts]
+        background_musics = (background_music_list * ((numShorts // len(background_music_list)) + 1))[:numShorts]
+        language = Language(language.lower())
+        embedHTML = '<div style="display: flex; overflow-x: auto; gap: 20px;">'
+        progress_counter = 0
+        try:
+            for i in range(numShorts):
+                shortEngine = create_short_engine(short_type=short_type,
+                                                    language=language,
+                                                    numImages=numImages,
+                                                background_video=background_videos[i],
+                                                background_music=background_musics[i],
+                                                watermark=watermark,
+                                                facts_subject=facts_subject
+                                                )
+                num_steps = shortEngine.get_total_steps()
+                def logger(prog_str):
+                    progress(progress_counter / (num_steps * numShorts),f"Making short {i+1}/{numShorts} - {prog_str}")
+                shortEngine.set_logger(logger)
+                
+                for step_num, step_info in shortEngine.makeShort():
+                    progress(progress_counter / (num_steps * numShorts), f"Making short {i+1}/{numShorts} - {step_info}")
+                    progress_counter += 1
 
-                useImages = gr.Checkbox(label="Use images", value=True)
-                numImages = gr.Radio([5, 10, 25],value=25, label="Number of images per short", visible=True, interactive=True)
-                useImages.change(lambda x: gr.update(visible=x), useImages, numImages)
+                video_path = shortEngine.get_video_output_path()
+                current_url = shortGptUI.share_url if shortGptUI.share else shortGptUI.local_url
+                file_url_path = f"{current_url}/file={video_path}"
+                file_name = video_path.split("/")[-1].split("\\")[-1]
+                embedHTML += f'''
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <video width="{250}" height="{500}" style="max-height: 100%;" controls>
+                        <source src="{file_url_path}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <a href="{file_url_path}" download="{file_name}" style="margin-top: 10px;">
+                        <button style="font-size: 1em; padding: 10px; border: none; cursor: pointer; color: white; background: #007bff;">Download Video</button>
+                    </a>
+                </div>'''
+                yield embedHTML + '</div>', gr.Button.update(visible=True), gr.update(visible=False)
 
-                addWatermark = gr.Checkbox(label="Add watermark")
-                watermark = gr.Textbox(label="Watermark (your channel name)", visible=False)
-                addWatermark.change(lambda x: gr.update(visible=x), [addWatermark], [watermark])
+        except Exception as e:
+            traceback_str = ''.join(traceback.format_tb(e.__traceback__))
+            print("Error", traceback_str)
+            yield embedHTML + '</div>', gr.Button.update(visible=True), gr.update(value=ERROR_TEMPLATE.format(error_message=e.args[0], stack_trace=traceback_str), visible=True)
+        
+        
+        
+        
+    with gr.Row(visible=False) as short_automation:
+        with gr.Column():
+            numShorts = gr.Number(label="Number of shorts", minimum=1, value=1)
+            short_type = gr.Radio(["Reddit Story shorts","Historical Facts shorts", "Scientific Facts shorts", "Custom Facts shorts"], label="Type of shorts generated", value="Custom Facts", interactive=True)
+            facts_subject = gr.Textbox(label="Write a subject for your facts (example: Football facts)",interactive=True, visible=False)
+            short_type.change(lambda x: gr.update(visible=x=="Custom Facts shorts"),[short_type],[facts_subject] )
+            language = gr.Radio(language_choices, label="Language", value="ENGLISH")
 
-                background_video_checkbox.render()
-                background_music_checkbox.render()
+            useImages = gr.Checkbox(label="Use images", value=True)
+            numImages = gr.Radio([5, 10, 25],value=25, label="Number of images per short", visible=True, interactive=True)
+            useImages.change(lambda x: gr.update(visible=x), useImages, numImages)
 
-                createButton = gr.Button(label="Create Shorts")
+            addWatermark = gr.Checkbox(label="Add watermark")
+            watermark = gr.Textbox(label="Watermark (your channel name)", visible=False)
+            addWatermark.change(lambda x: gr.update(visible=x), [addWatermark], [watermark])
 
-                generation_error = gr.HTML(visible=False)
-                video_folder = gr.Button("📁", visible=False)
-                output = gr.HTML()
+            background_video_checkbox.render()
+            background_music_checkbox.render()
 
-            video_folder.click(lambda _: os.startfile(os.path.abspath("videos/")))
+            createButton = gr.Button(label="Create Shorts")
 
-            createButton.click(inspect_create_inputs, inputs=[background_video_checkbox, background_music_checkbox, watermark,short_type, facts_subject], outputs=[]).success(create_short, inputs=[
-                numShorts,
-                short_type,
-                language,
-                numImages,
-                watermark,
-                background_video_checkbox,
-                background_music_checkbox,
-                facts_subject
-            ], outputs=[output, video_folder, generation_error])
-        return short_automation
+            generation_error = gr.HTML(visible=False)
+            video_folder = gr.Button("📁", visible=False)
+            output = gr.HTML()
+
+        video_folder.click(lambda _: os.startfile(os.path.abspath("videos/")))
+
+        createButton.click(inspect_create_inputs, inputs=[background_video_checkbox, background_music_checkbox, watermark,short_type, facts_subject], outputs=[]).success(create_short, inputs=[
+            numShorts,
+            short_type,
+            language,
+            numImages,
+            watermark,
+            background_video_checkbox,
+            background_music_checkbox,
+            facts_subject
+        ], outputs=[output, video_folder, generation_error])
+    return short_automation
+
+
+
 
 def inspect_create_inputs(
     background_video_list,
@@ -122,47 +185,3 @@ def create_short_engine(short_type, language, numImages,
                                             language=language)
     raise gr.Error(f"Short type does not have a valid short engine: {short_type}")
             
-def create_short(numShorts,
-        short_type,
-        language,
-        numImages,
-        watermark,
-        background_video_list,
-        background_music_list,
-        facts_subject,
-        progress=gr.Progress()):
-
-    numShorts = int(numShorts)
-    numImages = int(numImages) if numImages else None
-    background_videos = (background_video_list * ((numShorts // len(background_video_list)) + 1))[:numShorts]
-    background_musics = (background_music_list * ((numShorts // len(background_music_list)) + 1))[:numShorts]
-    language = Language(language.lower())
-    embedHTML = '<div style="display: flex;">'
-    progress_counter = 0
-    try:
-        for i in range(numShorts):
-            shortEngine = create_short_engine(short_type=short_type,
-                                              language=language,
-                                              numImages=numImages,
-                                            background_video=background_videos[i],
-                                            background_music=background_musics[i],
-                                            watermark=watermark,
-                                            facts_subject=facts_subject
-                                            )
-            num_steps = shortEngine.get_total_steps()
-            def logger(prog_str):
-                progress(progress_counter / (num_steps * numShorts),f"Making short {i+1}/{numShorts} - {prog_str}")
-            shortEngine.set_logger(logger)
-            
-            for step_num, step_info in shortEngine.makeShort():
-                progress(progress_counter / (num_steps * numShorts), f"Making short {i+1}/{numShorts} - {step_info}")
-                progress_counter += 1
-
-            video_path = shortEngine.get_video_output_path()
-            embedHTML+=f'<video width="{250}" height="{500}" style="max-height: 100%;" controls><source src="http://localhost:31415/file={video_path}" type="video/mp4">Your browser does not support the video tag.</video>'
-            yield embedHTML + '</div>', gr.Button.update(visible=True), gr.update(visible=False)
-
-    except Exception as e:
-        traceback_str = ''.join(traceback.format_tb(e.__traceback__))
-        print("Error", traceback_str)
-        yield embedHTML + '</div>', gr.Button.update(visible=True), gr.update(value=ERROR_TEMPLATE.format(error_message=e.args[0], stack_trace=traceback_str), visible=True)
