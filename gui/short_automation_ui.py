@@ -101,7 +101,7 @@ def create_short_automation_ui(shortGptUI: gr.Blocks):
             createButton = gr.Button(label="Create Shorts")
 
             generation_error = gr.HTML(visible=False)
-            video_folder = gr.Button("📁", visible=False)
+            video_folder = gr.Button("📁", visible=True)
             output = gr.HTML()
 
         video_folder.click(lambda _: start_file(os.path.abspath("videos/")))
