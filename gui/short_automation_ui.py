@@ -1,6 +1,6 @@
 import traceback
 import gradio as gr
-from gui.asset_components import background_video_checkbox, background_music_checkbox
+from gui.asset_components import background_video_checkbox, background_music_checkbox, start_file
 from shortGPT.config.api_db import get_api_key
 from shortGPT.engine.reddit_short_engine import RedditShortEngine, Language
 from shortGPT.engine.facts_short_engine import FactsShortEngine
@@ -57,7 +57,7 @@ def create_short_automation_ui(shortGptUI: gr.Blocks):
 
                 video_path = shortEngine.get_video_output_path()
                 current_url = shortGptUI.share_url if shortGptUI.share else shortGptUI.local_url
-                file_url_path = f"{current_url}/file={video_path}"
+                file_url_path = f"{current_url}file={video_path}"
                 file_name = video_path.split("/")[-1].split("\\")[-1]
                 embedHTML += f'''
                 <div style="display: flex; flex-direction: column; align-items: center;">
@@ -104,9 +104,9 @@ def create_short_automation_ui(shortGptUI: gr.Blocks):
             video_folder = gr.Button("📁", visible=False)
             output = gr.HTML()
 
-        video_folder.click(lambda _: os.startfile(os.path.abspath("videos/")))
+        video_folder.click(lambda _: start_file(os.path.abspath("videos/")))
 
-        createButton.click(inspect_create_inputs, inputs=[background_video_checkbox, background_music_checkbox, watermark,short_type, facts_subject], outputs=[]).success(create_short, inputs=[
+        createButton.click(inspect_create_inputs, inputs=[background_video_checkbox, background_music_checkbox, watermark,short_type, facts_subject], outputs=[generation_error]).success(create_short, inputs=[
             numShorts,
             short_type,
             language,
@@ -152,7 +152,7 @@ def inspect_create_inputs(
     eleven_labs_key = get_api_key("ELEVEN LABS")
     if not eleven_labs_key:
         raise gr.Error("ELEVEN LABS API key is missing. Please go to the config tab and enter the API key.")
-
+    return gr.update(visible=False)
 
 def update_progress(progress, progress_counter, num_steps, num_shorts, stop_event):
     start_time = time.time()

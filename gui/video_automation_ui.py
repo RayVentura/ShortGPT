@@ -1,6 +1,7 @@
 import os
 import traceback
 import gradio as gr
+from gui.asset_components import start_file
 from shortGPT.engine.content_video_engine import ContentVideoEngine, Language
 from shortGPT.config.api_db import get_api_key
 from shortGPT.gpt import gpt_chat_video
@@ -64,7 +65,6 @@ def create_video_automation_ui(shortGptUI: gr.Blocks):
 
             def respond(message, chat_history, progress=gr.Progress()):
                 global state, isVertical, language, script, videoVisible, video_html
-                print("SHORTGPTUI", shortGptUI.share_url if shortGptUI.share else shortGptUI.local_url)
                 error_html = ""
                 errorVisible = False
                 inputVisible= True
@@ -95,7 +95,7 @@ def create_video_automation_ui(shortGptUI: gr.Blocks):
                             video_path = makeVideo(script, language.value, isVertical, progress=progress)
                             file_name = video_path.split("/")[-1].split("\\")[-1]
                             current_url = shortGptUI.share_url if shortGptUI.share else shortGptUI.local_url
-                            file_url_path = f"{current_url}/file={video_path}"
+                            file_url_path = f"{current_url}file={video_path}"
                             video_html = f'''
                             <div style="display: flex; flex-direction: column; align-items: center;">
                                 <video width="{600}" height="{300}" style="max-height: 100%;" controls>
@@ -154,7 +154,7 @@ def create_video_automation_ui(shortGptUI: gr.Blocks):
                 msg = gr.Textbox()
                 restart_button = gr.Button("Restart")
                 video_folder = gr.Button("📁", visible=False)
-                video_folder.click(lambda _: os.startfile(os.path.abspath("videos/")))
+                video_folder.click(lambda _: start_file(os.path.abspath("videos/")))
                 respond = chatbot_conversation()
                 
             errorHTML = gr.HTML(visible=False)

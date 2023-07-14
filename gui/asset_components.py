@@ -17,3 +17,13 @@ def getBackgroundMusicChoices():
 
 background_video_checkbox = gr.CheckboxGroup(choices=getBackgroundVideoChoices(), interactive=True, label="Choose background video")
 background_music_checkbox = gr.CheckboxGroup(choices=getBackgroundMusicChoices(), interactive=True, label="Choose background music")
+
+import os, platform, subprocess
+
+def start_file(path):
+    if platform.system() == "Windows":
+        os.startfile(path)
+    elif platform.system() == "Darwin":
+        subprocess.Popen(["open", path])
+    else:
+        subprocess.Popen(["xdg-open", path])
