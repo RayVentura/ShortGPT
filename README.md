@@ -193,7 +193,7 @@ Keep up with the latest happenings, announcements, and insights about Short-GPT 
 We're eager to interact with you and listen to your feedback, concepts, and experiences with Short-GPT. Come on board on Twitter and let's navigate the future of AI as a team! 💡🤖
 
 <p align="center">
-  <a href="https://star-history.com/#ReyVentura/ShortGPT&Date">
+  <a href="https://star-history.com/#RayVentura/ShortGPT&Date">
     <img src="https://api.star-history.com/svg?repos=RayVentura/ShortGPT&type=Date" alt="Star History Chart">
   </a>
 </p>
