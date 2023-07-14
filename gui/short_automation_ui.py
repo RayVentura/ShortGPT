@@ -43,7 +43,6 @@ def create_short_automation_ui(shortGptUI: gr.Blocks):
         progress_counter = 0
         try:
             for i in range(numShorts):
-                raise gr.Error("Hey lol")
                 shortEngine = create_short_engine(short_type=short_type,
                                                     language=language,
                                                     numImages=numImages,
@@ -146,8 +145,8 @@ def inspect_create_inputs(
     if watermark != "":
         if not watermark.replace(" ", "").isalnum():
             raise gr.Error("Watermark should only contain letters and numbers.")
-        if len(watermark) > 15:
-            raise gr.Error("Watermark should not exceed 15 characters.")
+        if len(watermark) > 20:
+            raise gr.Error("Watermark should not exceed 20 characters.")
         if len(watermark) < 3:
             raise gr.Error("Watermark should be at least 3 characters long.")
     
