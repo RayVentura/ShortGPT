@@ -145,8 +145,8 @@ def inspect_create_inputs(
     if watermark != "":
         if not watermark.replace(" ", "").isalnum():
             raise gr.Error("Watermark should only contain letters and numbers.")
-        if len(watermark) > 20:
-            raise gr.Error("Watermark should not exceed 20 characters.")
+        if len(watermark) > 25:
+            raise gr.Error("Watermark should not exceed 25 characters.")
         if len(watermark) < 3:
             raise gr.Error("Watermark should be at least 3 characters long.")
     
