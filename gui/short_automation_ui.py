@@ -172,6 +172,7 @@ def create_short_engine(short_type, language, numImages,
         background_video,
         background_music,
         facts_subject):
+    watermark = watermark.upper() if watermark else None
     if short_type == "Reddit Story shorts":
         return RedditShortEngine(background_video_name=background_video,
                                             background_music_name=background_music,
