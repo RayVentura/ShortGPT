@@ -10,11 +10,16 @@ import gradio as gr
 import random
 import os
 import time
-ERROR_TEMPLATE = """<div style='text-align: center; background: #f2dede; color: #a94442; padding: 20px; border-radius: 5px; margin: 10px;'>
+ERROR_TEMPLATE = """
+<div style='text-align: center; background: #9fcbc3; color: #3f4039; 
+padding: 20px; border-radius: 5px; margin: 10px;'>
     <h2 style='margin: 0;'>ERROR : {error_message}</h2>
     <p style='margin: 10px 0;'>Traceback Info : {stack_trace}</p>
-    <p style='margin: 10px 0;'>If the problem persists, don't hesitate to contact our support. We're here to assist you.</p>
-    <a href='https://discord.gg/qn2WJaRH' target='_blank' style='background: #a94442; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; text-decoration: none;'>Get Help on Discord</a>
+    <p style='margin: 10px 0;'>If the problem persists, don't hesitate to 
+contact our support. We're here to assist you.</p>
+    <a href='https://discord.gg/qn2WJaRH' target='_blank' 
+style='background: #3f4039; color: #fff; border: none; padding: 10px 20px; 
+border-radius: 5px; cursor: pointer; text-decoration: none;'>Get Help on Discord</a>
 </div>"""
 
 
@@ -38,6 +43,7 @@ def create_short_automation_ui(shortGptUI: gr.Blocks):
         progress_counter = 0
         try:
             for i in range(numShorts):
+                raise gr.Error("Hey lol")
                 shortEngine = create_short_engine(short_type=short_type,
                                                     language=language,
                                                     numImages=numImages,
