@@ -39,7 +39,7 @@ ShortGPT is a powerful framework for automating content creation. It simplifies 
 
 https://github.com/RayVentura/ShortGPT/assets/121462835/a802faad-0fd7-4fcb-aa82-6365c27ea5fe
 
-## 🚀 Quick Start: Run ShortGPT on Google Colab
+## 🚀 Quick Start: Run ShortGPT on Google Colab (https://colab.research.google.com/drive/1_2UKdpF6lqxCqWaAcZb3rwMVQqtbisdE?usp=sharing)
 
 If you prefer not to install the prerequisites on your local system, you can use the Google Colab notebook. This option is free and requires no installation setup.
 
