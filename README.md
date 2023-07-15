@@ -14,7 +14,6 @@
     <img src="https://img.shields.io/badge/discord-join%20chat-blue.svg" alt="Join our Discord" height="34">
   </a>
 </div>
-![ShortGPT_diagram](https://github.com/RayVentura/ShortGPT/assets/121462835/4c3170f4-1484-4fdd-9bb8-cd2b8b7c99fe)
 
 ⚡ Automating video and short content creation with AI ⚡
 
@@ -33,9 +32,10 @@ ShortGPT is a powerful framework for automating content creation. It simplifies 
 
 - 🧠 **Memory and persistency**: Ensures long-term persistency of automated editing variables with TinyDB.
 
+## How it works
+https://github.com/RayVentura/ShortGPT/assets/121462835/841d3a78-a1d9-4909-b01a-f3126731f324
 
 ## Showcase (full video on https://www.youtube.com/watch?v=hpoSHq-ER8U )
-
 
 https://github.com/RayVentura/ShortGPT/assets/121462835/a802faad-0fd7-4fcb-aa82-6365c27ea5fe
 
