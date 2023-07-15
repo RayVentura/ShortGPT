@@ -33,7 +33,7 @@ ShortGPT is a powerful framework for automating content creation. It simplifies 
 - 🧠 **Memory and persistency**: Ensures long-term persistency of automated editing variables with TinyDB.
 
 ## How it works
-![alt text](https://github.com/RayVentura/ShortGPT/assets/121462835/841d3a78-a1d9-4909-b01a-f3126731f324)
+![alt text](https://github.com/RayVentura/ShortGPT/assets/121462835/648f6de2-c3f3-4b24-91bb-dcf5bfff0f6c)
 
 ## Showcase (full video on https://www.youtube.com/watch?v=hpoSHq-ER8U )
 
