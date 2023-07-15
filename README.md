@@ -14,6 +14,7 @@
     <img src="https://img.shields.io/badge/discord-join%20chat-blue.svg" alt="Join our Discord" height="34">
   </a>
 </div>
+![ShortGPT_diagram](https://github.com/RayVentura/ShortGPT/assets/121462835/4c3170f4-1484-4fdd-9bb8-cd2b8b7c99fe)
 
 ⚡ Automating video and short content creation with AI ⚡
 
