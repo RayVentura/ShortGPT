@@ -3,7 +3,7 @@
 !*.yaml
 !*.template
 *.pyc
-
+test.py
 public/*
 !public/white_reddit_template.png
 !public/subscribe-animation.mp4
@@ -19,4 +19,3 @@ flagged/
 ShortGPT.egg-info
 dist
 build
-test.py
