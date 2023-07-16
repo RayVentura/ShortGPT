@@ -15,11 +15,6 @@
   </a>
 </div>
 
-<p align="center">
-  <a href="https://star-history.com/#RayVentura/ShortGPT&Date">
-    <img src="https://api.star-history.com/svg?repos=RayVentura/ShortGPT&type=Date" alt="Star History Chart">
-  </a>
-</p>
 ⚡ Automating video and short content creation with AI ⚡
 
 ## 📝 Introduction to ShortGPT 
@@ -199,3 +194,8 @@ Keep up with the latest happenings, announcements, and insights about Short-GPT 
 - **Developer**: Stay updated [@RayVentura](https://twitter.com/RayVenturaHQ). Deep-dive into behind-the-scenes, project news, and related topics from the person behind ShortGPT.
 
 We're eager to interact with you and listen to your feedback, concepts, and experiences with Short-GPT. Come on board on Twitter and let's navigate the future of AI as a team! 💡🤖
+<p align="center">
+  <a href="https://star-history.com/#RayVentura/ShortGPT&Date">
+    <img src="https://api.star-history.com/svg?repos=RayVentura/ShortGPT&type=Date" alt="Star History Chart">
+  </a>
+</p>
