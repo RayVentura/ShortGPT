@@ -87,7 +87,7 @@ def create_short_automation_ui(shortGptUI: gr.Blocks):
     with gr.Row(visible=False) as short_automation:
         with gr.Column():
             numShorts = gr.Number(label="Number of shorts", minimum=1, value=1)
-            short_type = gr.Radio(["Reddit Story shorts","Historical Facts shorts", "Scientific Facts shorts", "Custom Facts shorts"], label="Type of shorts generated", value="Custom Facts", interactive=True)
+            short_type = gr.Radio(["Reddit Story shorts","Historical Facts shorts", "Scientific Facts shorts", "Custom Facts shorts"], label="Type of shorts generated", value="Scientific Facts shorts", interactive=True)
             facts_subject = gr.Textbox(label="Write a subject for your facts (example: Football facts)",interactive=True, visible=False)
             short_type.change(lambda x: gr.update(visible=x=="Custom Facts shorts"),[short_type],[facts_subject] )
             language = gr.Radio(language_choices, label="Language", value="ENGLISH")
