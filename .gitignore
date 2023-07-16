@@ -19,3 +19,4 @@ flagged/
 ShortGPT.egg-info
 dist
 build
+test.py

@@ -13,7 +13,7 @@ import time
 ERROR_TEMPLATE = """
 <div style='text-align: center; background: #9fcbc3; color: #3f4039; 
 padding: 20px; border-radius: 5px; margin: 10px;'>
-    <h2 style='margin: 0;'>ERROR : {error_message}</h2>
+    <h2 style='margin: 0;'>ERROR | {error_message}</h2>
     <p style='margin: 10px 0;'>Traceback Info : {stack_trace}</p>
     <p style='margin: 10px 0;'>If the problem persists, don't hesitate to 
 contact our support. We're here to assist you.</p>
@@ -78,8 +78,9 @@ def create_short_automation_ui(shortGptUI: gr.Blocks):
 
         except Exception as e:
             traceback_str = ''.join(traceback.format_tb(e.__traceback__))
+            error_name = type(e).__name__.capitalize()+ " : " +f"{e.args[0]}"
             print("Error", traceback_str)
-            yield embedHTML + '</div>', gr.Button.update(visible=True), gr.update(value=ERROR_TEMPLATE.format(error_message=e.args[0], stack_trace=traceback_str), visible=True)
+            yield embedHTML + '</div>', gr.Button.update(visible=True), gr.update(value=ERROR_TEMPLATE.format(error_message=error_name, stack_trace=traceback_str), visible=True)
         
         
         
