@@ -35,7 +35,7 @@ ShortGPT is a powerful framework for automating content creation. It simplifies 
 ## 🛠️ How it works
 ![alt text](https://github.com/RayVentura/ShortGPT/assets/121462835/fcee74d4-f856-4481-949f-244558bf3bfa)
 
-## 🎥 Showcase (FullVideo on https://www.youtube.com/watch?v=hpoSHq-ER8U)
+## 🎥 Showcase (full-video on https://www.youtube.com/watch?v=hpoSHq-ER8U)
 
 https://github.com/RayVentura/ShortGPT/assets/121462835/a802faad-0fd7-4fcb-aa82-6365c27ea5fe
 
