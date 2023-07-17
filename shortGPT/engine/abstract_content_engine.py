@@ -9,7 +9,7 @@ import os
 CONTENT_DB = ContentDatabase()
 
 class AbstractContentEngine(ABC):
-    def __init__(self, short_id: str, content_type:str, language: Language):
+    def __init__(self, short_id: str, content_type:str, language: Language, voiceName: str):
         if short_id:
             self.dataManager = CONTENT_DB.getContentDataManager(
                 short_id, content_type
@@ -20,7 +20,7 @@ class AbstractContentEngine(ABC):
         self.initializeMagickAndFFMPEG()
         self.prepareEditingPaths()
         self._db_language = language.value
-        self.voiceModule = ElevenLabsVoiceModule(get_api_key("ELEVEN LABS"))
+        self.voiceModule = ElevenLabsVoiceModule(get_api_key("ELEVEN LABS"), voiceName if voiceName else "Antoni")
         self.assetStore = AssetDatabase()
         self.stepDict = {}
         self.logger = lambda _: print(_)

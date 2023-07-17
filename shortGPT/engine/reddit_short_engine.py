@@ -8,9 +8,9 @@ import os
 class RedditShortEngine(ContentShortEngine):
     # Mapping of variable names to database paths
     def __init__(self, background_video_name: str, background_music_name: str,short_id="",
-                 num_images=None, watermark=None, language:Language = Language.ENGLISH):
+                 num_images=None, watermark=None, language:Language = Language.ENGLISH, voiceName="Antoni"):
         super().__init__(short_id=short_id, short_type="reddit_shorts", background_video_name=background_video_name, background_music_name=background_music_name,
-                 num_images=num_images, watermark=watermark, language=language)
+                 num_images=num_images, watermark=watermark, language=language, voiceName=voiceName)
     
     def __generateRandomStory(self):
         question = reddit_gpt.getInterestingRedditQuestion()
@@ -38,8 +38,6 @@ class RedditShortEngine(ContentShortEngine):
         self._db_script, _ = self.__getRealisticStory(max_tries=1)
         self._db_reddit_question = reddit_gpt.getQuestionFromThread(
             self._db_script)
-        self.logger("Choosing narration voice gender")
-        self._db_voice_gender = gpt_voice.getGenderFromText(self._db_script)
 
     def _prepareCustomAssets(self):
         """

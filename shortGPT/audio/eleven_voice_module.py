@@ -2,8 +2,9 @@ from shortGPT.api_utils.eleven_api import generateVoice, getCharactersFromKey
 from shortGPT.audio.voice_module import VoiceModule
 
 class ElevenLabsVoiceModule(VoiceModule):
-    def __init__(self, api_key):
+    def __init__(self, api_key, voiceName):
         self.api_key = api_key
+        self.voiceName = voiceName
         self.remaining_credits = None
         self.update_usage()
         if self.get_remaining_characters() < 1200:
@@ -17,9 +18,9 @@ class ElevenLabsVoiceModule(VoiceModule):
     def get_remaining_characters(self):
         return self.remaining_credits if self.remaining_credits else getCharactersFromKey(self.api_key)
 
-    def generate_voice(self, text, outputfile, character="Antoni"):
+    def generate_voice(self, text, outputfile):
         if self.get_remaining_characters() >= len(text):
-            file_path = generateVoice(text=text, character=character, fileName=outputfile, api_key=self.api_key)
+            file_path = generateVoice(text=text, character=self.voiceName, fileName=outputfile, api_key=self.api_key)
             self.update_usage()
             return file_path
         else:

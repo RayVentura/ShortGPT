@@ -14,8 +14,8 @@ import datetime
 class ContentVideoEngine(AbstractContentEngine):
 
     def __init__(self, script: str, background_music_name="",id="",
-     watermark=None,isVerticalFormat=False, language:Language = Language.ENGLISH):
-        super().__init__(id, "general_video", language)
+     watermark=None,isVerticalFormat=False, language:Language = Language.ENGLISH, voiceName=""):
+        super().__init__(id, "general_video", language, voiceName)
         if not id:
             if (watermark):
                 self._db_watermark = watermark
@@ -45,17 +45,12 @@ class ContentVideoEngine(AbstractContentEngine):
         if (self._db_temp_audio_path):
             return
         self.verifyParameters(text=self._db_script)
-        if not self._db_voice_character:
-            if (self._db_voice_gender == 'male'):
-                self._db_voice_character = "Antoni"
-            else:
-                self._db_voice_character = "Bella"
         script = self._db_script
         if (self._db_language != Language.ENGLISH.value):
             self._db_translated_script = gpt_translate.translateContent(script, self._db_language)
             script = self._db_translated_script
         self._db_temp_audio_path = self.voiceModule.generate_voice(
-            script, self.dynamicAssetDir + "temp_audio_path.wav", self._db_voice_character)
+            script, self.dynamicAssetDir + "temp_audio_path.wav")
 
     def _speedUpAudio(self):
         if (self._db_audio_path):

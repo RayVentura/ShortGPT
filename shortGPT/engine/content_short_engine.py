@@ -15,8 +15,8 @@ import datetime
 class ContentShortEngine(AbstractContentEngine):
 
     def __init__(self, short_type: str, background_video_name: str, background_music_name: str,short_id="",
-                 num_images=None, watermark=None, language:Language = Language.ENGLISH):
-        super().__init__(short_id, short_type, language)
+                 num_images=None, watermark=None, language:Language = Language.ENGLISH, voiceName=""):
+        super().__init__(short_id, short_type, language, voiceName)
         if not short_id:
             if (num_images):
                 self._db_num_images = num_images
@@ -51,17 +51,12 @@ class ContentShortEngine(AbstractContentEngine):
         if (self._db_temp_audio_path):
             return
         self.verifyParameters(text=self._db_script)
-        if not self._db_voice_character:
-            if (self._db_voice_gender == 'male'):
-                self._db_voice_character = "Antoni"
-            else:
-                self._db_voice_character = "Bella"
         script = self._db_script
         if (self._db_language != Language.ENGLISH.value):
             self._db_translated_script = gpt_translate.translateContent(script, self._db_language)
             script = self._db_translated_script
         self._db_temp_audio_path = self.voiceModule.generate_voice(
-            script, self.dynamicAssetDir + "temp_audio_path.wav", self._db_voice_character)
+            script, self.dynamicAssetDir + "temp_audio_path.wav")
 
     def _speedUpAudio(self):
         if (self._db_audio_path):

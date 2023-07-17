@@ -4,6 +4,7 @@ from gui.asset_components import background_video_checkbox, background_music_che
 from shortGPT.config.api_db import get_api_key
 from shortGPT.engine.reddit_short_engine import RedditShortEngine, Language
 from shortGPT.engine.facts_short_engine import FactsShortEngine
+from shortGPT.api_utils.eleven_api import getVoices
 import time
 language_choices = [lang.value.upper() for lang in Language]
 import gradio as gr
@@ -32,8 +33,9 @@ def create_short_automation_ui(shortGptUI: gr.Blocks):
             background_video_list,
             background_music_list,
             facts_subject,
+            voice,
             progress=gr.Progress()):
-        
+
         numShorts = int(numShorts)
         numImages = int(numImages) if numImages else None
         background_videos = (background_video_list * ((numShorts // len(background_video_list)) + 1))[:numShorts]
@@ -49,7 +51,8 @@ def create_short_automation_ui(shortGptUI: gr.Blocks):
                                                 background_video=background_videos[i],
                                                 background_music=background_musics[i],
                                                 watermark=watermark,
-                                                facts_subject=facts_subject
+                                                facts_subject=facts_subject,
+                                                voice=voice
                                                 )
                 num_steps = shortEngine.get_total_steps()
                 def logger(prog_str):
@@ -88,10 +91,10 @@ def create_short_automation_ui(shortGptUI: gr.Blocks):
         with gr.Column():
             numShorts = gr.Number(label="Number of shorts", minimum=1, value=1)
             short_type = gr.Radio(["Reddit Story shorts","Historical Facts shorts", "Scientific Facts shorts", "Custom Facts shorts"], label="Type of shorts generated", value="Custom Facts", interactive=True)
-            facts_subject = gr.Textbox(label="Write a subject for your facts (example: Football facts)",interactive=True, visible=False)
-            short_type.change(lambda x: gr.update(visible=x=="Custom Facts shorts"),[short_type],[facts_subject] )
+            facts_subject = gr.Textbox(label="Write a subject for your facts (example: Football facts)", interactive=True, visible=False)
+            short_type.change(lambda x: gr.update(visible=x=="Custom Facts shorts"), [short_type], [facts_subject] )
             language = gr.Radio(language_choices, label="Language", value="ENGLISH")
-
+            voice = gr.Radio(list(getVoices().keys()), label="Elevenlabs voice", value="Antoni", interactive=True)
             useImages = gr.Checkbox(label="Use images", value=True)
             numImages = gr.Radio([5, 10, 25],value=25, label="Number of images per short", visible=True, interactive=True)
             useImages.change(lambda x: gr.update(visible=x), useImages, numImages)
@@ -119,7 +122,8 @@ def create_short_automation_ui(shortGptUI: gr.Blocks):
             watermark,
             background_video_checkbox,
             background_music_checkbox,
-            facts_subject
+            facts_subject,
+            voice
         ], outputs=[output, video_folder, generation_error])
     return short_automation
 
@@ -171,13 +175,15 @@ def create_short_engine(short_type, language, numImages,
         watermark,
         background_video,
         background_music,
-        facts_subject):
+        facts_subject,
+        voice):
     if short_type == "Reddit Story shorts":
         return RedditShortEngine(background_video_name=background_video,
                                             background_music_name=background_music,
                                             num_images=numImages,
                                             watermark=watermark,
-                                            language=language)
+                                            language=language,
+                                            voiceName=voice)
     if "fact" in  short_type.lower():
         if "custom" in short_type.lower():
             facts_subject = facts_subject
@@ -187,6 +193,7 @@ def create_short_engine(short_type, language, numImages,
                                             background_music_name=background_music,
                                             num_images=50,
                                             watermark=watermark,
-                                            language=language)
+                                            language=language,
+                                            voiceName=voice)
     raise gr.Error(f"Short type does not have a valid short engine: {short_type}")
             
