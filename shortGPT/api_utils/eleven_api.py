@@ -2,9 +2,11 @@ import requests
 import json
 import random
 
-def getVoices():
+def getVoices(api_key=""):
     url = 'https://api.elevenlabs.io/v1/voices'
     headers = {'accept': 'application/json'}
+    if api_key:
+        headers['xi-api-key'] = api_key
     response = requests.get(url, headers=headers)
     voices = {}
     for a in response.json()['voices']:
@@ -24,10 +26,13 @@ def getCharactersFromKey(key):
         return sub['character_limit'] - sub['character_count']
     else:
         raise Exception(response.json()['detail']['message'])
+
+
+
 def generateVoice(text, character, fileName, stability=0.2, clarity=0.1, api_key=""):
     if not api_key:
         raise Exception("No api key")
-    charactersDict = getVoices()
+    charactersDict = getVoices(api_key)
     characters = list(charactersDict.keys())
     if character not in characters:
         print(character, 'is not in the array of characters: ', characters)

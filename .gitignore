@@ -3,7 +3,7 @@
 !*.yaml
 !*.template
 *.pyc
-
+test.py
 public/*
 !public/white_reddit_template.png
 !public/subscribe-animation.mp4

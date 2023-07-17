@@ -94,7 +94,7 @@ def create_video_automation_ui(shortGptUI: gr.Blocks):
                         try:
                             video_path = makeVideo(script, language.value, isVertical, progress=progress)
                             file_name = video_path.split("/")[-1].split("\\")[-1]
-                            current_url = shortGptUI.share_url if shortGptUI.share else shortGptUI.local_url
+                            current_url = shortGptUI.share_url+"/" if shortGptUI.share else shortGptUI.local_url
                             file_url_path = f"{current_url}file={video_path}"
                             video_html = f'''
                             <div style="display: flex; flex-direction: column; align-items: center;">
@@ -111,8 +111,9 @@ def create_video_automation_ui(shortGptUI: gr.Blocks):
                             bot_message = "Your video is completed !🎬. Scroll down below to open its file location."
                         except Exception as e:
                             traceback_str = ''.join(traceback.format_tb(e.__traceback__))
+                            error_name = type(e).__name__.capitalize()+ " : " +f"{e.args[0]}"
                             errorVisible = True
-                            error_html = ERROR_TEMPLATE.format(error_message=e.args[0], stack_trace=traceback_str)
+                            error_html = ERROR_TEMPLATE.format(error_message=error_name, stack_trace=traceback_str)
                             bot_message = "We encountered an error while making this video ❌"
                             print("Error", traceback_str)
                             yield gr.update(visible=False), gr.Chatbot.update(value=[[None,"Your video is being made now! 🎬"]]), gr.HTML.update(value="", visible=False), gr.HTML.update(value=ERROR_TEMPLATE.format(error_message=e.args[0], stack_trace=traceback_str), visible=errorVisible), gr.update(visible=folderVisible), gr.update(visible=True)
