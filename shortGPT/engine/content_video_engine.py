@@ -56,6 +56,9 @@ class ContentVideoEngine(AbstractContentEngine):
         if (self._db_audio_path):
             return
         self.verifyParameters(tempAudioPath=self._db_temp_audio_path)
+        #Since the video is not supposed to be a short( less than 60sec), there is no reason to speed it up
+        self._db_audio_path = self._db_temp_audio_path
+        return
         self._db_audio_path = audio_utils.speedUpAudio(
             self._db_temp_audio_path, self.dynamicAssetDir+"audio_voice.wav")
 
