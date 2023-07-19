@@ -52,7 +52,7 @@ def makeVideo(script, language, isVertical, progress):
 
 def create_video_automation_ui(shortGptUI: gr.Blocks):
         def reset_components():
-            return  gr.Chatbot.update(value=intialize_conv()), gr.update(visible=True), gr.HTML.update(value="", visible=False), gr.HTML.update(value="", visible=False)
+            return  gr.Chatbot.update(value=initialize_conv()), gr.update(visible=True), gr.HTML.update(value="", visible=False), gr.HTML.update(value="", visible=False)
 
         def chatbot_conversation():
             global state, isVertical, language, script
@@ -130,7 +130,7 @@ def create_video_automation_ui(shortGptUI: gr.Blocks):
 
             return respond
 
-        def intialize_conv():
+        def initialize_conv():
             global state, isVertical, language, script, video_html, videoVisible
             state = ChatState.ASK_ORIENTATION
             isVertical = None
@@ -151,7 +151,7 @@ def create_video_automation_ui(shortGptUI: gr.Blocks):
         
         with gr.Row(visible=False) as video_automation:
             with gr.Column():
-                chatbot = gr.Chatbot(intialize_conv, height=365)
+                chatbot = gr.Chatbot(initialize_conv, height=365)
                 msg = gr.Textbox()
                 restart_button = gr.Button("Restart")
                 video_folder = gr.Button("📁", visible=False)
