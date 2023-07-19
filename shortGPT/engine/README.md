@@ -1,118 +1,127 @@
-## AbstractContentEngine
+# **Module: engine**
 
-The `AbstractContentEngine` class is an abstract base class that provides a common interface for content engines. It contains methods and attributes that are shared among different types of content engines. 
+This module contains the main engine classes for generating different types of short videos. There are four main engine classes in this module:
 
-### Attributes
+- `AbstractContentEngine`: This is an abstract base class that provides the basic functionalities and attributes required by all content engines. It implements common methods for initializing the content engine, preparing editing paths, verifying parameters, and rendering the short video.
 
-- `dataManager`: An instance of `ContentDataManager` that manages the data for the content engine.
-- `id`: A string representing the ID of the content engine.
-- `voiceModule`: An instance of `ElevenLabsVoiceModule` that provides voice generation functionality.
-- `assetStore`: An instance of `AssetDatabase` that manages the assets used by the content engine.
-- `stepDict`: A dictionary that maps step numbers to step functions.
-- `logger`: A function that is called to log messages.
+- `ContentShortEngine`: This class extends `AbstractContentEngine` and is used for generating general content short videos. It implements specific methods for generating a script, generating temporary audio, speeding up the audio, timing captions, generating image search terms, generating image URLs, choosing background music and video, and preparing background and custom assets. It also overrides the `__generateScript` method to generate the script for the content short video.
 
-### Methods
+- `ContentVideoEngine`: This class extends `AbstractContentEngine` and is used for generating general content videos. It implements specific methods for generating temporary audio, speeding up the audio, timing captions, generating video search terms, generating video URLs, choosing background music, and preparing background and custom assets.
 
-- `__getattr__(self, name)`: Overrides the `__getattr__` method to retrieve data from the `dataManager`.
-- `__setattr__(self, name, value)`: Overrides the `__setattr__` method to save data to the `dataManager`.
-- `prepareEditingPaths(self)`: Creates the directory for storing editing assets.
-- `verifyParameters(*args, **kargs)`: Verifies that all the required parameters are not null.
-- `isShortDone(self)`: Returns a boolean indicating whether the short is done.
-- `makeShort(self)`: A generator function that executes the steps of the content engine and yields the current step and a progress message.
-- `get_video_output_path(self)`: Returns the path to the rendered video output.
-- `get_total_steps(self)`: Returns the total number of steps in the content engine.
-- `set_logger(self,logger)`: Sets the logger function.
-- `initializeMagickAndFFMPEG(self)`: Initializes the paths for FFmpeg and ImageMagick.
+- `FactsShortEngine`: This class extends `ContentShortEngine` and is used for generating facts short videos. It overrides the `_generateScript` method to generate the script for the facts short video.
 
-## ContentShortEngine
+- `RedditShortEngine`: This class extends `ContentShortEngine` and is used for generating reddit short videos. It overrides the `_generateScript` method to generate the script for the reddit short video and adds a custom step for preparing a reddit image.
 
-The `ContentShortEngine` class is a subclass of `AbstractContentEngine` that implements the functionality for creating short videos with a script. It contains methods for generating the script, generating temporary audio, speeding up the audio, timing captions, generating image search terms, generating image URLs, choosing background music and video, preparing background assets, preparing custom assets, editing and rendering the short video, and adding YouTube metadata.
+---
 
-### Attributes
+## **File: abstract_content_engine.py**
 
-- `temp_audio_path`: The path to the temporary audio file.
-- `audio_path`: The path to the audio file.
-- `timed_captions`: A list of tuples containing the timed captions.
-- `timed_image_searches`: A list of tuples containing the timed image search queries.
-- `timed_image_urls`: A list of tuples containing the timed image URLs.
-- `background_music_url`: The URL of the background music.
-- `background_video_url`: The URL of the background video.
-- `background_video_duration`: The duration of the background video.
-- `voiceover_duration`: The duration of the voiceover audio.
-- `background_trimmed`: The path to the trimmed background video file.
-- `yt_title`: The title of the YouTube video.
-- `yt_description`: The description of the YouTube video.
-- `ready_to_upload`: A boolean indicating whether the video is ready to be uploaded.
+This file contains the `AbstractContentEngine` class, which is an abstract base class for all content engines. It provides the basic functionalities and attributes required by all content engines.
 
-### Methods
+### **Class: AbstractContentEngine**
 
-- `_generateScript(self)`: Generates the script for the short video.
-- `_generateTempAudio(self)`: Generates the temporary audio file.
-- `_speedUpAudio(self)`: Speeds up the audio file.
-- `_timeCaptions(self)`: Times the captions.
-- `_generateImageSearchTerms(self)`: Generates the image search terms.
-- `_generateImageUrls(self)`: Generates the image URLs.
-- `_chooseBackgroundMusic(self)`: Chooses the background music.
-- `_chooseBackgroundVideo(self)`: Chooses the background video.
-- `_prepareBackgroundAssets(self)`: Prepares the background assets.
-- `_prepareCustomAssets(self)`: Prepares the custom assets.
-- `_editAndRenderShort(self)`: Edits and renders the short video.
-- `_addYoutubeMetadata(self)`: Adds YouTube metadata to the video.
+#### **Attributes:**
 
-## ContentVideoEngine
+- `CONTENT_DB`: An instance of the `ContentDatabase` class, which is used to store and retrieve content data.
 
-The `ContentVideoEngine` class is a subclass of `AbstractContentEngine` that implements the functionality for creating general videos with a script. It contains methods for generating the temporary audio, speeding up the audio, timing captions, generating video search terms, generating video URLs, choosing background music, preparing background assets, preparing custom assets, editing and rendering the video, and adding YouTube metadata.
+#### **Methods:**
 
-### Attributes
+- `__init__(self, short_id: str, content_type:str, language: Language, voiceName: str)`: Initializes an instance of the `AbstractContentEngine` class with the given parameters. It sets the `dataManager`, `id`, `_db_language`, `voiceModule`, `assetStore`, `stepDict`, and `logger` attributes.
 
-- `temp_audio_path`: The path to the temporary audio file.
-- `audio_path`: The path to the audio file.
-- `timed_captions`: A list of tuples containing the timed captions.
-- `timed_video_searches`: A list of tuples containing the timed video search queries.
-- `timed_video_urls`: A list of tuples containing the timed video URLs.
-- `background_music_url`: The URL of the background music.
-- `background_video_url`: The URL of the background video.
-- `background_video_duration`: The duration of the background video.
-- `voiceover_duration`: The duration of the voiceover audio.
-- `reddit_question`: The question from the Reddit post.
-- `reddit_thread_image`: The path to the Reddit thread image.
+- `__getattr__(self, name)`: Overrides the `__getattr__` method to retrieve attributes that start with '_db_' from the `dataManager`.
 
-### Methods
+- `__setattr__(self, name, value)`: Overrides the `__setattr__` method to save attributes that start with '_db_' to the `dataManager`.
 
-- `_generateTempAudio(self)`: Generates the temporary audio file.
-- `_speedUpAudio(self)`: Speeds up the audio file.
-- `_timeCaptions(self)`: Times the captions.
-- `_generateVideoSearchTerms(self)`: Generates the video search terms.
-- `_generateVideoUrls(self)`: Generates the video URLs.
-- `_chooseBackgroundMusic(self)`: Chooses the background music.
-- `_prepareBackgroundAssets(self)`: Prepares the background assets.
-- `_prepareCustomAssets(self)`: Prepares the custom assets.
-- `_editAndRenderShort(self)`: Edits and renders the video.
-- `_addMetadata(self)`: Adds metadata to the video.
+- `prepareEditingPaths(self)`: Creates the directory for storing dynamic assets if it doesn't already exist.
 
-## FactsShortEngine
+- `verifyParameters(*args, **kwargs)`: Verifies that all the required parameters are not null. If any parameter is null, it raises an exception.
 
-The `FactsShortEngine` class is a subclass of `ContentShortEngine` that specializes in creating short videos with facts. It contains a method for generating the script for the facts short video.
+- `isShortDone(self)`: Checks if the short video is done rendering by checking the value of the '_db_ready_to_upload' attribute.
 
-### Attributes
+- `makeShort(self)`: Generates the short video by executing the steps defined in the `stepDict`. It yields the current step number and a message indicating the progress.
 
-- `facts_type`: The type of facts.
+- `get_video_output_path(self)`: Returns the path of the rendered video.
 
-### Methods
+- `get_total_steps(self)`: Returns the total number of steps in the `stepDict`.
 
-- `_generateScript(self)`: Generates the script for the facts short video.
+- `set_logger(self, logger)`: Sets the logger function for logging the progress of the short video rendering.
 
-## RedditShortEngine
+- `initializeMagickAndFFMPEG(self)`: Initializes the paths for FFmpeg, FFProbe, and ImageMagick. If any of these programs are not found, it raises an exception.
 
-The `RedditShortEngine` class is a subclass of `ContentShortEngine` that specializes in creating short videos with Reddit posts. It contains methods for generating the script for the Reddit short video, generating a random story, getting a realistic story, and preparing custom assets.
+---
 
-### Attributes
+## **File: content_short_engine.py**
 
-None
+This file contains the `ContentShortEngine` class, which is used for generating general content short videos. It extends the `AbstractContentEngine` class and adds specific methods for generating a script, generating temporary audio, speeding up the audio, timing captions, generating image search terms, generating image URLs, choosing background music and video, and preparing background and custom assets.
 
-### Methods
+### **Class: ContentShortEngine**
 
-- `_generateScript(self)`: Generates the script for the Reddit short video.
-- `__generateRandomStory(self)`: Generates a random story.
-- `__getRealisticStory(self, max_tries=3)`: Gets a realistic story.
-- `_prepareCustomAssets(self)`: Prepares the custom assets for the Reddit short video.
+#### **Attributes:**
+
+- `stepDict`: A dictionary that maps step numbers to their corresponding methods for generating the short video.
+
+#### **Methods:**
+
+- `__init__(self, short_type: str, background_video_name: str, background_music_name: str, short_id="", num_images=None, watermark=None, language: Language = Language.ENGLISH, voiceName="")`: Initializes an instance of the `ContentShortEngine` class with the given parameters. It sets the `stepDict` attribute with the specific methods for generating the short video.
+
+- `__generateScript(self)`: Abstract method that generates the script for the content short video. This method needs to be implemented by the child classes.
+
+- `__prepareCustomAssets(self)`: Abstract method that prepares the custom assets for the content short video. This method needs to be implemented by the child classes.
+
+- `__editAndRenderShort(self)`: Abstract method that performs the editing and rendering of the content short video. This method needs to be implemented by the child classes.
+
+---
+
+## **File: content_video_engine.py**
+
+This file contains the `ContentVideoEngine` class, which is used for generating general content videos. It extends the `AbstractContentEngine` class and adds specific methods for generating temporary audio, speeding up the audio, timing captions, generating video search terms, generating video URLs, choosing background music, and preparing background and custom assets.
+
+### **Class: ContentVideoEngine**
+
+#### **Methods:**
+
+- `__generateTempAudio(self)`: Generates the temporary audio for the content video by using the `voiceModule` to generate a voice from the script.
+
+- `__speedUpAudio(self)`: Speeds up the temporary audio to match the duration of the background video.
+
+- `__timeCaptions(self)`: Converts the audio to text and then generates captions with time based on the text.
+
+- `__generateVideoSearchTerms(self)`: Generates the video search terms by using the timed captions.
+
+- `__generateVideoUrls(self)`: Generates the video URLs by using the video search terms and the `getBestVideo` function from the `pexels_api`.
+
+- `__chooseBackgroundMusic(self)`: Retrieves the background music URL from the `assetStore` based on the background music name.
+
+- `__prepareBackgroundAssets(self)`: Prepares the background assets for the content video by retrieving the voiceover audio duration, trimming the background video, and extracting a random clip from the background video.
+
+- `__prepareCustomAssets(self)`: Abstract method that prepares the custom assets for the content video. This method needs to be implemented by the child classes.
+
+- `__editAndRenderShort(self)`: Performs the editing and rendering of the content video by using the `videoEditor` and the editing steps defined in the `stepDict`.
+
+---
+
+## **File: facts_short_engine.py**
+
+This file contains the `FactsShortEngine` class, which is used for generating facts short videos. It extends the `ContentShortEngine` class and overrides the `_generateScript` method to generate the script for the facts short video.
+
+### **Class: FactsShortEngine**
+
+#### **Methods:**
+
+- `_generateScript(self)`: Generates the script for the facts short video by using the `generateFacts` function from the `facts_gpt` module.
+
+---
+
+## **File: reddit_short_engine.py**
+
+This file contains the `RedditShortEngine` class, which is used for generating reddit short videos. It extends the `ContentShortEngine` class and overrides the `_generateScript` method to generate the script for the reddit short video. It also adds a custom step for preparing a reddit image.
+
+### **Class: RedditShortEngine**
+
+#### **Methods:**
+
+- `_generateScript(self)`: Generates the script for the reddit short video by using the `getInterestingRedditQuestion` function from the `reddit_gpt` module.
+
+- `_prepareCustomAssets(self)`: Prepares the custom assets for the reddit short video by using the `ingestFlow` method from the `imageEditingEngine` to create a reddit image.
+
+- `_editAndRenderShort(self)`: Performs the editing and rendering of the reddit short video by using the `videoEditor` and the editing steps defined in the `stepDict`.

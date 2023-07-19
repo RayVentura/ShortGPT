@@ -1,234 +1,147 @@
-# ContentDataManager
+# Database Module Documentation
 
-The `ContentDataManager` class is responsible for managing content data in the database. It provides methods for saving, retrieving, and deleting content data.
+The `database` module provides classes for managing database documents and data in the ShortGPT application. The module consists of three files:
 
-## Constructor
+- `content_data_manager.py`: Defines the `ContentDataManager` class, which manages the content data for a document in the database.
+- `content_database.py`: Defines the `ContentDatabase` class, which provides methods for creating and accessing `ContentDataManager` instances.
+- `db_document.py`: Defines the `DatabaseDocument` abstract base class and the `TinyMongoDocument` class, which represents a document in a TinyMongo database.
 
-```python
-def __init__(self, db_doc: DatabaseDocument, content_type: str, new=False):
-```
+## File: content_data_manager.py
 
-- `db_doc`: An instance of `DatabaseDocument` representing the database document to manage.
-- `content_type`: A string representing the type of content.
-- `new`: A boolean indicating whether the content is new or not. Default is `False`.
+The `content_data_manager.py` file contains the `ContentDataManager` class, which is responsible for managing the content data for a document in the database.
 
-## Methods
+### Class: ContentDataManager
 
-### save(key, value)
+#### `__init__(self, db_doc: DatabaseDocument, content_type: str, new=False)`
 
-```python
-def save(self, key, value):
-```
+- Initializes a new instance of the `ContentDataManager` class.
+- Parameters:
+  - `db_doc`: The `DatabaseDocument` instance representing the document in the database.
+  - `content_type`: The type of content to be managed by the `ContentDataManager`.
+  - `new`: (Optional) A boolean flag indicating whether the document is new or existing. Default is `False`.
 
-Saves the given key-value pair in the database.
+#### `save(self, key, value)`
 
-- `key`: A string representing the key to save.
-- `value`: The value to save.
+- Saves the specified key-value pair to the document.
+- Parameters:
+  - `key`: The key of the data to be saved.
+  - `value`: The value of the data to be saved.
 
-### get(key)
+#### `get(self, key)`
 
-```python
-def get(self, key):
-```
+- Retrieves the value associated with the specified key from the document.
+- Parameters:
+  - `key`: The key of the data to be retrieved.
+- Returns:
+  - The value associated with the specified key.
 
-Retrieves the value associated with the given key from the database.
+#### `_getId(self)`
 
-- `key`: A string representing the key to retrieve.
+- Retrieves the ID of the document.
+- Returns:
+  - The ID of the document.
 
-### _getId()
+#### `delete(self)`
 
-```python
-def _getId(self):
-```
+- Deletes the document from the database.
 
-Returns the ID of the database document.
+#### `__str__(self)`
 
-### delete()
+- Returns a string representation of the document.
 
-```python
-def delete(self):
-```
+## File: content_database.py
 
-Deletes the database document.
+The `content_database.py` file contains the `ContentDatabase` class, which provides methods for creating and accessing `ContentDataManager` instances.
 
-### __str__()
+### Class: ContentDatabase
 
-```python
-def __str__(self):
-```
+#### `instanciateContentDataManager(self, id: str, content_type: str, new=False)`
 
-Returns a string representation of the database document.
+- Creates a new `ContentDataManager` instance for the specified document ID and content type.
+- Parameters:
+  - `id`: The ID of the document.
+  - `content_type`: The type of content to be managed by the `ContentDataManager`.
+  - `new`: (Optional) A boolean flag indicating whether the document is new or existing. Default is `False`.
+- Returns:
+  - A new `ContentDataManager` instance.
 
-# ContentDatabase
+#### `getContentDataManager(self, id, content_type: str)`
 
-The `ContentDatabase` class is responsible for managing content data in the database. It provides methods for creating and retrieving `ContentDataManager` instances.
+- Retrieves an existing `ContentDataManager` instance for the specified document ID and content type.
+- Parameters:
+  - `id`: The ID of the document.
+  - `content_type`: The type of content to be managed by the `ContentDataManager`.
+- Returns:
+  - The existing `ContentDataManager` instance, or `None` if not found.
 
-## Constructor
+#### `createContentDataManager(self, content_type: str) -> ContentDataManager`
 
-```python
-def __init__(self):
-```
+- Creates a new `ContentDataManager` instance for a new document with the specified content type.
+- Parameters:
+  - `content_type`: The type of content to be managed by the `ContentDataManager`.
+- Returns:
+  - A new `ContentDataManager` instance.
 
-## Methods
+## File: db_document.py
 
-### instanciateContentDataManager(id, content_type, new=False)
+The `db_document.py` file contains the `DatabaseDocument` abstract base class and the `TinyMongoDocument` class, which represents a document in a TinyMongo database.
 
-```python
-def instanciateContentDataManager(self, id: str, content_type: str, new=False):
-```
+### Abstract Class: DatabaseDocument
 
-Instantiates a `ContentDataManager` instance with the given ID and content type.
+- An abstract base class that defines the interface for a database document.
+- Subclasses must implement the abstract methods:
+  - `_save(self, key, data)`
+  - `_get(self, key)`
+  - `_getId(self)`
+  - `__str__(self)`
+  - `_delete(self)`
 
-- `id`: A string representing the ID of the database document.
-- `content_type`: A string representing the type of content.
-- `new`: A boolean indicating whether the content is new or not. Default is `False`.
+### Class: TinyMongoDocument
 
-### getContentDataManager(id, content_type)
+- Represents a document in a TinyMongo database.
+- Inherits from the `DatabaseDocument` abstract base class.
 
-```python
-def getContentDataManager(self, id, content_type: str):
-```
+#### `__init__(self, db_name: str, collection_name: str, document_id: str, create=False)`
 
-Retrieves a `ContentDataManager` instance with the given ID and content type.
+- Initializes a new instance of the `TinyMongoDocument` class.
+- Parameters:
+  - `db_name`: The name of the database.
+  - `collection_name`: The name of the collection.
+  - `document_id`: The ID of the document.
+  - `create`: (Optional) A boolean flag indicating whether to create the document if it doesn't exist. Default is `False`.
 
-- `id`: A string representing the ID of the database document.
-- `content_type`: A string representing the type of content.
+#### `exists(self)`
 
-### createContentDataManager(content_type) -> ContentDataManager
+- Checks if the document exists in the database.
+- Returns:
+  - `True` if the document exists, `False` otherwise.
 
-```python
-def createContentDataManager(self, content_type: str) -> ContentDataManager:
-```
+#### `_save(self, data)`
 
-Creates a new `ContentDataManager` instance with a new database document and the given content type.
+- Saves the specified data to the document.
+- Parameters:
+  - `data`: The data to be saved.
 
-- `content_type`: A string representing the type of content.
+#### `_get(self, key=None)`
 
-# DatabaseDocument
+- Retrieves the value associated with the specified key from the document.
+- Parameters:
+  - `key`: (Optional) The key of the data to be retrieved. If not specified, returns the entire document.
+- Returns:
+  - The value associated with the specified key, or the entire document if no key is specified.
 
-The `DatabaseDocument` class is an abstract base class that defines the interface for a database document.
+#### `_delete(self, key)`
 
-## Methods
+- Deletes the specified key from the document.
+- Parameters:
+  - `key`: The key to be deleted.
 
-### _save(key, data)
+#### `_getId(self)`
 
-```python
-@abstractmethod
-def _save(self, key, data):
-```
+- Retrieves the ID of the document.
+- Returns:
+  - The ID of the document.
 
-Abstract method for saving data in the database document.
+#### `__str__(self)`
 
-- `key`: A string representing the key to save.
-- `data`: The data to save.
-
-### _get(key)
-
-```python
-@abstractmethod
-def _get(self, key):
-```
-
-Abstract method for retrieving data from the database document.
-
-- `key`: A string representing the key to retrieve.
-
-### _getId()
-
-```python
-@abstractmethod
-def _getId(self):
-```
-
-Abstract method for getting the ID of the database document.
-
-### __str__()
-
-```python
-@abstractmethod
-def __str__(self):
-```
-
-Abstract method for getting a string representation of the database document.
-
-### _delete(key)
-
-```python
-@abstractmethod
-def _delete(self, key):
-```
-
-Abstract method for deleting data from the database document.
-
-- `key`: A string representing the key to delete.
-
-# TinyMongoDocument
-
-The `TinyMongoDocument` class is an implementation of the `DatabaseDocument` interface using the TinyMongo library.
-
-## Constructor
-
-```python
-def __init__(self, db_name: str, collection_name: str, document_id: str, create=False):
-```
-
-- `db_name`: A string representing the name of the database.
-- `collection_name`: A string representing the name of the collection.
-- `document_id`: A string representing the ID of the document.
-- `create`: A boolean indicating whether to create the document if it doesn't exist. Default is `False`.
-
-## Methods
-
-### exists()
-
-```python
-def exists(self):
-```
-
-Checks if the document exists in the database.
-
-### _save(data)
-
-```python
-def _save(self, data):
-```
-
-Saves the given data in the document.
-
-- `data`: A dictionary representing the data to save.
-
-### _get(key=None)
-
-```python
-def _get(self, key=None):
-```
-
-Retrieves the data associated with the given key from the document.
-
-- `key`: A string representing the key to retrieve. If not provided, returns the entire document.
-
-### _delete(key)
-
-```python
-def _delete(self, key):
-```
-
-Deletes the data associated with the given key from the document.
-
-- `key`: A string representing the key to delete.
-
-### _getId()
-
-```python
-def _getId(self):
-```
-
-Returns the ID of the document.
-
-### __str__()
-
-```python
-def __str__(self):
-```
-
-Returns a string representation of the document.
+- Returns a string representation of the document.

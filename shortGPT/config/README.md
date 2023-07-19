@@ -1,94 +1,204 @@
-# Configuration File API
+# Module: config
 
-The `config.py` file contains functions and variables related to the configuration of the application.
+The `config` module contains various files and functions related to configuration settings and utilities. 
 
-## Variables
+## File: config.py
 
-- `ELEVEN_LABS_KEY`: Stores the API key for Eleven Labs.
-- `OPENAI_KEY`: Stores the API key for OpenAI.
-- `PLAY_HT_USERID`: Stores the user ID for the Play HT API.
-- `PLAY_HT_API_KEY`: Stores the API key for the Play HT API.
+This file contains functions for reading and writing YAML files, as well as loading local assets specified in a YAML configuration file.
 
-## Functions
+### Functions:
 
-### `read_yaml_config(file_path: str) -> dict`
+#### `read_yaml_config(file_path: str) -> dict`
 
-Reads and returns the contents of a YAML file as a dictionary.
+This function reads and returns the contents of a YAML file as a dictionary.
 
-### `write_yaml_config(file_path: str, data: dict)`
+Parameters:
+- `file_path` - The path to the YAML file to be read.
 
-Writes a dictionary to a YAML file.
+Returns:
+- A dictionary containing the contents of the YAML file.
 
-### `load_editing_assets() -> dict`
+#### `write_yaml_config(file_path: str, data: dict)`
 
-Loads all local assets from the static-assets folder specified in the yaml_config and returns the updated yaml_config.
+This function writes a dictionary to a YAML file.
 
-# Asset Database API
+Parameters:
+- `file_path` - The path to the YAML file to be written.
+- `data` - The dictionary to be written to the YAML file.
 
-The `asset_db.py` file contains the `AssetDatabase` class, which provides methods for managing assets in the database.
+#### `load_editing_assets() -> dict`
 
-## Class
+This function loads all local assets from the static-assets folder specified in the yaml_config.
 
-### `AssetDatabase`
+Returns:
+- A dictionary containing the YAML configuration with updated local assets.
 
-#### Methods
+## File: asset_db.py
 
-- `asset_exists(name)`: Checks if an asset with the given name exists in the database.
-- `add_local_asset(name, type, path)`: Adds a local asset to the database.
-- `add_remote_asset(name, type, url)`: Adds a remote asset to the database.
-- `remove_asset(name)`: Removes an asset from the database.
-- `get_df()`: Returns a pandas DataFrame with specific asset details.
-- `sync_local_assets()`: Loads all local assets from the static-assets folder into the database.
-- `getAssetLink(key)`: Returns the link of an asset with the given key.
-- `getAssetDuration(key)`: Returns the duration of an asset with the given key.
-- `updateLocalAsset(key)`: Updates a local asset with the given key.
-- `updateYoutubeAsset(key)`: Updates a YouTube asset with the given key.
+This file contains a class `AssetDatabase` that provides methods for managing a database of assets.
 
-# API Database API
+### Class: AssetDatabase
 
-The `api_db.py` file contains functions for interacting with the API key database.
+This class represents a database of assets and provides methods for adding, removing, and retrieving assets.
 
-## Functions
+Methods:
 
-### `get_api_key(name)`
+#### `__init__()`
 
-Gets the API key with the given name from the database.
+This method initializes the `AssetDatabase` object. It creates the local and remote asset collections if they don't already exist.
 
-### `set_api_key(name, value)`
+#### `asset_exists(name)`
 
-Sets the API key with the given name to the given value in the database.
+This method checks if an asset with the given name exists in the database.
 
-# Languages Enum
+Parameters:
+- `name` - The name of the asset.
 
-The `languages.py` file contains the `Language` enum, which defines different languages supported by the application.
+Returns:
+- `True` if the asset exists, `False` otherwise.
 
-## Enum
+#### `add_local_asset(name, type, path)`
 
-### `Language`
+This method adds a local asset to the database.
 
-- `ENGLISH`: English language
-- `SPANISH`: Spanish language
-- `FRENCH`: French language
-- `ARABIC`: Arabic language
-- `GERMAN`: German language
-- `POLISH`: Polish language
-- `ITALIAN`: Italian language
-- `PORTUGUESE`: Portuguese language
+Parameters:
+- `name` - The name of the asset.
+- `type` - The type of the asset.
+- `path` - The path to the asset file.
 
-# Path Utilities
+#### `add_remote_asset(name, type, url)`
 
-The `path_utils.py` file contains utility functions for working with file paths.
+This method adds a remote asset to the database.
 
-## Functions
+Parameters:
+- `name` - The name of the asset.
+- `type` - The type of the asset.
+- `url` - The URL of the remote asset.
 
-### `search_program(program_name)`
+#### `remove_asset(name)`
 
-Searches for the specified program in the system's PATH and returns its path if found.
+This method removes an asset from the database.
 
-### `get_program_path(program_name)`
+Parameters:
+- `name` - The name of the asset.
 
-Gets the path of the specified program.
+#### `get_df()`
 
-### `magick_path`
+This method returns a pandas DataFrame with specific asset details.
 
-Stores the path of the ImageMagick program if it is installed on the system.
+Returns:
+- A pandas DataFrame containing the asset details.
+
+#### `sync_local_assets()`
+
+This method loads all local assets from the static-assets folder into the database.
+
+#### `getAssetLink(key)`
+
+This method returns the link or path of an asset with the given key.
+
+Parameters:
+- `key` - The key of the asset.
+
+Returns:
+- The link or path of the asset.
+
+#### `getAssetDuration(key)`
+
+This method returns the duration of an asset with the given key.
+
+Parameters:
+- `key` - The key of the asset.
+
+Returns:
+- The duration of the asset.
+
+#### `updateLocalAsset(key: str)`
+
+This method updates the local asset with the given key.
+
+Parameters:
+- `key` - The key of the asset.
+
+Returns:
+- The file path and duration of the updated asset.
+
+#### `updateYoutubeAsset(key: str)`
+
+This method updates the YouTube asset with the given key.
+
+Parameters:
+- `key` - The key of the asset.
+
+Returns:
+- The remote URL and duration of the updated asset.
+
+## File: api_db.py
+
+This file contains functions for managing API keys.
+
+### Functions:
+
+#### `get_api_key(name)`
+
+This function retrieves the API key with the given name.
+
+Parameters:
+- `name` - The name of the API key.
+
+Returns:
+- The API key.
+
+#### `set_api_key(name, value)`
+
+This function sets the API key with the given name to the specified value.
+
+Parameters:
+- `name` - The name of the API key.
+- `value` - The value of the API key.
+
+## File: languages.py
+
+This file contains an enumeration class `Language` that represents different languages.
+
+### Enum: Language
+
+This enumeration class represents different languages and provides a list of supported languages.
+
+Supported Languages:
+- ENGLISH
+- SPANISH
+- FRENCH
+- ARABIC
+- GERMAN
+- POLISH
+- ITALIAN
+- PORTUGUESE
+
+## File: path_utils.py
+
+This file contains utility functions for searching for program paths.
+
+### Functions:
+
+#### `search_program(program_name)`
+
+This function searches for the specified program and returns its path.
+
+Parameters:
+- `program_name` - The name of the program to search for.
+
+Returns:
+- The path of the program, or None if the program is not found.
+
+#### `get_program_path(program_name)`
+
+This function retrieves the path of the specified program.
+
+Parameters:
+- `program_name` - The name of the program.
+
+Returns:
+- The path of the program, or None if the program is not found.
+
+Note: The `magick_path` variable sets the `IMAGEMAGICK_BINARY` environment variable to the path of the `magick` program if it exists.

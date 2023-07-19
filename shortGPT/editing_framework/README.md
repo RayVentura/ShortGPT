@@ -1,170 +1,182 @@
-# Rendering Logger
+# Editing Framework Module Documentation
 
-The `rendering_logger.py` file contains the `MoviepyProgressLogger` class, which is a logger implementation for tracking the progress of rendering videos using the `proglog` library. This logger is specifically designed to work with the `Moviepy` library.
+The `editing_framework` module provides a set of classes and functions for editing videos and images. This module is part of the `shortGPT` project and is designed to be used with the `CoreEditingEngine` class to generate videos and images based on a specified editing schema.
 
-## Class: MoviepyProgressLogger
+## Module Files
 
-### Methods
+The `editing_framework` module consists of three files:
 
-#### `__init__(self, callBackFunction = None)`
+1. `rendering_logger.py`: This file contains the `MoviepyProgressLogger` class, which is used for logging the progress of the rendering process.
+2. `editing_engine.py`: This file contains the `EditingStep` and `Flow` enums, as well as the `EditingEngine` class, which is the main class for managing the editing process.
+3. `core_editing_engine.py`: This file contains the `CoreEditingEngine` class, which is responsible for generating videos and images based on the editing schema.
 
-- Initializes an instance of the `MoviepyProgressLogger` class.
+## `rendering_logger.py`
+
+This file defines the `MoviepyProgressLogger` class, which is a subclass of `ProgressBarLogger` from the `proglog` module. It provides a callback function for logging the progress of the rendering process. The `MoviepyProgressLogger` class has the following methods:
+
+### `__init__(self, callBackFunction=None)`
+
+- Initializes a new instance of the `MoviepyProgressLogger` class.
 - Parameters:
-  - `callBackFunction` (optional): A callback function that will be called every time the logger progress is updated. The callback function should accept a single parameter, which is a string representing the progress status.
+  - `callBackFunction`: An optional callback function that will be called with the progress string.
 
-#### `bars_callback(self, bar, attr, value, old_value=None)`
+### `bars_callback(self, bar, attr, value, old_value=None)`
 
 - This method is called every time the logger progress is updated.
+- It calculates the rendering progress and the estimated time left.
+- It calls the callback function with the progress string or prints the progress string if no callback function is provided.
 - Parameters:
-  - `bar`: The name of the progress bar being updated.
-  - `attr`: The attribute being updated (e.g., "value").
-  - `value`: The new value of the attribute.
-  - `old_value`: The previous value of the attribute (optional).
-- This method calculates the percentage of progress, elapsed time, and estimated time left for rendering. It then formats a progress string and either calls the callback function (if provided) or prints the progress string to the console.
+  - `bar`: The progress bar name.
+  - `attr`: The progress attribute name.
+  - `value`: The current progress value.
+  - `old_value`: The previous progress value.
 
-#### `format_time(self, seconds)`
+### `format_time(self, seconds)`
 
-- Helper method to format time in minutes and seconds.
+- Formats the given time in seconds to the format "mm:ss".
 - Parameters:
   - `seconds`: The time in seconds.
-- Returns a formatted string in the format "{minutes}m {seconds}s".
+- Returns:
+  - The formatted time string.
 
----
+## `editing_engine.py`
 
-# Editing Engine
+This file defines the `EditingStep` and `Flow` enums, as well as the `EditingEngine` class, which is responsible for managing the editing process. The `EditingEngine` class has the following methods:
 
-The `editing_engine.py` file contains the `EditingEngine` class, which is responsible for managing the editing steps and rendering of videos.
+### `__init__(self)`
 
-## Class: EditingEngine
+- Initializes a new instance of the `EditingEngine` class.
+- It initializes the editing step tracker and the editing schema.
 
-### Methods
+### `addEditingStep(self, editingStep: EditingStep, args: Dict[str, any] = {})`
 
-#### `__init__(self)`
-
-- Initializes an instance of the `EditingEngine` class.
-- This method initializes the editing step tracker and the editing schema.
-
-#### `addEditingStep(self, editingStep: EditingStep, args: Dict[str, any] = {})`
-
-- Adds an editing step to the editing schema.
+- Adds an editing step to the editing schema with the specified arguments.
 - Parameters:
-  - `editingStep`: The editing step to add, specified as a value from the `EditingStep` enum.
-  - `args` (optional): Additional arguments required for the editing step (if any).
+  - `editingStep`: The editing step to add.
+  - `args`: The arguments for the editing step.
+- Raises:
+  - `Exception`: If a required argument is missing.
 
-#### `ingestFlow(self, flow: Flow, args)`
+### `ingestFlow(self, flow: Flow, args)`
 
-- Ingests a flow into the editing schema.
+- Ingests a flow into the editing schema with the specified arguments.
 - Parameters:
-  - `flow`: The flow to ingest, specified as a value from the `Flow` enum.
-  - `args`: Additional arguments required for the flow.
+  - `flow`: The flow to ingest.
+  - `args`: The arguments for the flow.
+- Raises:
+  - `Exception`: If a required argument is missing.
 
-#### `dumpEditingSchema(self)`
+### `dumpEditingSchema(self)`
 
-- Dumps the current editing schema.
-- Returns the editing schema as a dictionary.
+- Returns the current editing schema.
 
-#### `renderVideo(self, outputPath, logger=None)`
+### `renderVideo(self, outputPath, logger=None)`
 
-- Renders a video based on the current editing schema and saves it to the specified output path.
+- Renders the video based on the editing schema and saves it to the specified output path.
 - Parameters:
-  - `outputPath`: The output path for the rendered video.
-  - `logger` (optional): A callback function to track the rendering progress.
+  - `outputPath`: The path to save the rendered video.
+  - `logger`: An optional logger object for logging the rendering progress.
 
-#### `renderImage(self, outputPath)`
+### `renderImage(self, outputPath)`
 
-- Renders an image based on the current editing schema and saves it to the specified output path.
+- Renders the image based on the editing schema and saves it to the specified output path.
 - Parameters:
-  - `outputPath`: The output path for the rendered image.
+  - `outputPath`: The path to save the rendered image.
 
----
+## `core_editing_engine.py`
 
-# Core Editing Engine
+This file defines the `CoreEditingEngine` class, which is responsible for generating videos and images based on the editing schema. The `CoreEditingEngine` class has the following methods:
 
-The `core_editing_engine.py` file contains the `CoreEditingEngine` class, which is responsible for generating videos and images based on the editing schema.
-
-## Class: CoreEditingEngine
-
-### Methods
-
-#### `generate_image(self, schema:Dict[str, Any], output_file)`
+### `generate_image(self, schema:Dict[str, Any], output_file)`
 
 - Generates an image based on the editing schema and saves it to the specified output file.
 - Parameters:
-  - `schema`: The editing schema as a dictionary.
-  - `output_file`: The output file path for the generated image.
-- Returns the output file path.
+  - `schema`: The editing schema.
+  - `output_file`: The path to save the generated image.
+- Returns:
+  - The path to the saved image.
 
-#### `generate_video(self, schema:Dict[str, Any], output_file, logger=None)`
+### `generate_video(self, schema:Dict[str, Any], output_file, logger=None)`
 
 - Generates a video based on the editing schema and saves it to the specified output file.
 - Parameters:
-  - `schema`: The editing schema as a dictionary.
-  - `output_file`: The output file path for the generated video.
-  - `logger` (optional): A callback function to track the rendering progress.
-- Returns the output file path.
+  - `schema`: The editing schema.
+  - `output_file`: The path to save the generated video.
+  - `logger`: An optional logger object for logging the rendering progress.
+- Returns:
+  - The path to the saved video.
 
-#### `process_common_actions(self, clip: Union[VideoFileClip, ImageClip, TextClip, AudioFileClip], actions: List[Dict[str, Any]])`
+### `process_common_actions(self, clip: Union[VideoFileClip, ImageClip, TextClip, AudioFileClip], actions: List[Dict[str, Any]])`
 
-- Process common actions for a clip (e.g., setting start and end time).
+- Processes common actions for the given clip.
 - Parameters:
-  - `clip`: The clip to apply the actions to.
-  - `actions`: A list of action dictionaries.
-- Returns the modified clip.
+  - `clip`: The clip to process.
+  - `actions`: The list of actions to apply to the clip.
+- Returns:
+  - The processed clip.
 
-#### `process_common_visual_actions(self, clip: Union[VideoFileClip, ImageClip, TextClip], actions: List[Dict[str, Any]])`
+### `process_common_visual_actions(self, clip: Union[VideoFileClip, ImageClip, TextClip], actions: List[Dict[str, Any]])`
 
-- Process common visual clip actions (e.g., resizing, cropping, setting position).
+- Processes common visual clip actions for the given clip.
 - Parameters:
-  - `clip`: The visual clip to apply the actions to.
-  - `actions`: A list of action dictionaries.
-- Returns the modified clip.
+  - `clip`: The clip to process.
+  - `actions`: The list of actions to apply to the clip.
+- Returns:
+  - The processed clip.
 
-#### `process_audio_actions(self, clip: AudioFileClip, actions: List[Dict[str, Any]])`
+### `process_audio_actions(self, clip: AudioFileClip, actions: List[Dict[str, Any]])`
 
-- Process audio actions (e.g., normalizing, looping, adjusting volume).
+- Processes audio actions for the given audio clip.
 - Parameters:
-  - `clip`: The audio clip to apply the actions to.
-  - `actions`: A list of action dictionaries.
-- Returns the modified clip.
+  - `clip`: The audio clip to process.
+  - `actions`: The list of actions to apply to the audio clip.
+- Returns:
+  - The processed audio clip.
 
-#### `process_video_asset(self, asset: Dict[str, Any])`
+### `process_video_asset(self, asset: Dict[str, Any])`
 
-- Process a video asset from the editing schema.
+- Processes a video asset based on the asset parameters and actions.
 - Parameters:
-  - `asset`: The video asset dictionary.
-- Returns the processed video clip.
+  - `asset`: The video asset to process.
+- Returns:
+  - The processed video clip.
 
-#### `process_image_asset(self, asset: Dict[str, Any])`
+### `process_image_asset(self, asset: Dict[str, Any])`
 
-- Process an image asset from the editing schema.
+- Processes an image asset based on the asset parameters and actions.
 - Parameters:
-  - `asset`: The image asset dictionary.
-- Returns the processed image clip.
+  - `asset`: The image asset to process.
+- Returns:
+  - The processed image clip.
 
-#### `process_text_asset(self, asset: Dict[str, Any])`
+### `process_text_asset(self, asset: Dict[str, Any])`
 
-- Process a text asset from the editing schema.
+- Processes a text asset based on the asset parameters and actions.
 - Parameters:
-  - `asset`: The text asset dictionary.
-- Returns the processed text clip.
+  - `asset`: The text asset to process.
+- Returns:
+  - The processed text clip.
 
-#### `process_audio_asset(self, asset: Dict[str, Any])`
+### `process_audio_asset(self, asset: Dict[str, Any])`
 
-- Process an audio asset from the editing schema.
+- Processes an audio asset based on the asset parameters and actions.
 - Parameters:
-  - `asset`: The audio asset dictionary.
-- Returns the processed audio clip.
+  - `asset`: The audio asset to process.
+- Returns:
+  - The processed audio clip.
 
-#### `__normalize_image(self, clip)`
+### `__normalize_image(self, clip)`
 
-- Helper method to normalize image frames.
+- Normalizes the image clip.
 - Parameters:
-  - `clip`: The clip to normalize.
-- Returns the normalized clip.
+  - `clip`: The image clip to normalize.
+- Returns:
+  - The normalized image clip.
 
-#### `__normalize_frame(self, frame)`
+### `__normalize_frame(self, frame)`
 
-- Helper method to normalize a single image frame.
+- Normalizes the given frame.
 - Parameters:
-  - `frame`: The image frame to normalize.
-- Returns the normalized image frame.
+  - `frame`: The frame to normalize.
+- Returns:
+  - The normalized frame.

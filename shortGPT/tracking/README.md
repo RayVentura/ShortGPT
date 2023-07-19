@@ -1,41 +1,56 @@
-# API Tracking Documentation
+# Module: Tracking
 
-This documentation provides an overview of the `APITracker` class and its methods in the `api_tracking.py` file.
+## Goal
+The `tracking` module is responsible for tracking and analyzing the usage and cost of various APIs used in the project. It includes two files: `api_tracking.py` and `cost_analytics.py`.
 
-## Class: APITracker
+## File: api_tracking.py
 
-The `APITracker` class is responsible for tracking and recording API usages in an application. It provides two wrapper methods for tracking API calls to OpenAI and Eleven APIs. The class also has methods for setting the data manager and initializing API tracking.
+### Class: APITracker
+This class is responsible for tracking the usage of APIs and saving the data to a content manager.
 
-### Method: `__init__(self)`
+#### Method: `__init__()`
+- Initializes the APITracker object.
+- Calls the `initiateAPITracking()` method.
 
-This method is the constructor of the `APITracker` class. It initializes the API tracking by calling the `initiateAPITracking` method.
+#### Method: `setDataManager(contentManager: ContentDataManager)`
+- Sets the content manager for storing the API usage data.
+- Raises an exception if the content manager is null.
 
-### Method: `setDataManager(self, contentManager : ContentDataManager)`
+#### Method: `openAIWrapper(gptFunc)`
+- Wrapper function for OpenAI API calls.
+- Saves the API usage data to the content manager.
+- Returns the result of the API call.
 
-This method sets the data manager for the APITracker. The `contentManager` parameter is an instance of the `ContentDataManager` class. If the `contentManager` parameter is null, an exception is raised.
+#### Method: `elevenWrapper(audioFunc)`
+- Wrapper function for Eleven API calls.
+- Saves the API usage data to the content manager.
+- Returns the result of the API call.
 
-### Method: `openAIWrapper(self, gptFunc)`
+#### Method: `wrap_turbo()`
+- Wraps the `gpt3Turbo_completion` function from the `gpt_utils` module using the `openAIWrapper` method.
+- Replaces the original function with the wrapped function.
 
-This method is a wrapper function for tracking API calls to the OpenAI API. It takes a function (`gptFunc`) as a parameter and returns a wrapped function. The wrapped function tracks the API call by saving the number of tokens used to the data manager.
+#### Method: `wrap_eleven()`
+- Wraps the `generateVoice` function from the `audio_generation` module using the `elevenWrapper` method.
+- Replaces the original function with the wrapped function.
 
-### Method: `elevenWrapper(self, audioFunc)`
+#### Method: `initiateAPITracking()`
+- Initiates the tracking of APIs by wrapping the necessary functions using the `wrap_turbo` and `wrap_eleven` methods.
 
-This method is a wrapper function for tracking API calls to the Eleven API. It takes a function (`audioFunc`) as a parameter and returns a wrapped function. The wrapped function tracks the API call by saving the length of the input text to the data manager.
-
-### Method: `wrap_turbo(self)`
-
-This method wraps the `gpt3Turbo_completion` function from the `gpt_utils` module with the `openAIWrapper` method. It dynamically imports the `gpt_utils` module and replaces the original function with the wrapped function.
-
-### Method: `wrap_eleven(self)`
-
-This method wraps the `generateVoice` function from the `audio_generation` module with the `elevenWrapper` method. It dynamically imports the `audio_generation` module and replaces the original function with the wrapped function.
-
-### Method: `initiateAPITracking(self)`
-
-This method initiates the API tracking by calling the `wrap_turbo` and `wrap_eleven` methods.
 
 ## File: cost_analytics.py
 
-The `cost_analytics.py` file provides an example usage of the `APITracker` class. It calculates and prints the average and price of API usages for both OpenAI and Eleven APIs.
+### Function: calculateCostAnalytics()
+This function calculates the average usage and cost of OpenAI and Eleven APIs based on the data stored in the content database.
 
-Please note that the code in this file is incomplete and requires additional implementation to obtain the data for the `all` variable.
+- Initializes the content database.
+- Retrieves the API usage data from the database.
+- Calculates the average usage and cost for OpenAI and Eleven APIs.
+- Prints the results.
+
+### Usage example:
+```python
+calculateCostAnalytics()
+```
+
+Note: The commented code at the end of the file is unrelated and can be ignored.

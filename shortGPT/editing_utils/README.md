@@ -1,151 +1,55 @@
-# Editing Images
+# Module: editing_utils
 
-This module provides functions for editing images, such as searching for image URLs based on a query and extracting the URLs of the top matching images.
+The `editing_utils` module provides utility functions for editing videos and images. It consists of three files: `editing_images.py`, `captions.py`, and `handle_videos.py`.
 
-## Functions
+## File: editing_images.py
 
-### `getImageUrlsTimed(imageTextPairs)`
+This file contains functions related to editing images.
 
-This function takes a list of image-text pairs and returns a list of tuples, where each tuple contains the text and the URL of an image that matches the corresponding text. The function uses the `searchImageUrlsFromQuery` function to search for image URLs for each text.
+### Function: getImageUrlsTimed(imageTextPairs)
 
-**Parameters:**
+This function takes a list of image-text pairs and returns a list of tuples containing the image URL and the corresponding text. It uses the `searchImageUrlsFromQuery` function to search for image URLs based on the provided text.
 
-- `imageTextPairs` (list): A list of tuples, where each tuple contains a text and an image query.
+### Function: searchImageUrlsFromQuery(query, top=3, expected_dim=[720,720], retries=5)
 
-**Returns:**
+This function searches for image URLs based on a given query. It uses the `getBingImages` function from the `shortGPT.api_utils.image_api` module to fetch the images. The `top` parameter specifies the number of images to fetch (default is 3), and the `expected_dim` parameter specifies the expected dimensions of the images (default is [720,720]). If no images are found, the function returns None. Otherwise, it selects the images with the closest dimensions to the expected dimensions and returns the URL of the first image.
 
-- `result` (list): A list of tuples, where each tuple contains the text and the URL of an image that matches the corresponding text.
+## File: captions.py
 
+This file contains functions related to handling captions.
 
-### `searchImageUrlsFromQuery(query, top=3, expected_dim=[720,720], retries=5)`
+### Function: interpolateTimeFromDict(word_position, d)
 
-This function searches for image URLs based on a query. It retrieves the top matching images from the Bing Image Search API and selects the image with the closest dimensions to the expected dimensions.
+This function interpolates the time based on the word position in a dictionary. The dictionary contains word positions as keys and corresponding timestamps as values. Given a word position, the function returns the interpolated timestamp.
 
-**Parameters:**
+### Function: cleanWord(word)
 
-- `query` (str): The query to search for images.
-- `top` (int): The number of top matching images to retrieve. Default is 3.
-- `expected_dim` (list): The expected dimensions of the images. Default is [720, 720].
-- `retries` (int): The number of times to retry the API call in case of failure. Default is 5.
+This function cleans a word by removing any non-alphanumeric characters.
 
-**Returns:**
+### Function: getTimestampMapping(whisper_analysis)
 
-- `image_url` (str): The URL of the image that matches the query.
+This function extracts the mapping of word positions to timestamps from a Whisper analysis. The `whisper_analysis` parameter is a dictionary containing the analysis results. The function returns a dictionary with word positions as keys and corresponding timestamps as values.
 
+### Function: splitWordsBySize(words, maxCaptionSize)
 
-# File: captions.py
+This function splits a list of words into captions based on a maximum caption size. The `maxCaptionSize` parameter specifies the maximum number of characters allowed in a caption (default is 15). The function returns a list of captions.
 
-This module provides functions for handling captions of videos, such as splitting captions into smaller chunks and mapping the timestamps of words in the captions.
+### Function: getCaptionsWithTime(whisper_analysis, maxCaptionSize=15)
 
-## Functions
+This function generates captions with their corresponding timestamps from a Whisper analysis. The `whisper_analysis` parameter is a dictionary containing the analysis results. The `maxCaptionSize` parameter specifies the maximum number of characters allowed in a caption (default is 15). The function uses the `getTimestampMapping` function to get the word position to timestamp mapping and the `splitWordsBySize` function to split the words into captions. It returns a list of caption-time pairs.
 
-### `interpolateTimeFromDict(word_position, d)`
+## File: handle_videos.py
 
-This function interpolates the timestamp of a word in the captions based on its position in the text. It takes a dictionary (`d`) that maps word positions to timestamps and returns the timestamp corresponding to the given word position.
+This file contains functions related to handling videos.
 
-**Parameters:**
+### Function: getYoutubeAudio(url)
 
-- `word_position` (int): The position of the word in the captions.
-- `d` (dict): The dictionary that maps word positions to timestamps.
+This function retrieves the audio URL and duration from a YouTube video. The `url` parameter specifies the URL of the YouTube video. The function uses the `yt_dlp` library to extract the audio information. It returns the audio URL and duration as a tuple. If the retrieval fails, it returns None.
 
-**Returns:**
+### Function: getYoutubeVideoLink(url)
 
-- `value` (float): The interpolated timestamp of the word.
+This function retrieves the video URL and duration from a YouTube video. The `url` parameter specifies the URL of the YouTube video. The function uses the `yt_dlp` library to extract the video information. It returns the video URL and duration as a tuple. If the retrieval fails, it returns None.
 
-### `cleanWord(word)`
+### Function: extract_random_clip_from_video(video_url, video_duration, clip_duration, output_file)
 
-This function removes any non-alphanumeric characters from a word and returns the cleaned word.
-
-**Parameters:**
-
-- `word` (str): The word to be cleaned.
-
-**Returns:**
-
-- `cleaned_word` (str): The cleaned word.
-
-### `getTimestampMapping(whisper_analysis)`
-
-This function generates a dictionary that maps word positions in the captions to their corresponding timestamps. It takes a `whisper_analysis` object as input, which contains the analyzed captions, and returns the dictionary.
-
-**Parameters:**
-
-- `whisper_analysis` (dict): The whisper analysis object that contains the captions.
-
-**Returns:**
-
-- `locationToTimestamp` (dict): A dictionary that maps word positions to timestamps.
-
-### `splitWordsBySize(words, maxCaptionSize)`
-
-This function splits a list of words into smaller captions based on a maximum caption size. It takes a list of `words` and a `maxCaptionSize` as input and returns a list of split captions.
-
-**Parameters:**
-
-- `words` (list): A list of words.
-- `maxCaptionSize` (int): The maximum size of each split caption.
-
-**Returns:**
-
-- `captions` (list): A list of split captions.
-
-### `getCaptionsWithTime(whisper_analysis, maxCaptionSize=15)`
-
-This function generates captions with their corresponding timestamps. It takes a `whisper_analysis` object as input, which contains the analyzed captions, and returns a list of caption-timestamp pairs.
-
-**Parameters:**
-
-- `whisper_analysis` (dict): The whisper analysis object that contains the captions.
-- `maxCaptionSize` (int): The maximum size of each caption. Default is 15.
-
-**Returns:**
-
-- `CaptionsPairs` (list): A list of caption-timestamp pairs.
-
-
-# File: handle_videos.py
-
-This module provides functions for handling videos, such as extracting audio and video clips from YouTube videos.
-
-## Functions
-
-### `getYoutubeAudio(url)`
-
-This function extracts the audio from a YouTube video and returns the URL of the audio file and its duration.
-
-**Parameters:**
-
-- `url` (str): The URL of the YouTube video.
-
-**Returns:**
-
-- `audio_url` (str): The URL of the audio file.
-- `duration` (int): The duration of the audio file in seconds.
-
-### `getYoutubeVideoLink(url)`
-
-This function extracts the video link from a YouTube video and returns the URL of the video and its duration.
-
-**Parameters:**
-
-- `url` (str): The URL of the YouTube video.
-
-**Returns:**
-
-- `video_url` (str): The URL of the video.
-- `duration` (int): The duration of the video in seconds.
-
-### `extract_random_clip_from_video(video_url, video_duration, clip_duration, output_file)`
-
-This function extracts a random clip from a video and saves it to the specified output file. It takes the URL of the video, the duration of the video, the duration of the clip, and the output file path as input.
-
-**Parameters:**
-
-- `video_url` (str): The URL of the video.
-- `video_duration` (int): The duration of the video in seconds.
-- `clip_duration` (int): The duration of the clip in seconds.
-- `output_file` (str): The output file path for the extracted clip.
-
-**Returns:**
-
-- `output_file` (str): The path of the extracted clip.
+This function extracts a random clip from a video and saves it to an output file. The `video_url` parameter specifies the URL of the video, the `video_duration` parameter specifies the duration of the video, the `clip_duration` parameter specifies the duration of the desired clip, and the `output_file` parameter specifies the file path for the extracted clip. The function uses the `ffmpeg` library to perform the extraction. It randomly selects a start time within 15% to 85% of the video duration and extracts a clip of the specified duration starting from the selected start time. If the extraction fails or the output file is not created, an exception is raised.

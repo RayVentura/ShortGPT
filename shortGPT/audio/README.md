@@ -1,149 +1,76 @@
-# audio_utils.py
+# Audio Module
 
-This file contains utility functions for working with audio files.
+The audio module provides a set of functions and classes for working with audio files and performing various operations on them. 
 
-## Functions
+## audio_utils.py
+
+This file contains utility functions for audio processing.
 
 ### downloadYoutubeAudio(url, outputFile)
-Downloads the audio from a YouTube video given its URL and saves it to the specified output file path.
-
-Parameters:
-- `url` (str): The URL of the YouTube video.
-- `outputFile` (str): The file path to save the downloaded audio.
-
-Returns:
-- `outputFile` (str): The path of the downloaded audio file.
-- `dictMeta['duration']` (float): The duration of the downloaded audio in seconds.
+Downloads audio from a YouTube video given its URL and saves it to the specified output file. Returns the path to the downloaded audio file and its duration.
 
 ### speedUpAudio(tempAudioPath, outputFile, expected_chars_per_sec=CONST_CHARS_PER_SEC)
-Speeds up the audio file to make it under 60 seconds, if necessary. If the duration of the audio is already less than 57 seconds, no changes are made.
-
-Parameters:
-- `tempAudioPath` (str): The file path of the input audio.
-- `outputFile` (str): The file path to save the sped up audio.
-- `expected_chars_per_sec` (float): The expected number of characters per second of speech in the audio. Default is `CONST_CHARS_PER_SEC`.
-
-Returns:
-- `outputFile` (str): The path of the sped up audio file, if successful. Otherwise, an empty string.
+Speeds up the audio to make it under 60 seconds. If the duration of the audio is greater than 57 seconds, it will be sped up to fit within the time limit. Otherwise, the audio will be left unchanged. Returns the path to the sped up audio file.
 
 ### ChunkForAudio(alltext, chunk_size=2500)
-Splits a long text into smaller chunks based on a specified character limit.
+Splits a text into chunks of a specified size (default is 2500 characters) to be used for audio generation. Returns a list of text chunks.
 
-Parameters:
-- `alltext` (str): The input text to be split into chunks.
-- `chunk_size` (int): The maximum character limit for each chunk. Default is 2500.
-
-Returns:
-- `chunks` (list): A list of chunks, where each chunk is a string.
-
-### audioToText(filename)
-Transcribes the audio file to text using the Whisper ASR model.
-
-Parameters:
-- `filename` (str): The file path of the input audio.
-
-Returns:
-- `gen` (generator): A generator object that yields the transcriptions.
+### audioToText(filename, model_size="tiny")
+Converts an audio file to text using a pre-trained model. Returns a generator object that yields the transcribed text and its corresponding timestamps.
 
 ### getWordsPerSec(filename)
-Calculates the average number of words per second in the audio file.
-
-Parameters:
-- `filename` (str): The file path of the input audio.
-
-Returns:
-- `len(a['text'].split()) / a['segments'][-1]['end']` (float): The average number of words per second.
+Calculates the average number of words per second in an audio file. Returns the words per second value.
 
 ### getCharactersPerSec(filename)
-Calculates the average number of characters per second in the audio file.
+Calculates the average number of characters per second in an audio file. Returns the characters per second value.
 
-Parameters:
-- `filename` (str): The file path of the input audio.
-
-Returns:
-- `len(a['text']) / a['segments'][-1]['end']` (float): The average number of characters per second.
-
-# audio_duration.py
+## audio_duration.py
 
 This file contains functions for getting the duration of audio files.
 
-## Functions
-
 ### get_duration_yt_dlp(url)
-Gets the duration of a video or audio file using the yt-dlp library.
-
-Parameters:
-- `url` (str): The URL of the video or audio file.
-
-Returns:
-- `dictMeta['duration']` (float): The duration of the video or audio file in seconds.
-- "" (str): An empty string if successful, otherwise an error message.
+Gets the duration of a YouTube video or audio using the yt_dlp library. Returns the duration in seconds.
 
 ### get_duration_ffprobe(signed_url)
-Gets the duration of a video or audio file using the ffprobe command line tool.
-
-Parameters:
-- `signed_url` (str): The signed URL of the video or audio file.
-
-Returns:
-- `duration` (float): The duration of the video or audio file in seconds.
-- "" (str): An empty string if successful, otherwise an error message.
+Gets the duration of an audio or video file using the ffprobe command line tool. Returns the duration in seconds.
 
 ### getAssetDuration(url, isVideo=True)
-Gets the duration of a video or audio file from various sources.
-
-Parameters:
-- `url` (str): The URL or file path of the video or audio file.
-- `isVideo` (bool): Indicates whether the asset is a video. Default is `True`.
-
-Returns:
-- `url` (str): The URL or file path of the video or audio file.
-- `duration` (float): The duration of the video or audio file in seconds.
+Gets the duration of an audio or video asset from various sources, including YouTube and cloud storage providers. Returns the URL of the asset and its duration in seconds.
 
 ### getYoutubeAudioLink(url)
-Gets the audio link of a YouTube video.
-
-Parameters:
-- `url` (str): The URL of the YouTube video.
-
-Returns:
-- `dictMeta['url']` (str): The audio link of the YouTube video.
-- `dictMeta['duration']` (float): The duration of the YouTube video.
+Gets the audio link of a YouTube video given its URL. Returns the audio URL and its duration in seconds.
 
 ### getYoutubeVideoLink(url)
-Gets the video link of a YouTube video.
+Gets the video link of a YouTube video given its URL. Returns the video URL and its duration in seconds.
 
-Parameters:
-- `url` (str): The URL of the YouTube video.
+## voice_module.py
 
-Returns:
-- `dictMeta['url']` (str): The video link of the YouTube video.
-- `dictMeta['duration']` (float): The duration of the YouTube video.
+This file contains an abstract base class for voice modules.
 
-# voice_module.py
+### VoiceModule
+An abstract base class that defines the interface for voice modules. Voice modules are responsible for generating voice recordings from text.
 
-This file defines an abstract base class for voice modules.
+#### update_usage()
+Updates the usage statistics of the voice module.
 
-## Class
+#### get_remaining_characters()
+Gets the number of remaining characters that can be generated using the voice module.
 
-### VoiceModule(ABC)
-An abstract base class for voice modules.
+#### generate_voice(text, outputfile)
+Generates a voice recording from the specified text and saves it to the specified output file.
 
-Methods:
-- `update_usage()`: Updates the usage information of the voice module.
-- `get_remaining_characters()`: Gets the remaining characters available for voice generation.
-- `generate_voice(text, outputfile)`: Generates voice for the specified text and saves it to the output file.
+## eleven_voice_module.py
 
-# eleven_voice_module.py
+This file contains a voice module implementation for the ElevenLabs API.
 
-This file contains a voice module implementation for Eleven Labs API.
+### ElevenLabsVoiceModule
+A voice module implementation for the ElevenLabs API. Requires an API key and a voice name to be initialized.
 
-## Class
+#### update_usage()
+Updates the usage statistics of the ElevenLabs API.
 
-### ElevenLabsVoiceModule(VoiceModule)
-A voice module implementation for Eleven Labs API.
+#### get_remaining_characters()
+Gets the number of remaining characters that can be generated using the ElevenLabs API.
 
-Methods:
-- `update_usage()`: Updates the usage information of the Eleven Labs API key.
-- `get_remaining_characters()`: Gets the remaining characters available for voice generation using the Eleven Labs API key.
-- `generate_voice(text, outputfile)`: Generates voice for the specified text using the Eleven Labs API and saves it to the output file.
+#### generate_voice(text, outputfile)
+Generates a voice recording from the specified text using the ElevenLabs API and saves it to the specified output file. Raises an exception if the API key does not have enough credits to generate the text.
