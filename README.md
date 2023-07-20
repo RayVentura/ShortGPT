@@ -19,8 +19,10 @@
 ⚡ Automating video and short content creation with AI ⚡
 </div>
 
-## 🛠️ How it works
-![alt text](https://github.com/RayVentura/ShortGPT/assets/121462835/fcee74d4-f856-4481-949f-244558bf3bfa)
+## 🎥 Showcase (full-video on https://www.youtube.com/watch?v=hpoSHq-ER8U)
+
+https://github.com/RayVentura/ShortGPT/assets/121462835/a802faad-0fd7-4fcb-aa82-6365c27ea5fe
+
 ## 📝 Introduction to ShortGPT 
 ShortGPT is a powerful framework for automating content creation. It simplifies video creation, footage sourcing, voiceover synthesis, and editing tasks.
 
@@ -36,9 +38,8 @@ ShortGPT is a powerful framework for automating content creation. It simplifies 
 
 - 🧠 **Memory and persistency**: Ensures long-term persistency of automated editing variables with TinyDB.
 
-## 🎥 Showcase (full-video on https://www.youtube.com/watch?v=hpoSHq-ER8U)
-
-https://github.com/RayVentura/ShortGPT/assets/121462835/a802faad-0fd7-4fcb-aa82-6365c27ea5fe
+## 🛠️ How it works
+![alt text](https://github.com/RayVentura/ShortGPT/assets/121462835/fcee74d4-f856-4481-949f-244558bf3bfa)
 
 ## 🚀 Quick Start: Run ShortGPT on Google Colab (https://colab.research.google.com/drive/1_2UKdpF6lqxCqWaAcZb3rwMVQqtbisdE?usp=sharing)
 
