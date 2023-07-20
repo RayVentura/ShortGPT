@@ -15,7 +15,9 @@
   </a>
 </div>
 
+<div align="center">
 ⚡ Automating video and short content creation with AI ⚡
+</div>
 
 ## 🛠️ How it works
 ![alt text](https://github.com/RayVentura/ShortGPT/assets/121462835/fcee74d4-f856-4481-949f-244558bf3bfa)
