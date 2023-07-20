@@ -19,7 +19,7 @@
 ⚡ Automating video and short content creation with AI ⚡
 </div>
 
-## 🎥 Showcase (full-video on https://www.youtube.com/watch?v=hpoSHq-ER8U)
+## 🎥 Showcase ([Full video on YouTube](https://youtu.be/hpoSHq-ER8U))
 
 https://github.com/RayVentura/ShortGPT/assets/121462835/a802faad-0fd7-4fcb-aa82-6365c27ea5fe
 
