@@ -126,7 +126,7 @@ Follow the instructions below to install ImageMagick, FFmpeg, and clone the shor
 ### Step 4: Install Python Dependencies
 
 1. Open a terminal or command prompt.
-2. Navigate to the directory where `shortgpt.py` is located (the cloned repo).
+2. Navigate to the directory where `runShortGPT.py` is located (the cloned repo).
 3. Execute the following command to install the required Python dependencies:
    ```
    pip install -r requirements.txt
@@ -136,7 +136,7 @@ Follow the instructions below to install ImageMagick, FFmpeg, and clone the shor
 
 ## Running runShortGPT.py Web Interface
 
-Once you have successfully installed ImageMagick, FFmpeg, and the Python dependencies, you can run `shortgpt.py` by following these steps:
+Once you have successfully installed ImageMagick, FFmpeg, and the Python dependencies, you can run `runShortGPT.py` by following these steps:
 
 1. Open a terminal or command prompt.
 2. Navigate to the directory where `runShortGPT.py` is located (the cloned repo).
