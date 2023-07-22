@@ -2,6 +2,7 @@ import gradio as gr
 from gui.config_ui import create_config_ui
 from gui.asset_library_ui import create_asset_library_ui
 from gui.content_automation_ui import create_content_automation
+from gui.video_translation_ui import create_video_translation_ui
 max_choices = 20
 ui_asset_dataframe = gr.Dataframe(interactive=False)
 LOGO_PATH = "http://localhost:31415/file=public/logo.png"

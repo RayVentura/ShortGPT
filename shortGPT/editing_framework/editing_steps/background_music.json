@@ -7,7 +7,7 @@
 		"type": "audio",
 		"z": -1,
 		"parameters": {
-			"url": "editing_test/music.wav"
+			"url": null
 		},
 		"actions": [
 			{

@@ -1,6 +1,8 @@
 
 import gradio as gr
 
+from gui.video_translation_ui import create_video_translation_ui
+
 ERROR_TEMPLATE = """<div style='text-align: center; background: #f2dede; color: #a94442; padding: 20px; border-radius: 5px; margin: 10px;'>
     <h2 style='margin: 0;'>ERROR : {error_message}</h2>
     <p style='margin: 10px 0;'>Traceback Info : {stack_trace}</p>
@@ -15,8 +17,11 @@ def create_content_automation(shortGPTUI: gr.Blocks):
     with gr.Tab("Content Automation") as content_automation_ui:
         gr.Markdown("# 🏆 Content Automation 🚀")
         gr.Markdown("## Choose your desired automation task.")
-        choice = gr.Radio([ '🎬 Automate the creation of shorts', '🎞️ Automate a video with stock assets'], label="Choose an option")
+        choice = gr.Radio([ '🎬 Automate the creation of shorts', '🎞️ Automate a video with stock assets', '📹 Automate video translation'], label="Choose an option")
         video_automation_ui = create_video_automation_ui(shortGPTUI)
         short_automation_ui = create_short_automation_ui(shortGPTUI)
-        choice.change(lambda x: (gr.update(visible= x == choice.choices[1]), gr.update(visible= x == choice.choices[0])), [choice], [video_automation_ui, short_automation_ui])
+        video_translation_ui = create_video_translation_ui(shortGPTUI)
+        choice.change(lambda x: (gr.update(visible= x == choice.choices[1]), gr.update(visible= x == choice.choices[0]), gr.update(visible= x == choice.choices[2])), [choice], [video_automation_ui, short_automation_ui, video_translation_ui])
     return content_automation_ui
+
+        # video_translation_ui = create_video_translation_ui(shortGPTUI)

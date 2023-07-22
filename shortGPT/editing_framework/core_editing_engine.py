@@ -81,11 +81,32 @@ class CoreEditingEngine:
             video.audio = audio
         if logger:
             my_logger = MoviepyProgressLogger(callBackFunction=logger)
-            video.write_videofile(output_file, logger=my_logger)
+            video.write_videofile(output_file, codec='libx264', audio_codec='aac', logger=my_logger)
         else:
-            video.write_videofile(output_file)
+            video.write_videofile(output_file, codec='libx264', audio_codec='aac')
         return output_file
     
+    def generate_audio(self, schema:Dict[str, Any], output_file, logger=None) -> None:
+        audio_assets = dict(sorted(schema['audio_assets'].items(), key=lambda item: item[1]['z']))
+        audio_clips = []
+
+        for asset_key in audio_assets:
+            asset = audio_assets[asset_key]
+            asset_type = asset['type']
+            if asset_type == "audio":
+                audio_clip = self.process_audio_asset(asset)
+            else:
+                raise ValueError(f"Invalid asset type: {asset_type}")
+
+            audio_clips.append(audio_clip)
+        audio = CompositeAudioClip(audio_clips)
+        audio.fps = 44100
+        if logger:
+            my_logger = MoviepyProgressLogger(callBackFunction=logger)
+            audio.write_audiofile(output_file, logger=my_logger)
+        else:
+            audio.write_audiofile(output_file)
+        return output_file
     # Process common actions
     def process_common_actions(self,
                                    clip: Union[VideoFileClip, ImageClip, TextClip, AudioFileClip],
@@ -97,6 +118,10 @@ class CoreEditingEngine:
    
             if action['type'] == 'set_time_end':
                 clip = clip.set_end(action['param'])
+                continue
+            
+            if action['type'] == 'subclip':
+                clip = clip.subclip(**action['param'])
                 continue
 
         return clip
@@ -118,10 +143,6 @@ class CoreEditingEngine:
 
             if action['type'] == 'screen_position':
                 clip = clip.set_position(**action['param'])
-                continue
-
-            if action['type'] == 'subclip':
-                clip = clip.subclip(**action['param'])
                 continue
 
             if action['type'] == 'green_screen':

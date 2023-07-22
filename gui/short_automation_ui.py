@@ -1,10 +1,9 @@
 import traceback
 import gradio as gr
-from gui.asset_components import background_video_checkbox, background_music_checkbox, start_file
+from gui.asset_components import background_video_checkbox, background_music_checkbox, voiceChoice, start_file
 from shortGPT.config.api_db import get_api_key
 from shortGPT.engine.reddit_short_engine import RedditShortEngine, Language
 from shortGPT.engine.facts_short_engine import FactsShortEngine
-from shortGPT.api_utils.eleven_api import getVoices
 import time
 language_choices = [lang.value.upper() for lang in Language]
 import gradio as gr
@@ -23,13 +22,6 @@ contact our support. We're here to assist you.</p>
 style='background: #3f4039; color: #fff; border: none; padding: 10px 20px; 
 border-radius: 5px; cursor: pointer; text-decoration: none;'>Get Help on Discord</a>
 </div>"""
-
-def getElevenlabsVoices():
-    api_key = get_api_key("ELEVEN LABS")
-    voices = list(reversed(getVoices(api_key).keys()))
-    return voices
-
-voiceChoice = gr.Radio(getElevenlabsVoices(), label="Elevenlabs voice", value="Antoni", interactive=True)
 
 def create_short_automation_ui(shortGptUI: gr.Blocks):
     def create_short(numShorts,
@@ -66,7 +58,7 @@ def create_short_automation_ui(shortGptUI: gr.Blocks):
                     progress(progress_counter / (num_steps * numShorts),f"Making short {i+1}/{numShorts} - {prog_str}")
                 shortEngine.set_logger(logger)
                 
-                for step_num, step_info in shortEngine.makeShort():
+                for step_num, step_info in shortEngine.makeContent():
                     progress(progress_counter / (num_steps * numShorts), f"Making short {i+1}/{numShorts} - {step_info}")
                     progress_counter += 1
 

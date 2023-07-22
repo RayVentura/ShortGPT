@@ -1,0 +1,19 @@
+{
+	"background_voiceover": {
+		"inputs": {
+			"parameters": ["url"],
+            "actions": ["volume_percentage"]
+		},
+		"type": "audio",
+		"z": -1,
+		"parameters": {
+			"url": null
+		},
+		"actions": [
+			{
+				"type": "volume_percentage",
+				"param": null
+			}
+		]
+	}
+}

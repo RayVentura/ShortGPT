@@ -2,12 +2,12 @@ from shortGPT.api_utils.eleven_api import generateVoice, getCharactersFromKey
 from shortGPT.audio.voice_module import VoiceModule
 
 class ElevenLabsVoiceModule(VoiceModule):
-    def __init__(self, api_key, voiceName):
+    def __init__(self, api_key, voiceName, checkElevenCredits):
         self.api_key = api_key
         self.voiceName = voiceName
         self.remaining_credits = None
         self.update_usage()
-        if self.get_remaining_characters() < 1200:
+        if checkElevenCredits and self.get_remaining_characters() < 1200:
             raise Exception(f"Your ElevenLabs API KEY doesn't have enough credits ({self.remaining_credits} character remaining). Minimum required: 1200 characters (equivalent to a 45sec short)")
         super().__init__()
 

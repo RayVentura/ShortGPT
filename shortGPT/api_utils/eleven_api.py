@@ -56,7 +56,7 @@ def generateVoice(text, character, fileName, stability=0.2, clarity=0.1, api_key
             return fileName
     else:
         message = response.text
-        print(f'Error in response, {response.status_code} , message: {message}')
+        raise Exception(f'Error in response, {response.status_code} , message: {message}')
     return ""
 
 # print(getCharactersFromKey(''))

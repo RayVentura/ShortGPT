@@ -28,15 +28,17 @@ def downloadYoutubeAudio(url, outputFile):
         print("Failed downloading audio from the following video/url", e.args[0])
     return None
 
-def speedUpAudio(tempAudioPath, outputFile, expected_chars_per_sec=CONST_CHARS_PER_SEC): # Speeding up the audio to make it under 60secs, otherwise the output video is not considered as a short.
+def speedUpAudio(tempAudioPath, outputFile, expected_duration=None): # Speeding up the audio to make it under 60secs, otherwise the output video is not considered as a short.
     tempAudioPath, duration = getAssetDuration(tempAudioPath, False)
-    if(duration > 57):
-        subprocess.run(['ffmpeg', '-i', tempAudioPath, '-af', f'atempo={(duration/57):.5f}', outputFile])
+    if not expected_duration:
+        if(duration > 57):
+            subprocess.run(['ffmpeg', '-i', tempAudioPath, '-af', f'atempo={(duration/57):.5f}', outputFile])
+        else:
+            subprocess.run(['ffmpeg', '-i', tempAudioPath, outputFile])
     else:
-        subprocess.run(['ffmpeg', '-i', tempAudioPath, outputFile])
+        subprocess.run(['ffmpeg', '-i', tempAudioPath, '-af', f'atempo={(duration/expected_duration):.5f}', outputFile])
     if(os.path.exists(outputFile)):
-        return outputFile
-    return ""
+            return outputFile
 
 def ChunkForAudio(alltext, chunk_size=2500):
     alltext_list = alltext.split('.')

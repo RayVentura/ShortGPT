@@ -43,7 +43,7 @@ def makeVideo(script, language, isVertical, progress):
     def logger(prog_str):
         progress(progress_counter / (num_steps),f"Creating video - {progress_counter} - {prog_str}")
     shortEngine.set_logger(logger)
-    for step_num, step_info in shortEngine.makeShort():
+    for step_num, step_info in shortEngine.makeContent():
                 progress(progress_counter / (num_steps), f"Creating video - {step_info}")
                 progress_counter += 1
 

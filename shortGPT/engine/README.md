@@ -38,7 +38,7 @@ This file contains the `AbstractContentEngine` class, which is an abstract base 
 
 - `isShortDone(self)`: Checks if the short video is done rendering by checking the value of the '_db_ready_to_upload' attribute.
 
-- `makeShort(self)`: Generates the short video by executing the steps defined in the `stepDict`. It yields the current step number and a message indicating the progress.
+- `makeContent(self)`: Generates the short video by executing the steps defined in the `stepDict`. It yields the current step number and a message indicating the progress.
 
 - `get_video_output_path(self)`: Returns the path of the rendered video.
 

@@ -27,6 +27,9 @@ class EditingStep(Enum):
     ADD_BACKGROUND_MUSIC = "background_music.json"
     ADD_REDDIT_IMAGE = "show_reddit_image.json"
     ADD_BACKGROUND_VIDEO = "add_background_video.json"
+    INSERT_AUDIO = "insert_audio.json"
+    EXTRACT_AUDIO = "extract_audio.json"
+    ADD_BACKGROUND_VOICEOVER = "add_background_voiceover.json"
 
 class Flow(Enum):
     WHITE_REDDIT_IMAGE_FLOW = "build_reddit_image.json"
@@ -90,6 +93,9 @@ class EditingEngine:
     def renderVideo(self, outputPath, logger=None):
         engine = CoreEditingEngine()
         engine.generate_video(self.schema, outputPath, logger=logger)
-    def renderImage(self, outputPath):
+    def renderImage(self, outputPath, logger=None):
         engine = CoreEditingEngine()
-        engine.generate_image(self.schema, outputPath)
+        engine.generate_image(self.schema, outputPath, logger=logger)
+    def generateAudio(self, outputPath, logger=None):
+        engine = CoreEditingEngine()
+        engine.generate_audio(self.schema, outputPath, logger=logger)
