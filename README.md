@@ -15,10 +15,14 @@
   </a>
 </div>
 
+<div align="center">
 ⚡ Automating video and short content creation with AI ⚡
+</div>
 
-## 🛠️ How it works
-![alt text](https://github.com/RayVentura/ShortGPT/assets/121462835/fcee74d4-f856-4481-949f-244558bf3bfa)
+## 🎥 Showcase ([Full video on YouTube](https://youtu.be/hpoSHq-ER8U))
+
+https://github.com/RayVentura/ShortGPT/assets/121462835/a802faad-0fd7-4fcb-aa82-6365c27ea5fe
+
 ## 📝 Introduction to ShortGPT 
 ShortGPT is a powerful framework for automating content creation. It simplifies video creation, footage sourcing, voiceover synthesis, and editing tasks.
 
@@ -34,9 +38,8 @@ ShortGPT is a powerful framework for automating content creation. It simplifies 
 
 - 🧠 **Memory and persistency**: Ensures long-term persistency of automated editing variables with TinyDB.
 
-## 🎥 Showcase (full-video on https://www.youtube.com/watch?v=hpoSHq-ER8U)
-
-https://github.com/RayVentura/ShortGPT/assets/121462835/a802faad-0fd7-4fcb-aa82-6365c27ea5fe
+## 🛠️ How it works
+![alt text](https://github.com/RayVentura/ShortGPT/assets/121462835/fcee74d4-f856-4481-949f-244558bf3bfa)
 
 ## 🚀 Quick Start: Run ShortGPT on Google Colab (https://colab.research.google.com/drive/1_2UKdpF6lqxCqWaAcZb3rwMVQqtbisdE?usp=sharing)
 
@@ -126,7 +129,7 @@ Follow the instructions below to install ImageMagick, FFmpeg, and clone the shor
 ### Step 4: Install Python Dependencies
 
 1. Open a terminal or command prompt.
-2. Navigate to the directory where `shortgpt.py` is located (the cloned repo).
+2. Navigate to the directory where `runShortGPT.py` is located (the cloned repo).
 3. Execute the following command to install the required Python dependencies:
    ```
    pip install -r requirements.txt
@@ -136,7 +139,7 @@ Follow the instructions below to install ImageMagick, FFmpeg, and clone the shor
 
 ## Running runShortGPT.py Web Interface
 
-Once you have successfully installed ImageMagick, FFmpeg, and the Python dependencies, you can run `shortgpt.py` by following these steps:
+Once you have successfully installed ImageMagick, FFmpeg, and the Python dependencies, you can run `runShortGPT.py` by following these steps:
 
 1. Open a terminal or command prompt.
 2. Navigate to the directory where `runShortGPT.py` is located (the cloned repo).
@@ -160,7 +163,7 @@ That's it! You have successfully set up your API keys and can now utilize the fu
 
 ## 💁 Contributing
 
-As an open-source project in a rapidly developing field, we are extremely open to contributions, whether it be in the form of a new feature, improved infrastructure, or better documentation.
+As an open-source project in a rapidly developing field, we are extremely open to contributions, whether it would be in the form of a new feature, improved infrastructure, or better documentation.
 
 ## Framework overview
 
