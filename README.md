@@ -163,7 +163,7 @@ That's it! You have successfully set up your API keys and can now utilize the fu
 
 ## 💁 Contributing
 
-As an open-source project in a rapidly developing field, we are extremely open to contributions, whether it be in the form of a new feature, improved infrastructure, or better documentation.
+As an open-source project in a rapidly developing field, we are extremely open to contributions, whether it would be in the form of a new feature, improved infrastructure, or better documentation.
 
 ## Framework overview
 
