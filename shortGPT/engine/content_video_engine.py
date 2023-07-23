@@ -1,6 +1,6 @@
 from shortGPT.api_utils.pexels_api import getBestVideo
 from shortGPT.audio.audio_duration import getAssetDuration
-from shortGPT.gpt import  gpt_editing, gpt_translate, gpt_yt
+from shortGPT.gpt import gpt_editing, gpt_translate, gpt_yt
 from shortGPT.audio import audio_utils
 from shortGPT.editing_utils import captions
 from shortGPT.engine.abstract_content_engine import AbstractContentEngine
@@ -11,31 +11,31 @@ import shutil
 import os
 import datetime
 
+
 class ContentVideoEngine(AbstractContentEngine):
 
-    def __init__(self, script: str, background_music_name="",id="",
-     watermark=None,isVerticalFormat=False, language:Language = Language.ENGLISH, voiceName=""):
+    def __init__(self, script: str, background_music_name="", id="", watermark=None, isVerticalFormat=False, language: Language = Language.ENGLISH, voiceName=""):
         super().__init__(id, "general_video", language, voiceName)
         if not id:
-            if (watermark):
+            if watermark:
                 self._db_watermark = watermark
             if background_music_name:
                 self._db_background_music_name = background_music_name
             self._db_script = script
             self._db_format_vertical = isVerticalFormat
-        
-        self.stepDict = {
-            1:  self._generateTempAudio,
-            2:  self._speedUpAudio,
-            3:  self._timeCaptions,
-            4:  self._generateVideoSearchTerms,
-            5:  self._generateVideoUrls,
-            6:  self._chooseBackgroundMusic,
-            7:  self._prepareBackgroundAssets,
-            8: self._prepareCustomAssets,
-            9: self._editAndRenderShort,
-            10: self._addMetadata
-        }
+
+        self.stepDict = {i + 1: func for i, func in enumerate([
+            self._generateTempAudio,
+            self._speedUpAudio,
+            self._timeCaptions,
+            self._generateVideoSearchTerms,
+            self._generateVideoUrls,
+            self._chooseBackgroundMusic,
+            self._prepareBackgroundAssets,
+            #self._prepareCustomAssets,  # Not used, can be removed
+            self._editAndRenderShort,
+            self._addMetadata
+        ])}
     
 
 
