@@ -216,7 +216,7 @@ class CoreEditingEngine:
         return self.process_common_visual_actions(clip, asset['actions'])
 
     def process_audio_asset(self, asset: Dict[str, Any]) -> AudioFileClip:
-        clip = AudioFileClip(handle_path(asset['parameters']['url']))
+        clip = AudioFileClip(asset['parameters']['url'])
         return self.process_audio_actions(clip, asset['actions'])
     
     def __normalize_image(self, clip):

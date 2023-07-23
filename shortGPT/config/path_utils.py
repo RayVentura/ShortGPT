@@ -24,7 +24,7 @@ def is_running_in_colab():
 
 def handle_path(path):
     if 'https' in path:
-        if is_running_in_colab() or True:
+        if is_running_in_colab():
             import requests
             import tempfile
             temp_file = tempfile.NamedTemporaryFile(delete=False)
