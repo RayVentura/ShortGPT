@@ -83,18 +83,7 @@ def create_video_translation_ui(shortGptUI: gr.Blocks):
 
             generation_error = gr.HTML(visible=False)
             video_folder = gr.Button("📁", visible=True)
-            file_name= "videos/2023-07-22_16-17-06 - translatedcontenttofrench.mp4"
-            file_url_path = f"http://127.0.0.1:31415/file={file_name}"
-            output = gr.HTML(f'''
-            <div style="display: flex; overflow-x: auto; gap: 20px;"><div style="display: flex; flex-direction: column; align-items: center;">
-                <video width="{500}"  style="max-height: 100%;" controls>
-                    <source src="{file_url_path}" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <a href="{file_url_path}" style="margin-top: 10px;">
-                    <button style="font-size: 1em; padding: 10px; border: none; cursor: pointer; color: white; background: #007bff;">Download Video</button>
-                </a>
-            </div></div>''')
+            output = gr.HTML()
 
         video_folder.click(lambda _: start_file(os.path.abspath("videos/")))
         translateButton.click(inspect_create_inputs, inputs=[videoType, video_path, yt_link,  ], outputs=[generation_error]).success(translate_video, inputs=[
