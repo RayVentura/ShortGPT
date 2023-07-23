@@ -16,3 +16,19 @@ def get_program_path(program_name):
 magick_path = get_program_path("magick")
 if magick_path:
     os.environ['IMAGEMAGICK_BINARY'] = magick_path
+
+import os
+
+def is_running_in_colab():
+    return 'COLAB_GPU' in os.environ
+
+def handle_path(path):
+    if 'https' in path:
+        if is_running_in_colab() or True:
+            import requests
+            import tempfile
+            temp_file = tempfile.NamedTemporaryFile(delete=False)
+            temp_file.write(requests.get(path).content)
+            temp_file.close()
+            return temp_file.name
+    return path
