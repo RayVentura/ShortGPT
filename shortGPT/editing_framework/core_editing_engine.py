@@ -18,7 +18,7 @@ def load_schema(json_path):
 
 class CoreEditingEngine:
 
-    def generate_image(self, schema:Dict[str, Any], output_file):
+    def generate_image(self, schema:Dict[str, Any],output_file , logger=None):
         assets = dict(sorted(schema['visual_assets'].items(), key=lambda item: item[1]['z']))
         clips = []
 
