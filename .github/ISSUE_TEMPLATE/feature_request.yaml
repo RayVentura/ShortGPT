@@ -1,0 +1,36 @@
+name: ✨ Feature request
+description: Suggest an feature / idea for this project
+title: '✨ [Feature Request / Suggestion]: '
+labels: ['feature']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        We appreciate your feedback on how to improve this project. Please be sure to include as much details & any resources if possible!
+
+  - type: textarea
+    id: Suggestion
+    attributes:
+      label: Suggestion / Feature Request
+      description: Describe the feature(s) you would like to see added.
+      placeholder: Tell us your suggestion
+    validations:
+      required: true
+
+  - type: textarea
+    id: why-usage
+    attributes:
+      label: Why would this be useful?
+      description: Describe why this feature would be useful.
+      placeholder: Tell us why this would be useful to have this feature
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshots-assets
+    attributes:
+      label: Screenshots/Assets/Relevant links
+      description: If applicable, add screenshots, assets or any relevant links that can help understand the issue.
+      placeholder: Provide any relevant material here
+    validations:
+      required: false
