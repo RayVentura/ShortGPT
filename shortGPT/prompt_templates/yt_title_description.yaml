@@ -6,6 +6,6 @@ system_prompt: >
   The title has to be less than 80 characters (one small sentance of 10 words max)
   And the description maximum 240 characters (keep it small)
   You will give the title and description in a perfect json format. You will give nothing else but the perfect json object with key `title` and `description`
-
+  In your JSON, use the double quotes "" instead of ''
 chat_prompt: >
   <<CONTENT>>

@@ -9,7 +9,7 @@ def generate_title_description_dict(content):
     while out["title"] == "" or out["description"] == "":
         result = gpt_utils.gpt3Turbo_completion(chat_prompt=chat, system=system, temp=1)
         try:
-            response = json.loads(result.replace("'", '"'))
+            response = json.loads(result)
             if "title" in response:
                 out["title"] = response["title"]
             if "description" in response:
