@@ -1,0 +1,99 @@
+name: 🐛 Bug Report
+description: File a bug report
+title: '🐛 [Bug]: '
+labels: ['bug']
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the issue here.
+      placeholder: Tell us what you see!
+    validations:
+      required: true
+
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: What type of browser are you seeing the problem on?
+      multiple: true
+      options:
+        - Firefox
+        - Chrome
+        - Safari
+        - Microsoft Edge
+    validations:
+      required: true
+
+  - type: dropdown
+    id: operating-systems
+    attributes:
+      label: What type of Operating System are you seeing the problem on?
+      multiple: true
+      options:
+        - Linux
+        - Windows
+        - Mac
+        - Google Colab
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: python-version
+    attributes:
+      label: Python Version
+      description: What version of Python are you using?
+      placeholder: e.g. Python 3.9.0
+    validations:
+      required: true
+
+  - type: input
+    id: application-version
+    attributes:
+      label: Application Version
+      description: What version of the application are you using?
+      placeholder: e.g. v1.2.3
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+      placeholder: What did you expect?
+    validations:
+      required: true
+
+  - type: textarea
+    id: error-message
+    attributes:
+      label: Error Message
+      description: What error message did you receive?
+      placeholder:
+      render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Code to produce this issue.
+      description: Please copy and paste any relevant code to re-produce this issue.
+      render: shell
+
+  - type: textarea
+    id: screenshots-assets
+    attributes:
+      label: Screenshots/Assets/Relevant links
+      description: If applicable, add screenshots, assets or any relevant links that can help understand the issue.
+      placeholder: Provide any relevant material here
+    validations:
+      required: false

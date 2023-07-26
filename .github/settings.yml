@@ -1,0 +1,190 @@
+repository:
+  # See https://developer.github.com/v3/repos/#edit for all available settings.
+
+  # The name of the repository. Changing this will rename the repository
+  #name: repo-name
+
+  # A short description of the repository that will show up on GitHub
+  #description: description of repo
+
+  # A URL with more information about the repository
+  #homepage: https://example.github.io/
+
+  # A comma-separated list of topics to set on the repository
+  #topics: project, template, project-template
+
+  # Either `true` to make the repository private, or `false` to make it public.
+  #private: false
+
+  # Either `true` to enable issues for this repository, `false` to disable them.
+  has_issues: true
+
+  # Either `true` to enable the wiki for this repository, `false` to disable it.
+  has_wiki: true
+
+  # Either `true` to enable downloads for this repository, `false` to disable them.
+  #has_downloads: true
+
+  # Updates the default branch for this repository.
+  default_branch: stable
+
+  # Either `true` to allow squash-merging pull requests, or `false` to prevent
+  # squash-merging.
+  #allow_squash_merge: true
+
+  # Either `true` to allow merging pull requests with a merge commit, or `false`
+  # to prevent merging pull requests with merge commits.
+  #allow_merge_commit: true
+
+  # Either `true` to allow rebase-merging pull requests, or `false` to prevent
+  # rebase-merging.
+  #allow_rebase_merge: true
+
+# Labels: define labels for Issues and Pull Requests
+labels:
+  - name: 'Type: Bug'
+    color: e80c0c
+    description: Something isn't working as expected.
+
+  - name: 'Type: Enhancement'
+    color: 54b2ff
+    description: Suggest an improvement for an existing feature.
+
+  - name: 'Type: Feature'
+    color: 54b2ff
+    description: Suggest a new feature.
+
+  - name: 'Type: Security'
+    color: fbff00
+    description: A problem or enhancement related to a security issue.
+
+  - name: 'Type: Question'
+    color: 9309ab
+    description: Request for information.
+
+  - name: 'Type: Test'
+    color: ce54e3
+    description: A problem or enhancement related to a test.
+
+  - name: 'Status: Awaiting Review'
+    color: 24d15d
+    description: Ready for review.
+
+  - name: 'Status: WIP'
+    color: 07b340
+    description: Currently being worked on.
+
+  - name: 'Status: Waiting'
+    color: 38C968
+    description: Waiting on something else to be ready.
+
+  - name: 'Status: Stale'
+    color: 66b38a
+    description: Has had no activity for some time.
+
+  - name: 'Duplicate'
+    color: EB862D
+    description: Duplicate of another issue.
+
+  - name: 'Invalid'
+    color: faef50
+    description: This issue doesn't seem right.
+
+  - name: 'Priority: High +'
+    color: ff008c
+    description: Task is considered higher-priority.
+
+  - name: 'Priority: Low -'
+    color: 690a34
+    description: Task is considered lower-priority.
+
+  - name: 'Documentation'
+    color: 2fbceb
+    description: An issue/change with the documentation.
+
+  - name: "Won't fix"
+    color: C8D9E6
+    description: Reported issue is working as intended.
+
+  - name: '3rd party issue'
+    color: e88707
+    description: This issue might be caused by a 3rd party script/package/other reasons
+
+  - name: 'Os: Windows'
+    color: AEB1C2
+    description: Is Windows-specific
+
+  - name: 'Os: Mac'
+    color: AEB1C2
+    description: Is Mac-specific
+
+  - name: 'Os: Linux'
+    color: AEB1C2
+    description: Is Linux-specific
+
+  - name: 'Os: Google Colab'
+    color: AEB1C2
+    description: Is Google Colab-specific
+#
+#
+# # Collaborators: give specific users access to this repository.
+# # See https://developer.github.com/v3/repos/collaborators/#add-user-as-a-collaborator for available options
+# collaborators:
+#   # - username: bkeepers
+#   #   permission: push
+#   # - username: hubot
+#   #   permission: pull
+
+#   # Note: `permission` is only valid on organization-owned repositories.
+#   # The permission to grant the collaborator. Can be one of:
+#   # * `pull` - can pull, but not push to or administer this repository.
+#   # * `push` - can pull and push, but not administer this repository.
+#   # * `admin` - can pull, push and administer this repository.
+#   # * `maintain` - Recommended for project managers who need to manage the repository without access to sensitive or destructive actions.
+#   # * `triage` - Recommended for contributors who need to proactively manage issues and pull requests without write access.
+
+# # See https://developer.github.com/v3/teams/#add-or-update-team-repository for available options
+# teams:
+#   - name: core
+#     # The permission to grant the team. Can be one of:
+#     # * `pull` - can pull, but not push to or administer this repository.
+#     # * `push` - can pull and push, but not administer this repository.
+#     # * `admin` - can pull, push and administer this repository.
+#     # * `maintain` - Recommended for project managers who need to manage the repository without access to sensitive or destructive actions.
+#     # * `triage` - Recommended for contributors who need to proactively manage issues and pull requests without write access.
+#     permission: admin
+#   - name: docs
+#     permission: push
+
+# branches:
+#   - name: master
+#     # https://developer.github.com/v3/repos/branches/#update-branch-protection
+#     # Branch Protection settings. Set to null to disable
+#     protection:
+#       # Required. Require at least one approving review on a pull request, before merging. Set to null to disable.
+#       required_pull_request_reviews:
+#         # The number of approvals required. (1-6)
+#         required_approving_review_count: 1
+#         # Dismiss approved reviews automatically when a new commit is pushed.
+#         dismiss_stale_reviews: true
+#         # Blocks merge until code owners have reviewed.
+#         require_code_owner_reviews: true
+#         # Specify which users and teams can dismiss pull request reviews. Pass an empty dismissal_restrictions object to disable. User and team dismissal_restrictions are only available for organization-owned repositories. Omit this parameter for personal repositories.
+#         dismissal_restrictions:
+#           users: []
+#           teams: []
+#       # Required. Require status checks to pass before merging. Set to null to disable
+#       required_status_checks:
+#         # Required. Require branches to be up to date before merging.
+#         strict: true
+#         # Required. The list of status checks to require in order to merge into this branch
+#         contexts: []
+#       # Required. Enforce all configured restrictions for administrators. Set to true to enforce required status checks for repository administrators. Set to null to disable.
+#       enforce_admins: true
+#       # Prevent merge commits from being pushed to matching branches
+#       required_linear_history: true
+#       # Required. Restrict who can push to this branch. Team and user restrictions are only available for organization-owned repositories. Set to null to disable.
+#       restrictions:
+#         apps: []
+#         users: []
+#         teams: []

@@ -1,0 +1,17 @@
+name: ❓ Question
+description: Ask a question about this project
+title: '❓ [Question]: '
+labels: ['question']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        We appreciate your interest in this project. Please be sure to include as much detail & context about your question as possible!
+
+  - type: textarea
+    id: Question
+    attributes:
+      label: Your Question
+      description: Describe your question in detail.
+    validations:
+      required: true

@@ -1,0 +1,6 @@
+# These owners will be the default owners for everything in
+# the repo. Unless a later match takes precedence,
+# @USER will be requested for
+# review when someone opens a pull request.
+# if you want to add more owners just write it after the demo user @DemoUser
+*       @RayVentura
