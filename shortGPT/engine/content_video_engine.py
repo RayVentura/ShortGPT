@@ -1,5 +1,6 @@
 from shortGPT.api_utils.pexels_api import getBestVideo
 from shortGPT.audio.audio_duration import getAssetDuration
+from shortGPT.audio.voice_module import VoiceModule
 from shortGPT.gpt import  gpt_editing, gpt_translate, gpt_yt
 from shortGPT.audio import audio_utils
 from shortGPT.editing_utils import captions
@@ -13,9 +14,10 @@ import datetime
 
 class ContentVideoEngine(AbstractContentEngine):
 
-    def __init__(self, script: str, background_music_name="",id="",
-     watermark=None,isVerticalFormat=False, language:Language = Language.ENGLISH, voiceName=""):
-        super().__init__(id, "general_video", language, voiceName)
+    def __init__(self, voiceModule: VoiceModule, script: str, background_music_name="",id="",
+     watermark=None,isVerticalFormat=False, language:Language = Language.ENGLISH):
+        print(Language, VoiceModule.voice)
+        super().__init__(id, "general_video", language, voiceModule)
         if not id:
             if (watermark):
                 self._db_watermark = watermark

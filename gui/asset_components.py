@@ -19,7 +19,8 @@ def getElevenlabsVoices():
     api_key = get_api_key("ELEVEN LABS")
     voices = list(reversed(getVoices(api_key).keys()))
     return voices
-
+EDGE_TTS = "Free EdgeTTS (medium quality)"
+ELEVEN_TTS = "ElevenLabs(High Quality)"
 background_video_checkbox = gr.CheckboxGroup(choices=getBackgroundVideoChoices(), interactive=True, label="Choose background video")
 background_music_checkbox = gr.CheckboxGroup(choices=getBackgroundMusicChoices(), interactive=True, label="Choose background music")
 voiceChoice = gr.Radio(getElevenlabsVoices(), label="Elevenlabs voice", value="Antoni", interactive=True)

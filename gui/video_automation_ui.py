@@ -2,20 +2,24 @@ import os
 import traceback
 import gradio as gr
 from gui.asset_components import start_file
-from shortGPT.engine.content_video_engine import ContentVideoEngine, Language
+from shortGPT.engine.content_video_engine import ContentVideoEngine
+from shortGPT.audio.edge_voice_module import EdgeTTSVoiceModule
+from shortGPT.audio.eleven_voice_module import ElevenLabsVoiceModule
 from shortGPT.config.api_db import get_api_key
 from shortGPT.gpt import gpt_chat_video
+from shortGPT.config.languages import Language, ELEVEN_SUPPORTED_LANGUAGES, EDGE_TTS_VOICENAME_MAPPING
 from gui.content_automation_ui import ERROR_TEMPLATE
 from enum import Enum
 
 class ChatState(Enum):
     ASK_ORIENTATION = 1
-    ASK_LANGUAGE = 2
-    ASK_DESCRIPTION = 3
-    GENERATE_SCRIPT = 4
-    ASK_SATISFACTION = 5
-    MAKE_VIDEO = 6
-    ASK_CORRECTION = 7 
+    ASK_VOICE_MODULE = 2
+    ASK_LANGUAGE = 3
+    ASK_DESCRIPTION = 4
+    GENERATE_SCRIPT = 5
+    ASK_SATISFACTION = 6
+    MAKE_VIDEO = 7
+    ASK_CORRECTION = 8 
 
 def isKeyMissing():
     openai_key = get_api_key("OPENAI")
@@ -36,18 +40,18 @@ def generate_script(message, language):
 def correct_script(script, correction):
     return gpt_chat_video.correctScript(script, correction)
 
-def makeVideo(script, language, isVertical, progress):
-    shortEngine = ContentVideoEngine(script=script, language=Language(language), isVerticalFormat=isVertical)
-    num_steps = shortEngine.get_total_steps()
+def makeVideo(script, voice_module, isVertical, progress):
+    videoEngine = ContentVideoEngine( voiceModule=voice_module, script=script, isVerticalFormat=isVertical)
+    num_steps = videoEngine.get_total_steps()
     progress_counter = 0
     def logger(prog_str):
         progress(progress_counter / (num_steps),f"Creating video - {progress_counter} - {prog_str}")
-    shortEngine.set_logger(logger)
-    for step_num, step_info in shortEngine.makeContent():
+    videoEngine.set_logger(logger)
+    for step_num, step_info in videoEngine.makeContent():
                 progress(progress_counter / (num_steps), f"Creating video - {step_info}")
                 progress_counter += 1
 
-    video_path = shortEngine.get_video_output_path()
+    video_path = videoEngine.get_video_output_path()
     return video_path
 
 def create_video_automation_ui(shortGptUI: gr.Blocks):
@@ -55,16 +59,17 @@ def create_video_automation_ui(shortGptUI: gr.Blocks):
             return  gr.Chatbot.update(value=initialize_conv()), gr.update(visible=True), gr.HTML.update(value="", visible=False), gr.HTML.update(value="", visible=False)
 
         def chatbot_conversation():
-            global state, isVertical, language, script
+            global state, isVertical, voice_module, language, script
             state = ChatState.ASK_ORIENTATION
             isVertical = None
+            voice_module = None
             language = None
             script = ""
             video_html = ""
             videoVisible= False
 
             def respond(message, chat_history, progress=gr.Progress()):
-                global state, isVertical, language, script, videoVisible, video_html
+                global state, isVertical, voice_module, language, script, videoVisible, video_html
                 error_html = ""
                 errorVisible = False
                 inputVisible= True
@@ -75,11 +80,27 @@ def create_video_automation_ui(shortGptUI: gr.Blocks):
                         bot_message = errorMessage
                     else:     
                         isVertical = "vertical" in message.lower() or "short" in message.lower()
-                        state = ChatState.ASK_LANGUAGE
-                        bot_message = f"🌐What language will be used in the video?🌐 Choose from one of these ({', '.join([lang.value.lower().capitalize() for lang in Language])})"
+                        state = ChatState.ASK_VOICE_MODULE
+                        bot_message = "Which voice module do you want to use? Please type 'ElevenLabs' for high quality voice or 'EdgeTTS' for free but medium quality voice."
+                elif state == ChatState.ASK_VOICE_MODULE:
+                    if "elevenlabs" in message.lower():
+                        voice_module = ElevenLabsVoiceModule
+                        language_choices = [lang.value for lang in ELEVEN_SUPPORTED_LANGUAGES]
+                    elif "edgetts" in message.lower():
+                        voice_module = EdgeTTSVoiceModule
+                        language_choices = [lang.value for lang in Language]
+                    else:
+                        bot_message = "Invalid voice module. Please type 'ElevenLabs' or 'EdgeTTS'."
+                        return
+                    state = ChatState.ASK_LANGUAGE
+                    bot_message = f"🌐What language will be used in the video?🌐 Choose from one of these ({', '.join(language_choices)})"
                 elif state == ChatState.ASK_LANGUAGE:
                     language = next((lang for lang in Language if lang.value.lower() in message.lower()), None)
                     language = language if language else Language.ENGLISH
+                    if voice_module == ElevenLabsVoiceModule:
+                        voice_module = ElevenLabsVoiceModule(get_api_key('ELEVEN LABS'),"Antoni", checkElevenCredits=True)
+                    elif voice_module == EdgeTTSVoiceModule:
+                        voice_module = EdgeTTSVoiceModule(EDGE_TTS_VOICENAME_MAPPING[language]['male'])
                     state = ChatState.ASK_DESCRIPTION
                     bot_message = "Amazing 🔥 ! 📝Can you describe thoroughly the subject of your video?📝 I will next generate you a script based on that description"
                 elif state == ChatState.ASK_DESCRIPTION:
@@ -92,7 +113,7 @@ def create_video_automation_ui(shortGptUI: gr.Blocks):
                         inputVisible = False
                         yield gr.update(visible=False), gr.Chatbot.update(value=[[None,"Your video is being made now! 🎬"]]), gr.HTML.update(value="", visible=False), gr.HTML.update(value=error_html, visible=errorVisible), gr.update(visible=folderVisible), gr.update(visible=False)
                         try:
-                            video_path = makeVideo(script, language.value, isVertical, progress=progress)
+                            video_path = makeVideo(script, voice_module, isVertical, progress=progress)
                             file_name = video_path.split("/")[-1].split("\\")[-1]
                             current_url = shortGptUI.share_url+"/" if shortGptUI.share else shortGptUI.local_url
                             file_url_path = f"{current_url}file={video_path}"

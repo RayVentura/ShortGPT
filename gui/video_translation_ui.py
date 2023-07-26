@@ -1,9 +1,13 @@
 import traceback
 import gradio as gr
-from gui.asset_components import voiceChoiceTranslation, start_file
-from shortGPT.engine.content_translation_engine import ContentTranslationEngine, Language
+from gui.asset_components import voiceChoiceTranslation, start_file, EDGE_TTS, ELEVEN_TTS
+from shortGPT.config.api_db import get_api_key
+from shortGPT.engine.content_translation_engine import ContentTranslationEngine
+from shortGPT.audio.edge_voice_module import EdgeTTSVoiceModule
+from shortGPT.audio.eleven_voice_module import ElevenLabsVoiceModule
+from shortGPT.config.languages import EDGE_TTS_VOICENAME_MAPPING, ELEVEN_SUPPORTED_LANGUAGES, Language
 import time
-language_choices = [lang.value.upper() for lang in Language]
+eleven_language_choices = [lang.value.upper() for lang in ELEVEN_SUPPORTED_LANGUAGES]
 import gradio as gr
 import os
 import time
@@ -26,15 +30,23 @@ def create_video_translation_ui(shortGptUI: gr.Blocks):
             videoType,
             yt_link,
             video_path,
-            target_language,
+            tts_engine, 
+            language_eleven,
+            language_edge,
             use_captions: bool,
             voice: str,
             progress=gr.Progress()):
-        language = Language(target_language.lower())
+        if tts_engine == ELEVEN_TTS:
+            language = Language(language_eleven.lower().capitalize())
+            voice_module = ElevenLabsVoiceModule(get_api_key('ELEVEN LABS'), voice, checkElevenCredits=True)
+        elif tts_engine == EDGE_TTS:
+            language = Language(language_edge.lower().capitalize())
+            voice_module = EdgeTTSVoiceModule( EDGE_TTS_VOICENAME_MAPPING[language]['male'])
+        print(EDGE_TTS_VOICENAME_MAPPING[language]['male'], Language)
         embedHTML = '<div style="display: flex; overflow-x: auto; gap: 20px;">'
         progress_counter = 0
         try:
-            content_translation_engine = ContentTranslationEngine(src_url=yt_link if videoType=="Youtube link" else video_path, target_language=language, use_captions=use_captions, voice_name=voice )
+            content_translation_engine = ContentTranslationEngine(voiceModule=voice_module, src_url=yt_link if videoType=="Youtube link" else video_path, target_language=language, use_captions=use_captions )
             num_steps = content_translation_engine.get_total_steps()
             def logger(prog_str):
                 progress(progress_counter / (num_steps),f"Translating your video - {prog_str}")
@@ -75,8 +87,15 @@ def create_video_translation_ui(shortGptUI: gr.Blocks):
             video_path = gr.Video(source="upload", interactive=True, width=533.33, height=300)
             yt_link = gr.Textbox(label="Youtube link (https://youtube.com/xyz): ", interactive=True, visible=False)
             videoType.change(lambda x: (gr.update(visible= x == "Video file"), gr.update(visible= x == "Youtube link")), [videoType], [video_path, yt_link] )
-            language = gr.Radio(language_choices, label="Target Language", value="SPANISH", interactive=True)
-            voiceChoiceTranslation.render()
+            tts_engine = gr.Radio([ELEVEN_TTS, EDGE_TTS], label="Text to speech engine", value=ELEVEN_TTS, interactive=True)
+            
+            with gr.Column(visible=True) as eleven_tts:
+                language_eleven = gr.Radio(eleven_language_choices, label="Language", value="ENGLISH", interactive=True)
+                voiceChoiceTranslation.render()
+            with gr.Column(visible=False) as edge_tts:
+                language_edge = gr.Dropdown([lang.value.upper() for lang in Language], label="Language", value="ENGLISH", interactive=True)
+            tts_engine.change(lambda x: (gr.update(visible= x==ELEVEN_TTS), gr.update(visible= x==EDGE_TTS)), tts_engine, [eleven_tts, edge_tts])
+            
             useCaptions = gr.Checkbox(label="Caption video", value=False)
 
             translateButton = gr.Button(label="Create Shorts")
@@ -87,7 +106,7 @@ def create_video_translation_ui(shortGptUI: gr.Blocks):
 
         video_folder.click(lambda _: start_file(os.path.abspath("videos/")))
         translateButton.click(inspect_create_inputs, inputs=[videoType, video_path, yt_link,  ], outputs=[generation_error]).success(translate_video, inputs=[
-            videoType, yt_link, video_path, language, useCaptions, voiceChoiceTranslation
+            videoType, yt_link, video_path, tts_engine, language_eleven,language_edge, useCaptions, voiceChoiceTranslation
         ], outputs=[output, video_folder, generation_error])
     return video_translation_ui
 

@@ -1,3 +1,4 @@
+from shortGPT.audio.voice_module import VoiceModule
 from shortGPT.config.languages import Language
 from shortGPT.engine.content_short_engine import ContentShortEngine
 from shortGPT.editing_framework.editing_engine import EditingEngine, EditingStep, Flow
@@ -7,10 +8,10 @@ import os
 
 class RedditShortEngine(ContentShortEngine):
     # Mapping of variable names to database paths
-    def __init__(self, background_video_name: str, background_music_name: str,short_id="",
-                 num_images=None, watermark=None, language:Language = Language.ENGLISH, voiceName="Antoni"):
+    def __init__(self,voiceModule: VoiceModule, background_video_name: str, background_music_name: str,short_id="",
+                 num_images=None, watermark=None, language:Language = Language.ENGLISH):
         super().__init__(short_id=short_id, short_type="reddit_shorts", background_video_name=background_video_name, background_music_name=background_music_name,
-                 num_images=num_images, watermark=watermark, language=language, voiceName=voiceName)
+                 num_images=num_images, watermark=watermark, language=language, voiceModule=voiceModule)
     
     def __generateRandomStory(self):
         question = reddit_gpt.getInterestingRedditQuestion()

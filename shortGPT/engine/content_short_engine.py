@@ -1,4 +1,5 @@
 from shortGPT.audio.audio_duration import getAssetDuration
+from shortGPT.audio.voice_module import VoiceModule
 from shortGPT.gpt import  gpt_editing, gpt_translate, gpt_yt
 from shortGPT.audio import audio_utils
 from shortGPT.editing_utils import captions, editing_images
@@ -14,9 +15,9 @@ import datetime
 
 class ContentShortEngine(AbstractContentEngine):
 
-    def __init__(self, short_type: str, background_video_name: str, background_music_name: str,short_id="",
-                 num_images=None, watermark=None, language:Language = Language.ENGLISH, voiceName=""):
-        super().__init__(short_id, short_type, language, voiceName)
+    def __init__(self, short_type: str, background_video_name: str, background_music_name: str, voiceModule: VoiceModule, short_id="",
+                 num_images=None, watermark=None, language:Language = Language.ENGLISH,):
+        super().__init__(short_id, short_type, language, voiceModule)
         if not short_id:
             if (num_images):
                 self._db_num_images = num_images

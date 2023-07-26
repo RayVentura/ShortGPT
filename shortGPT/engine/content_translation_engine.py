@@ -1,8 +1,8 @@
 from shortGPT.audio.audio_duration import getAssetDuration
+from shortGPT.audio.voice_module import VoiceModule
 from shortGPT.engine.abstract_content_engine import AbstractContentEngine
-from shortGPT.config.languages import Language
 from shortGPT.gpt.gpt_translate import translateContent
-from shortGPT.config.languages import Language
+from shortGPT.config.languages import Language, ACRONYM_LANGUAGE_MAPPING
 from shortGPT.editing_utils.handle_videos import get_aspect_ratio
 from shortGPT.editing_framework.editing_engine import EditingEngine, EditingStep
 from shortGPT.editing_utils.captions import getSpeechBlocks, getCaptionsWithTime
@@ -13,20 +13,11 @@ import re
 import shutil
 import os
 import datetime
-language_mapping = {
-    "en": Language.ENGLISH,
-    "es": Language.SPANISH,
-    "fr": Language.FRENCH,
-    "ar": Language.ARABIC,
-    "de": Language.GERMAN,
-    "pl": Language.POLISH,
-    "it": Language.ITALIAN,
-    "pt": Language.PORTUGUESE,
-}
+
 class ContentTranslationEngine(AbstractContentEngine):
 
-    def __init__(self, src_url: str = "", target_language: Language = Language.ENGLISH, use_captions=False, id="", voice_name=""):
-        super().__init__(id, "content_translation", target_language, voice_name, checkElevenCredits=False)
+    def __init__(self,voiceModule: VoiceModule, src_url: str = "", target_language: Language = Language.ENGLISH, use_captions=False, id=""):
+        super().__init__(id, "content_translation", target_language, voiceModule)
         if not id:
             self._db_should_translate = True
             if src_url:
@@ -48,7 +39,7 @@ class ContentTranslationEngine(AbstractContentEngine):
         self.logger(f"1/5 - Transcribing original audio to text...")
         whispered = audioToText(video_audio, model_size='base')
         self._db_speech_blocks = getSpeechBlocks(whispered, silence_time=0.8)
-        if (language_mapping.get(whispered['language']) == Language(self._db_target_language)):
+        if (ACRONYM_LANGUAGE_MAPPING.get(whispered['language']) == Language(self._db_target_language)):
             self._db_translated_timed_sentences = self._db_speech_blocks 
             self._db_should_translate = False
 
@@ -56,7 +47,7 @@ class ContentTranslationEngine(AbstractContentEngine):
         chars_remaining = self.voiceModule.get_remaining_characters()
         if chars_remaining < expected_chars:
             raise Exception(
-                f"Your Elevenlabs key doesn't have enough characters to totally translate this video | Remaining: {chars_remaining} | Number of characters to translate: {expected_chars}")
+                f"Your VoiceModule's key doesn't have enough characters to totally translate this video | Remaining: {chars_remaining} | Number of characters to translate: {expected_chars}")
 
     def _translate_content(self):
         if(self._db_should_translate):

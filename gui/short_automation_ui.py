@@ -2,15 +2,18 @@ import traceback
 import gradio as gr
 from gui.asset_components import background_video_checkbox, background_music_checkbox, voiceChoice, start_file
 from shortGPT.config.api_db import get_api_key
-from shortGPT.engine.reddit_short_engine import RedditShortEngine, Language
+from shortGPT.engine.reddit_short_engine import RedditShortEngine
 from shortGPT.engine.facts_short_engine import FactsShortEngine
+from shortGPT.audio.edge_voice_module import EdgeTTSVoiceModule
+from shortGPT.audio.eleven_voice_module import ElevenLabsVoiceModule
+from shortGPT.config.languages import Language, ELEVEN_SUPPORTED_LANGUAGES, EDGE_TTS_VOICENAME_MAPPING
 import time
-language_choices = [lang.value.upper() for lang in Language]
 import gradio as gr
 import random
 import os
 import time
-
+EDGE_TTS = "Free EdgeTTS (medium quality)"
+ELEVEN_TTS = "ElevenLabs(High Quality)"
 ERROR_TEMPLATE = """
 <div style='text-align: center; background: #9fcbc3; color: #3f4039; 
 padding: 20px; border-radius: 5px; margin: 10px;'>
@@ -26,7 +29,9 @@ border-radius: 5px; cursor: pointer; text-decoration: none;'>Get Help on Discord
 def create_short_automation_ui(shortGptUI: gr.Blocks):
     def create_short(numShorts,
             short_type,
-            language,
+            tts_engine,
+            language_eleven,
+            language_edge,
             numImages,
             watermark,
             background_video_list,
@@ -34,24 +39,29 @@ def create_short_automation_ui(shortGptUI: gr.Blocks):
             facts_subject,
             voice,
             progress=gr.Progress()):
-
         numShorts = int(numShorts)
         numImages = int(numImages) if numImages else None
         background_videos = (background_video_list * ((numShorts // len(background_video_list)) + 1))[:numShorts]
         background_musics = (background_music_list * ((numShorts // len(background_music_list)) + 1))[:numShorts]
-        language = Language(language.lower())
+        if tts_engine == ELEVEN_TTS:
+            language = Language(language_eleven.lower().capitalize())
+            voice_module = ElevenLabsVoiceModule(get_api_key('ELEVEN LABS'), voice, checkElevenCredits=True)
+        elif tts_engine == EDGE_TTS:
+            language = Language(language_edge.lower().capitalize())
+            voice_module = EdgeTTSVoiceModule( EDGE_TTS_VOICENAME_MAPPING[language]['male'])
+
         embedHTML = '<div style="display: flex; overflow-x: auto; gap: 20px;">'
         progress_counter = 0
         try:
             for i in range(numShorts):
                 shortEngine = create_short_engine(short_type=short_type,
+                                                  voice_module=voice_module,
                                                     language=language,
                                                     numImages=numImages,
                                                 background_video=background_videos[i],
                                                 background_music=background_musics[i],
                                                 watermark=watermark,
                                                 facts_subject=facts_subject,
-                                                voice=voice
                                                 )
                 num_steps = shortEngine.get_total_steps()
                 def logger(prog_str):
@@ -93,8 +103,15 @@ def create_short_automation_ui(shortGptUI: gr.Blocks):
             short_type = gr.Radio(["Reddit Story shorts","Historical Facts shorts", "Scientific Facts shorts", "Custom Facts shorts"], label="Type of shorts generated", value="Scientific Facts shorts", interactive=True)
             facts_subject = gr.Textbox(label="Write a subject for your facts (example: Football facts)", interactive=True, visible=False)
             short_type.change(lambda x: gr.update(visible=x=="Custom Facts shorts"), [short_type], [facts_subject] )
-            language = gr.Radio(language_choices, label="Language", value="ENGLISH")
-            voiceChoice.render()
+            tts_engine = gr.Radio([ELEVEN_TTS, EDGE_TTS], label="Text to speech engine", value=ELEVEN_TTS, interactive=True)
+            
+            with gr.Column(visible=True) as eleven_tts:
+                language_eleven = gr.Radio([lang.value for lang in ELEVEN_SUPPORTED_LANGUAGES], label="Language", value="ENGLISH", interactive=True)
+                voiceChoice.render()
+            with gr.Column(visible=False) as edge_tts:
+                language_edge = gr.Dropdown([lang.value.upper() for lang in Language], label="Language", value="ENGLISH", interactive=True)
+            tts_engine.change(lambda x: (gr.update(visible= x==ELEVEN_TTS), gr.update(visible= x==EDGE_TTS)), tts_engine, [eleven_tts, edge_tts])
+            
             useImages = gr.Checkbox(label="Use images", value=True)
             numImages = gr.Radio([5, 10, 25],value=25, label="Number of images per short", visible=True, interactive=True)
             useImages.change(lambda x: gr.update(visible=x), useImages, numImages)
@@ -117,7 +134,9 @@ def create_short_automation_ui(shortGptUI: gr.Blocks):
         createButton.click(inspect_create_inputs, inputs=[background_video_checkbox, background_music_checkbox, watermark,short_type, facts_subject], outputs=[generation_error]).success(create_short, inputs=[
             numShorts,
             short_type,
-            language,
+            tts_engine,
+            language_eleven,
+            language_edge,
             numImages,
             watermark,
             background_video_checkbox,
@@ -170,29 +189,27 @@ def update_progress(progress, progress_counter, num_steps, num_shorts, stop_even
         progress(progress_counter / (num_steps * num_shorts), f"Step 12 in progress - {dynamic}/3649")
         time.sleep(0.1)  # update every 0.1 second
 
-def create_short_engine(short_type, language, numImages,
+def create_short_engine(short_type, voice_module, language, numImages,
         watermark,
         background_video,
         background_music,
-        facts_subject,
-        voice):
+        facts_subject):
+    
     if short_type == "Reddit Story shorts":
-        return RedditShortEngine(background_video_name=background_video,
+        return RedditShortEngine(voice_module, background_video_name=background_video,
                                             background_music_name=background_music,
                                             num_images=numImages,
                                             watermark=watermark,
-                                            language=language,
-                                            voiceName=voice)
+                                            language=language)
     if "fact" in  short_type.lower():
         if "custom" in short_type.lower():
             facts_subject = facts_subject
         else:
             facts_subject = short_type
-        return FactsShortEngine(facts_type=facts_subject, background_video_name=background_video,
+        return FactsShortEngine(voice_module, facts_type=facts_subject, background_video_name=background_video,
                                             background_music_name=background_music,
                                             num_images=50,
                                             watermark=watermark,
-                                            language=language,
-                                            voiceName=voice)
+                                            language=language)
     raise gr.Error(f"Short type does not have a valid short engine: {short_type}")
             

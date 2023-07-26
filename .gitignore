@@ -3,6 +3,7 @@
 !*.yaml
 !*.template
 *.pyc
+**/__pycache__/
 test.py
 public/*
 !public/white_reddit_template.png
