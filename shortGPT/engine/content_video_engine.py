@@ -16,7 +16,6 @@ class ContentVideoEngine(AbstractContentEngine):
 
     def __init__(self, voiceModule: VoiceModule, script: str, background_music_name="",id="",
      watermark=None,isVerticalFormat=False, language:Language = Language.ENGLISH):
-        print(Language, VoiceModule.voice)
         super().__init__(id, "general_video", language, voiceModule)
         if not id:
             if (watermark):
