@@ -18,3 +18,4 @@ moviepy
 termcolor
 progress
 questionary
+edge-tts
