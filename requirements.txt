@@ -14,7 +14,7 @@ git+https://github.com/linto-ai/whisper-timestamped
 protobuf==3.20.0
 pillow==9.0.0
 langchain
-moviepy
+moviepy==1.0.3
 termcolor
 progress
 questionary
