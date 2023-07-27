@@ -11,8 +11,7 @@ from shortGPT.config.asset_db import AssetDatabase
 
 class AssetLibrary:
     def __init__(self):
-        self.asset_store = AssetDatabase()
-        self.asset_store.sync_local_assets()
+        pass
 
     def create_asset_library_ui(self):
         '''Create the asset library UI'''
@@ -39,20 +38,20 @@ class AssetLibrary:
 
     def fulfill_df(self):
         '''Get the asset dataframe'''
-        return self.asset_store.get_df()
+        return AssetDatabase.get_df()
 
     def verify_youtube_asset_inputs(self, asset_name, yt_url, type):
         if not asset_name or not re.match("^[A-Za-z0-9 _-]*$", asset_name):
             raise gr.Error('Invalid asset name. Please provide a valid name that you will recognize (Only use letters and numbers)')
         if not yt_url.startswith("https://youtube.com/") and not yt_url.startswith("https://www.youtube.com/"):
             raise gr.Error('Invalid YouTube URL. Please provide a valid URL.')
-        if self.asset_store.asset_exists(asset_name):
+        if AssetDatabase.asset_exists(asset_name):
             raise gr.Error('An asset already exists with this name, please choose a different name.')
 
     def add_youtube_asset(self, asset_name, yt_url, type):
         '''Add a youtube asset'''
-        self.asset_store.add_remote_asset(asset_name, type, yt_url)
-        latest_df = self.asset_store.get_df()
+        AssetDatabase.add_remote_asset(asset_name, type, yt_url)
+        latest_df = AssetDatabase.get_df()
         return gr.DataFrame.update(value=latest_df), gr.HTML.update(value=self.get_asset_embed(latest_df, 0)),\
             gr.update(value=f"🗑️ Delete {latest_df.iloc[0]['name']}"),\
             gr.Accordion.update(open=False),\
@@ -61,13 +60,13 @@ class AssetLibrary:
 
     def _get_first_preview(self):
         '''Get the first preview'''
-        return self.get_asset_embed(self.asset_store.get_df(), 0)
+        return self.get_asset_embed(AssetDatabase.get_df(), 0)
 
     def delete_clicked(self, button_name):
         '''Delete an asset'''
         asset_name = button_name.split("🗑️ Delete ")[-1]
-        self.asset_store.remove_asset(asset_name)
-        data = self.asset_store.get_df()
+        AssetDatabase.remove_asset(asset_name)
+        data = AssetDatabase.get_df()
         if len(data) > 0:
             return gr.update(value=data),\
                 gr.HTML.update(value=self.get_asset_embed(data, 0)),\

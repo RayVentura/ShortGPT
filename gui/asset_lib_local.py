@@ -12,8 +12,7 @@ from shortGPT.config.asset_db import AssetDatabase
 
 class AssetLocalLibrary:
     def __init__(self):
-        self.asset_store = AssetDatabase()
-        self.asset_store.sync_local_assets()
+        pass
 
     def create_asset_library_ui(self):
         '''Create the asset library UI'''
@@ -57,7 +56,7 @@ class AssetLocalLibrary:
 
     def fulfill_df(self):
         '''Get the dataframe of assets'''
-        return self.asset_store.get_df()
+        return AssetDatabase.get_df()
 
     def verify_youtube_asset_inputs(self, asset_name, yt_url, type):
         '''Verify that the inputs for a youtube asset are valid'''
@@ -65,13 +64,13 @@ class AssetLocalLibrary:
             raise gr.Error('Invalid asset name. Please provide a valid name that you will recognize (Only use letters and numbers)')
         if not yt_url.startswith("https://youtube.com/") and not yt_url.startswith("https://www.youtube.com/"):
             raise gr.Error('Invalid YouTube URL. Please provide a valid URL.')
-        if self.asset_store.asset_exists(asset_name):
+        if AssetDatabase.asset_exists(asset_name):
             raise gr.Error('An asset already exists with this name, please choose a different name.')
 
     def add_youtube_asset(self, asset_name, yt_url, type):
         '''Add a youtube asset to the database'''
-        self.asset_store.add_remote_asset(asset_name, type, yt_url)
-        latest_df = self.asset_store.get_df()
+        AssetDatabase.add_remote_asset(asset_name, type, yt_url)
+        latest_df = AssetDatabase.get_df()
         return gr.DataFrame.update(value=latest_df), gr.HTML.update(value=self.get_asset_embed(latest_df, 0)),\
             gr.update(value=f"🗑️ Delete {latest_df.iloc[0]['name']}"),\
             gr.Accordion.update(open=False),\
@@ -80,13 +79,13 @@ class AssetLocalLibrary:
 
     def _get_first_preview(self):
         '''Get the first asset preview'''
-        return self.get_asset_embed(self.asset_store.get_df(), 0)
+        return self.get_asset_embed(AssetDatabase.get_df(), 0)
 
     def delete_clicked(self, button_name):
         '''Delete the asset with the given name'''
         asset_name = button_name.split("🗑️ Delete ")[-1]
-        self.asset_store.remove_asset(asset_name)
-        data = self.asset_store.get_df()
+        AssetDatabase.remove_asset(asset_name)
+        data = AssetDatabase.get_df()
         if len(data) > 0:
             return gr.update(value=data), gr.HTML.update(value=self.get_asset_embed(data, 0)),  gr.update(value=f"🗑️ Delete {data.iloc[0]['name']}"), gr.CheckboxGroup.update(choices=getBackgroundVideoChoices(), interactive=True)
         return gr.Dataframe.update(value=data),\
@@ -140,7 +139,7 @@ class AssetLocalLibrary:
         }
         if not upload_name or not re.match("^[A-Za-z0-9 _-]*$", upload_name):
             raise gr.Error('Invalid asset name. Please provide a valid name that you will recognize (Only use letters and numbers)')
-        if self.asset_store.asset_exists(upload_name):
+        if AssetDatabase.asset_exists(upload_name):
             raise gr.Error(f'An asset already exists with this name, please choose a different name.')
 
     def upload_local_asset(self, upload_type, upload_name, video_path, audio_path, image_path):
@@ -154,5 +153,5 @@ class AssetLocalLibrary:
         }
         new_path = "public/" + self.clean_filename(upload_name) + "." + path_dict[upload_type].split(".")[-1]
         shutil.move(path_dict[upload_type], new_path)
-        self.asset_store.add_local_asset(upload_name, upload_type, new_path)
-        return gr.DataFrame.update(value=self.asset_store.get_df()), gr.CheckboxGroup.update(choices=getBackgroundVideoChoices(), interactive=True)
+        AssetDatabase.add_local_asset(upload_name, upload_type, new_path)
+        return gr.DataFrame.update(value=AssetDatabase.get_df()), gr.CheckboxGroup.update(choices=getBackgroundVideoChoices(), interactive=True)
