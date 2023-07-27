@@ -54,7 +54,7 @@ def ChunkForAudio(alltext, chunk_size=2500):
         chunks.append(curr_chunk)
     return chunks
 
-def audioToText(filename, model_size="tiny"):
+def audioToText(filename, model_size="base"):
     from whisper_timestamped import load_model, transcribe_timestamped
     global WHISPER_MODEL
     if(WHISPER_MODEL == None):
