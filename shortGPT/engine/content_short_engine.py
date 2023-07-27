@@ -1,5 +1,6 @@
 from shortGPT.audio.audio_duration import getAssetDuration
 from shortGPT.audio.voice_module import VoiceModule
+from shortGPT.config.asset_db import AssetDatabase
 from shortGPT.gpt import  gpt_editing, gpt_translate, gpt_yt
 from shortGPT.audio import audio_utils
 from shortGPT.editing_utils import captions, editing_images
@@ -84,12 +85,12 @@ class ContentShortEngine(AbstractContentEngine):
                 self._db_timed_image_searches)
 
     def _chooseBackgroundMusic(self):
-        self._db_background_music_url = self.assetStore.getAssetLink(self._db_background_music_name)
+        self._db_background_music_url = AssetDatabase.getAssetLink(self._db_background_music_name)
 
     def _chooseBackgroundVideo(self):
-        self._db_background_video_url = self.assetStore.getAssetLink(
+        self._db_background_video_url = AssetDatabase.getAssetLink(
             self._db_background_video_name)
-        self._db_background_video_duration = self.assetStore.getAssetDuration(
+        self._db_background_video_duration = AssetDatabase.getAssetDuration(
             self._db_background_video_name)
 
     def _prepareBackgroundAssets(self):
