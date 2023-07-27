@@ -20,6 +20,12 @@
 ## 🎥 Showcase ([Full video on YouTube](https://youtu.be/hpoSHq-ER8U))
 
 https://github.com/RayVentura/ShortGPT/assets/121462835/a802faad-0fd7-4fcb-aa82-6365c27ea5fe
+## 🎥 Voice Dubbing
+
+
+https://github.com/RayVentura/ShortGPT/assets/121462835/06f51b2d-f8b1-4a23-b299-55e0e18902ef
+
+
 
 ## 📝 Introduction to ShortGPT 
 ShortGPT is a powerful framework for automating content creation. It simplifies video creation, footage sourcing, voiceover synthesis, and editing tasks.
