@@ -15,7 +15,7 @@ d8'   .8P 88     88  Y8.   .8P 88  88     88    88    Y8.   .88  88           88
  Y88888P  dP     dP   `8888P'  dP  dP     dP    dP     `88888'   dP           dP
 
         ''')
-        CLI.display_blue_text("Welcome to ShortGPT! This is a tool to generate short video using GPT.")
+        CLI.display_blue_text("Welcome to ShortGPT! This is an experimental AI framework to automate all aspects of content creation.")
         print("")
         CLI.display_requirements_check()
 

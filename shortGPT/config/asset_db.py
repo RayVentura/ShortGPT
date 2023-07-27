@@ -17,6 +17,7 @@ class AssetDatabase:
             shutil.copy(TEMPLATE_ASSETS_DB_PATH, ASSETS_DB_PATH)
     local_assets = TinyMongoDocument("asset_db", "asset_collection", "local_assets", create=True)
     remote_assets = TinyMongoDocument("asset_db", "asset_collection", "remote_assets", create=True)
+    
     @classmethod
     def asset_exists(cls, name):
         local_assets = cls.local_assets._get()
@@ -69,7 +70,6 @@ class AssetDatabase:
     @classmethod
     def get_df(cls):
         """Returns a pandas DataFrame with specific asset details."""
-
         remote_assets = cls.remote_assets._get()
 
         # Prepare data for DataFrame

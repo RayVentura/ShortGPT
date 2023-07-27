@@ -8,8 +8,6 @@ from shortGPT.api_utils.eleven_api import ElevenLabsAPI
 from shortGPT.config.api_db import ApiKeyManager
 from shortGPT.config.asset_db import AssetDatabase
 
-AssetDatabase.sync_local_assets()
-
 
 def getBackgroundVideoChoices():
     df = AssetDatabase.get_df()
