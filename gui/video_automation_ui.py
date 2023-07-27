@@ -1,15 +1,19 @@
 import os
 import traceback
+from enum import Enum
+
 import gradio as gr
+
 from gui.asset_components import start_file
-from shortGPT.engine.content_video_engine import ContentVideoEngine
+from gui.gradio_components_html import GradioComponentsHTML
 from shortGPT.audio.edge_voice_module import EdgeTTSVoiceModule
 from shortGPT.audio.eleven_voice_module import ElevenLabsVoiceModule
-from shortGPT.config.api_db import get_api_key
+from shortGPT.config.api_db import ApiKeyManager
+from shortGPT.config.languages import (EDGE_TTS_VOICENAME_MAPPING,
+                                       ELEVEN_SUPPORTED_LANGUAGES, Language)
+from shortGPT.engine.content_video_engine import ContentVideoEngine
 from shortGPT.gpt import gpt_chat_video
-from shortGPT.config.languages import Language, ELEVEN_SUPPORTED_LANGUAGES, EDGE_TTS_VOICENAME_MAPPING
-from gui.content_automation_ui import ERROR_TEMPLATE
-from enum import Enum
+
 
 class ChatState(Enum):
     ASK_ORIENTATION = 1
@@ -19,105 +23,115 @@ class ChatState(Enum):
     GENERATE_SCRIPT = 5
     ASK_SATISFACTION = 6
     MAKE_VIDEO = 7
-    ASK_CORRECTION = 8 
+    ASK_CORRECTION = 8
 
-def isKeyMissing():
-    openai_key = get_api_key("OPENAI")
-    if not openai_key:
-        return "Your OpenAI key is missing. Please go to the config tab and enter the API key."
-    
-    eleven_labs_key = get_api_key("ELEVEN LABS")
-    if not eleven_labs_key:
-        return "Your Eleven Labs API key is missing. Please go to the config tab and enter the API key."
-    
-    eleven_labs_key = get_api_key("PEXELS")
-    if not eleven_labs_key:
-        return "Your Pexels API key is missing. Please go to the config tab and enter the API key."
 
-def generate_script(message, language):
-    return gpt_chat_video.generateScript(message, language)
+class VideoAutomationUI:
+    def __init__(self, shortGptUI: gr.Blocks):
+        self.shortGptUI = shortGptUI
+        self.state = ChatState.ASK_ORIENTATION
+        self.isVertical = None
+        self.voice_module = None
+        self.language = None
+        self.script = ""
+        self.video_html = ""
+        self.videoVisible = False
+        self.video_automation = None
+        self.chatbot = None
+        self.msg = None
+        self.restart_button = None
+        self.video_folder = None
+        self.errorHTML = None
+        self.outHTML = None
 
-def correct_script(script, correction):
-    return gpt_chat_video.correctScript(script, correction)
+    def is_key_missing(self):
+        openai_key = ApiKeyManager.get_api_key("OPENAI")
+        if not openai_key:
+            return "Your OpenAI key is missing. Please go to the config tab and enter the API key."
 
-def makeVideo(script, voice_module, isVertical, progress):
-    videoEngine = ContentVideoEngine( voiceModule=voice_module, script=script, isVerticalFormat=isVertical)
-    num_steps = videoEngine.get_total_steps()
-    progress_counter = 0
-    def logger(prog_str):
-        progress(progress_counter / (num_steps),f"Creating video - {progress_counter} - {prog_str}")
-    videoEngine.set_logger(logger)
-    for step_num, step_info in videoEngine.makeContent():
-                progress(progress_counter / (num_steps), f"Creating video - {step_info}")
-                progress_counter += 1
+        eleven_labs_key = ApiKeyManager.get_api_key("ELEVEN LABS")
+        if not eleven_labs_key:
+            return "Your Eleven Labs API key is missing. Please go to the config tab and enter the API key."
 
-    video_path = videoEngine.get_video_output_path()
-    return video_path
+        eleven_labs_key = ApiKeyManager.get_api_key("PEXELS")
+        if not eleven_labs_key:
+            return "Your Pexels API key is missing. Please go to the config tab and enter the API key."
 
-def create_video_automation_ui(shortGptUI: gr.Blocks):
-        def reset_components():
-            return  gr.Chatbot.update(value=initialize_conv()), gr.update(visible=True), gr.HTML.update(value="", visible=False), gr.HTML.update(value="", visible=False)
+    def generate_script(self, message, language):
+        return gpt_chat_video.generateScript(message, language)
 
-        def chatbot_conversation():
-            global state, isVertical, voice_module, language, script
-            state = ChatState.ASK_ORIENTATION
-            isVertical = None
-            voice_module = None
-            language = None
-            script = ""
-            video_html = ""
-            videoVisible= False
+    def correct_script(self, script, correction):
+        return gpt_chat_video.correctScript(script, correction)
 
-            def respond(message, chat_history, progress=gr.Progress()):
-                global state, isVertical, voice_module, language, script, videoVisible, video_html
-                error_html = ""
-                errorVisible = False
-                inputVisible= True
-                folderVisible= False
-                if state == ChatState.ASK_ORIENTATION:
-                    errorMessage = isKeyMissing()
-                    if errorMessage:
-                        bot_message = errorMessage
-                    else:     
-                        isVertical = "vertical" in message.lower() or "short" in message.lower()
-                        state = ChatState.ASK_VOICE_MODULE
-                        bot_message = "Which voice module do you want to use? Please type 'ElevenLabs' for high quality voice or 'EdgeTTS' for free but medium quality voice."
-                elif state == ChatState.ASK_VOICE_MODULE:
-                    if "elevenlabs" in message.lower():
-                        voice_module = ElevenLabsVoiceModule
-                        language_choices = [lang.value for lang in ELEVEN_SUPPORTED_LANGUAGES]
-                    elif "edgetts" in message.lower():
-                        voice_module = EdgeTTSVoiceModule
-                        language_choices = [lang.value for lang in Language]
-                    else:
-                        bot_message = "Invalid voice module. Please type 'ElevenLabs' or 'EdgeTTS'."
-                        return
-                    state = ChatState.ASK_LANGUAGE
-                    bot_message = f"🌐What language will be used in the video?🌐 Choose from one of these ({', '.join(language_choices)})"
-                elif state == ChatState.ASK_LANGUAGE:
-                    language = next((lang for lang in Language if lang.value.lower() in message.lower()), None)
-                    language = language if language else Language.ENGLISH
-                    if voice_module == ElevenLabsVoiceModule:
-                        voice_module = ElevenLabsVoiceModule(get_api_key('ELEVEN LABS'),"Antoni", checkElevenCredits=True)
-                    elif voice_module == EdgeTTSVoiceModule:
-                        voice_module = EdgeTTSVoiceModule(EDGE_TTS_VOICENAME_MAPPING[language]['male'])
-                    state = ChatState.ASK_DESCRIPTION
-                    bot_message = "Amazing 🔥 ! 📝Can you describe thoroughly the subject of your video?📝 I will next generate you a script based on that description"
-                elif state == ChatState.ASK_DESCRIPTION:
-                    script = generate_script(message, language.value)
-                    state = ChatState.ASK_SATISFACTION
-                    bot_message = f"📝 Here is your generated script: \n\n--------------\n{script}\n\n・Are you satisfied with the script and ready to proceed with creating the video? Please respond with 'YES' or 'NO'. 👍👎"
-                elif state == ChatState.ASK_SATISFACTION:
-                    if "yes" in message.lower():
-                        state = ChatState.MAKE_VIDEO
-                        inputVisible = False
-                        yield gr.update(visible=False), gr.Chatbot.update(value=[[None,"Your video is being made now! 🎬"]]), gr.HTML.update(value="", visible=False), gr.HTML.update(value=error_html, visible=errorVisible), gr.update(visible=folderVisible), gr.update(visible=False)
-                        try:
-                            video_path = makeVideo(script, voice_module, isVertical, progress=progress)
-                            file_name = video_path.split("/")[-1].split("\\")[-1]
-                            current_url = shortGptUI.share_url+"/" if shortGptUI.share else shortGptUI.local_url
-                            file_url_path = f"{current_url}file={video_path}"
-                            video_html = f'''
+    def make_video(self, script, voice_module, isVertical, progress):
+        videoEngine = ContentVideoEngine(voiceModule=voice_module, script=script, isVerticalFormat=isVertical)
+        num_steps = videoEngine.get_total_steps()
+        progress_counter = 0
+
+        def logger(prog_str):
+            progress(progress_counter / (num_steps), f"Creating video - {progress_counter} - {prog_str}")
+        videoEngine.set_logger(logger)
+        for step_num, step_info in videoEngine.makeContent():
+            progress(progress_counter / (num_steps), f"Creating video - {step_info}")
+            progress_counter += 1
+
+        video_path = videoEngine.get_video_output_path()
+        return video_path
+
+    def reset_components(self):
+        return gr.Chatbot.update(value=self.initialize_conversation()), gr.update(visible=True), gr.HTML.update(value="", visible=False), gr.HTML.update(value="", visible=False)
+
+    def chatbot_conversation(self):
+        def respond(message, chat_history, progress=gr.Progress()):
+            global state, isVertical, voice_module, language, script, videoVisible, video_html
+            error_html = ""
+            errorVisible = False
+            inputVisible = True
+            folderVisible = False
+            if state == ChatState.ASK_ORIENTATION:
+                errorMessage = self.is_key_missing()
+                if errorMessage:
+                    bot_message = errorMessage
+                else:
+                    isVertical = "vertical" in message.lower() or "short" in message.lower()
+                    state = ChatState.ASK_VOICE_MODULE
+                    bot_message = "Which voice module do you want to use? Please type 'ElevenLabs' for high quality voice or 'EdgeTTS' for free but medium quality voice."
+            elif state == ChatState.ASK_VOICE_MODULE:
+                if "elevenlabs" in message.lower():
+                    voice_module = ElevenLabsVoiceModule
+                    language_choices = [lang.value for lang in ELEVEN_SUPPORTED_LANGUAGES]
+                elif "edgetts" in message.lower():
+                    voice_module = EdgeTTSVoiceModule
+                    language_choices = [lang.value for lang in Language]
+                else:
+                    bot_message = "Invalid voice module. Please type 'ElevenLabs' or 'EdgeTTS'."
+                    return
+                state = ChatState.ASK_LANGUAGE
+                bot_message = f"🌐What language will be used in the video?🌐 Choose from one of these ({', '.join(language_choices)})"
+            elif state == ChatState.ASK_LANGUAGE:
+                language = next((lang for lang in Language if lang.value.lower() in message.lower()), None)
+                language = language if language else Language.ENGLISH
+                if voice_module == ElevenLabsVoiceModule:
+                    voice_module = ElevenLabsVoiceModule(ApiKeyManager.get_api_key('ELEVEN LABS'), "Antoni", checkElevenCredits=True)
+                elif voice_module == EdgeTTSVoiceModule:
+                    voice_module = EdgeTTSVoiceModule(EDGE_TTS_VOICENAME_MAPPING[language]['male'])
+                state = ChatState.ASK_DESCRIPTION
+                bot_message = "Amazing 🔥 ! 📝Can you describe thoroughly the subject of your video?📝 I will next generate you a script based on that description"
+            elif state == ChatState.ASK_DESCRIPTION:
+                script = self.generate_script(message, language.value)
+                state = ChatState.ASK_SATISFACTION
+                bot_message = f"📝 Here is your generated script: \n\n--------------\n{script}\n\n・Are you satisfied with the script and ready to proceed with creating the video? Please respond with 'YES' or 'NO'. 👍👎"
+            elif state == ChatState.ASK_SATISFACTION:
+                if "yes" in message.lower():
+                    state = ChatState.MAKE_VIDEO
+                    inputVisible = False
+                    yield gr.update(visible=False), gr.Chatbot.update(value=[[None, "Your video is being made now! 🎬"]]), gr.HTML.update(value="", visible=False), gr.HTML.update(value=error_html, visible=errorVisible), gr.update(visible=folderVisible), gr.update(visible=False)
+                    try:
+                        video_path = self.make_video(script, voice_module, isVertical, progress=progress)
+                        file_name = video_path.split("/")[-1].split("\\")[-1]
+                        current_url = shortGptUI.share_url+"/" if shortGptUI.share else shortGptUI.local_url
+                        file_url_path = f"{current_url}file={video_path}"
+                        video_html = f'''
                             <div style="display: flex; flex-direction: column; align-items: center;">
                                 <video width="{600}" height="{300}" style="max-height: 100%;" controls>
                                     <source src="{file_url_path}" type="video/mp4">
@@ -127,61 +141,62 @@ def create_video_automation_ui(shortGptUI: gr.Blocks):
                                     <button style="font-size: 1em; padding: 10px; border: none; cursor: pointer; color: white; background: #007bff;">Download Video</button>
                                 </a>
                             </div>'''
-                            videoVisible = True
-                            folderVisible = True
-                            bot_message = "Your video is completed !🎬. Scroll down below to open its file location."
-                        except Exception as e:
-                            traceback_str = ''.join(traceback.format_tb(e.__traceback__))
-                            error_name = type(e).__name__.capitalize()+ " : " +f"{e.args[0]}"
-                            errorVisible = True
-                            error_html = ERROR_TEMPLATE.format(error_message=error_name, stack_trace=traceback_str)
-                            bot_message = "We encountered an error while making this video ❌"
-                            print("Error", traceback_str)
-                            yield gr.update(visible=False), gr.Chatbot.update(value=[[None,"Your video is being made now! 🎬"]]), gr.HTML.update(value="", visible=False), gr.HTML.update(value=ERROR_TEMPLATE.format(error_message=e.args[0], stack_trace=traceback_str), visible=errorVisible), gr.update(visible=folderVisible), gr.update(visible=True)
-                            
-                    else:
-                        state = ChatState.ASK_CORRECTION  # change state to ASK_CORRECTION
-                        bot_message = "Explain me what you want different in the script"
-                elif state == ChatState.ASK_CORRECTION:  # new state
-                    script = correct_script(script, message)  # call generateScript with correct=True
-                    state = ChatState.ASK_SATISFACTION
-                    bot_message = f"📝 Here is your corrected script: \n\n--------------\n{script}\n\n・Are you satisfied with the script and ready to proceed with creating the video? Please respond with 'YES' or 'NO'. 👍👎"
-                chat_history.append((message, bot_message))
-                yield gr.update(value="", visible=inputVisible), gr.Chatbot.update(value=chat_history), gr.HTML.update(value=video_html, visible=videoVisible), gr.HTML.update(value=error_html, visible=errorVisible), gr.update(visible=folderVisible), gr.update(visible=True)
+                        videoVisible = True
+                        folderVisible = True
+                        bot_message = "Your video is completed !🎬. Scroll down below to open its file location."
+                    except Exception as e:
+                        traceback_str = ''.join(traceback.format_tb(e.__traceback__))
+                        error_name = type(e).__name__.capitalize() + " : " + f"{e.args[0]}"
+                        errorVisible = True
+                        gradio_content_automation_ui_error_template = GradioComponentsHTML.ERROR_TEMPLATE
+                        error_html = gradio_content_automation_ui_error_template.format(error_message=error_name, stack_trace=traceback_str)
+                        bot_message = "We encountered an error while making this video ❌"
+                        print("Error", traceback_str)
+                        yield gr.update(visible=False), gr.Chatbot.update(value=[[None, "Your video is being made now! 🎬"]]), gr.HTML.update(value="", visible=False),
+                        gr.HTML.update(value=error_html, visible=errorVisible), gr.update(visible=folderVisible), gr.update(visible=True)
 
-            return respond
+                else:
+                    state = ChatState.ASK_CORRECTION  # change state to ASK_CORRECTION
+                    bot_message = "Explain me what you want different in the script"
+            elif state == ChatState.ASK_CORRECTION:  # new state
+                script = self.correct_script(script, message)  # call generateScript with correct=True
+                state = ChatState.ASK_SATISFACTION
+                bot_message = f"📝 Here is your corrected script: \n\n--------------\n{script}\n\n・Are you satisfied with the script and ready to proceed with creating the video? Please respond with 'YES' or 'NO'. 👍👎"
+            chat_history.append((message, bot_message))
+            yield gr.update(value="", visible=inputVisible), gr.Chatbot.update(value=chat_history), gr.HTML.update(value=video_html, visible=videoVisible), gr.HTML.update(value=error_html, visible=errorVisible), gr.update(visible=folderVisible), gr.update(visible=True)
 
-        def initialize_conv():
-            global state, isVertical, language, script, video_html, videoVisible
-            state = ChatState.ASK_ORIENTATION
-            isVertical = None
-            language = None
-            script = ""
-            video_html = ""
-            videoVisible= False
-            return [[None, "🤖 Welcome to ShortGPT! 🚀 I'm a python framework aiming to simplify and automate your video editing tasks.\nLet's get started! 🎥🎬\n\n Do you want your video to be in landscape or vertical format? (landscape OR vertical)"]]                 
+        return respond
 
-        def reset_conversation():
-            global state, isVertical, language, script, videoVisible, video_html
-            state = ChatState.ASK_ORIENTATION
-            isVertical = None
-            language = None
-            script = ""
-            video_html = ""
-            videoVisible= False
-        
-        with gr.Row(visible=False) as video_automation:
+    def initialize_conversation(self):
+        self.state = ChatState.ASK_ORIENTATION
+        self.isVertical = None
+        self.language = None
+        self.script = ""
+        self.video_html = ""
+        self.videoVisible = False
+        return [[None, "🤖 Welcome to ShortGPT! 🚀 I'm a python framework aiming to simplify and automate your video editing tasks.\nLet's get started! 🎥🎬\n\n Do you want your video to be in landscape or vertical format? (landscape OR vertical)"]]
+
+    def reset_conversation(self):
+        self.state = ChatState.ASK_ORIENTATION
+        self.isVertical = None
+        self.language = None
+        self.script = ""
+        self.video_html = ""
+        self.videoVisible = False
+
+    def create_video_automation_ui(self):
+        with gr.Row(visible=False) as self.video_automation:
             with gr.Column():
-                chatbot = gr.Chatbot(initialize_conv, height=365)
-                msg = gr.Textbox()
-                restart_button = gr.Button("Restart")
-                video_folder = gr.Button("📁", visible=False)
-                video_folder.click(lambda _: start_file(os.path.abspath("videos/")))
-                respond = chatbot_conversation()
-                
-            errorHTML = gr.HTML(visible=False)
-            outHTML = gr.HTML(visible=False)
-            restart_button.click(reset_components, [], [chatbot, msg, errorHTML, outHTML])
-            restart_button.click(reset_conversation, [])
-            msg.submit(respond, [msg, chatbot], [msg, chatbot, outHTML, errorHTML, video_folder, restart_button])
-        return video_automation
+                self.chatbot = gr.Chatbot(self.initialize_conversation, height=365)
+                self.msg = gr.Textbox()
+                self.restart_button = gr.Button("Restart")
+                self.video_folder = gr.Button("📁", visible=False)
+                self.video_folder.click(lambda _: start_file(os.path.abspath("videos/")))
+                respond = self.chatbot_conversation()
+
+            self.errorHTML = gr.HTML(visible=False)
+            self.outHTML = gr.HTML(visible=False)
+            self.restart_button.click(self.reset_components, [], [self.chatbot, self.msg, self.errorHTML, self.outHTML])
+            self.restart_button.click(self.reset_conversation, [])
+            self.msg.submit(respond, [self.msg, self.chatbot], [self.msg, self.chatbot, self.outHTML, self.errorHTML, self.video_folder, self.restart_button])
+        return self.video_automation

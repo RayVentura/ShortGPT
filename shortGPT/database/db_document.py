@@ -1,27 +1,34 @@
-import tinymongo as tm
-import tinydb
 from abc import ABC, abstractmethod
 
+import tinydb
+import tinymongo as tm
+
+
 class DatabaseDocument(ABC):
-    
+
     @abstractmethod
     def _save(self, key, data):
+        '''Save the data in the database'''
         pass
 
     @abstractmethod
     def _get(self, key):
+        '''Get the data from the database'''
         pass
 
     @abstractmethod
     def _getId(self):
+        '''Get the id of the document'''
         pass
-    
+
     @abstractmethod
     def __str__(self):
+        '''Return the string representation of the document'''
         pass
 
     @abstractmethod
     def _delete(self):
+        '''Delete the document'''
         pass
 
 
@@ -30,7 +37,9 @@ class TinyMongoClient(tm.TinyMongoClient):
     def _storage(self):
         return tinydb.storages.JSONStorage
 
+
 TINY_MONGO_DATABASE = TinyMongoClient("./.database")
+
 
 class TinyMongoDocument(DatabaseDocument):
 
@@ -38,7 +47,7 @@ class TinyMongoDocument(DatabaseDocument):
         self.collection = TINY_MONGO_DATABASE[db_name][collection_name]
         self.collection_name = collection_name
         self.document_id = document_id
-        if(not self.exists()):
+        if (not self.exists()):
             if create:
                 self.collection.insert_one({"_id": document_id})
             else:
@@ -48,11 +57,11 @@ class TinyMongoDocument(DatabaseDocument):
         return self.collection.find({"_id": self.document_id}).count() == 1
 
     def _save(self, data):
-        try:    
+        try:
             update_data = {'$set': {}}
             for key, value in data.items():
                 path_parts = key.split(".")
-                
+
                 if len(path_parts) > 1:
                     root_key = ".".join(path_parts[:-1])
                     last_key = path_parts[-1]
@@ -68,7 +77,6 @@ class TinyMongoDocument(DatabaseDocument):
         except Exception as e:
             print(f"Error saving data: {e}")
 
-
     def _get(self, key=None):
         try:
             document = self.collection.find_one({'_id': self.document_id})
@@ -83,7 +91,7 @@ class TinyMongoDocument(DatabaseDocument):
         except Exception as e:
             return None
             #print(f"Error getting value for key '{key}': {e}")
-            
+
     def _delete(self, key):
         try:
             document = self.collection.find_one({'_id': self.document_id})
@@ -95,9 +103,9 @@ class TinyMongoDocument(DatabaseDocument):
                 print(f"Key '{key}' not found in the document")
         except Exception as e:
             print(f"Error deleting key '{key}': {e}")
+
     def _getId(self):
         return self.document_id
-
 
     def __str__(self):
         document = self.collection.find_one({'_id': self.document_id})

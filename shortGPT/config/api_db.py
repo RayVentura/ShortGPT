@@ -1,10 +1,13 @@
-from shortGPT.database.db_document import TINY_MONGO_DATABASE, TinyMongoDocument
+from shortGPT.database.db_document import TinyMongoDocument
 
-API_KEY_DOC_MANAGER = TinyMongoDocument("api_db", "api_keys", "key_doc", create=True)
-    
-def get_api_key(name):
-    return API_KEY_DOC_MANAGER._get(name) or ""
 
-def set_api_key(name, value):
-    return API_KEY_DOC_MANAGER._save({name: value})
-    
+class ApiKeyManager:
+    api_key_doc_manager = TinyMongoDocument("api_db", "api_keys", "key_doc", create=True)
+
+    @classmethod
+    def get_api_key(cls, name):
+        return cls.api_key_doc_manager._get(name) or ""
+
+    @classmethod
+    def set_api_key(cls, name, value):
+        return cls.api_key_doc_manager._save({name: value})
