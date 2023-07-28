@@ -55,7 +55,6 @@ class Language(Enum):
     DUTCH = "Dutch"
     NORWEGIAN_BOKMAL = "Norwegian Bokmål"
     NORWEGIAN_NYNORSK = "Norwegian Nynorsk"
-    PANJABI = "Panjabi"
     PASHTO = "Pashto"
     ROMANIAN = "Romanian"
     RUSSIAN = "Russian"
@@ -195,7 +194,7 @@ EDGE_TTS_VOICENAME_MAPPING = {
     Language.GALICIAN: {'male': 'gl-ES-RoiNeural', 'female': 'gl-ES-SabelaNeural'},
     Language.GUJARATI: {'male': 'gu-IN-NiranjanNeural', 'female': 'gu-IN-DhwaniNeural'},
     Language.HEBREW: {'male': 'he-IL-AvriNeural', 'female': 'he-IL-HilaNeural'},
-    Language.HINDI: {'male': 'hi-IN-PrabhatNeural', 'female': 'hi-IN-SwaraNeural'},
+    Language.HINDI: {'male': 'hi-IN-MadhurNeural', 'female': 'hi-IN-SwaraNeural'},
     Language.CROATIAN: {'male': 'hr-HR-SreckoNeural', 'female': 'hr-HR-GabrijelaNeural'},
     Language.HUNGARIAN: {'male': 'hu-HU-TamasNeural', 'female': 'hu-HU-NoemiNeural'},
     Language.INDONESIAN: {'male': 'id-ID-ArdiNeural', 'female': 'id-ID-GadisNeural'},
@@ -212,7 +211,7 @@ EDGE_TTS_VOICENAME_MAPPING = {
     Language.LITHUANIAN: {'male': 'lt-LT-LeonasNeural', 'female': 'lt-LT-OnaNeural'},
     Language.LATVIAN: {'male': 'lv-LV-NilsNeural', 'female': 'lv-LV-EveritaNeural'},
     Language.MACEDONIAN: {'male': 'mk-MK-AleksandarNeural', 'female': 'mk-MK-MarijaNeural'},
-    Language.MALAYALAM: {'male': 'ml-IN-ManoharNeural', 'female': 'ml-IN-MidhunNeural'},
+    Language.MALAYALAM: {'male': 'ml-IN-MidhunNeural', 'female': 'ml-IN-MidhunNeural'},
     Language.MONGOLIAN: {'male': 'mn-MN-YesuiNeural', 'female': 'mn-MN-BataaNeural'},
     Language.MARATHI: {'male': 'mr-IN-ManoharNeural', 'female': 'mr-IN-AarohiNeural'},
     Language.MALAY: {'male': 'ms-MY-OsmanNeural', 'female': 'ms-MY-YasminNeural'},
@@ -223,7 +222,6 @@ EDGE_TTS_VOICENAME_MAPPING = {
     Language.DUTCH: {'male': 'nl-NL-MaartenNeural', 'female': 'nl-NL-FennaNeural'},
     Language.NORWEGIAN_BOKMAL: {'male': 'nb-NO-FinnNeural', 'female': 'nb-NO-PernilleNeural'},
     Language.NORWEGIAN_NYNORSK: {'male': 'nb-NO-FinnNeural', 'female': 'nb-NO-PernilleNeural'},
-    Language.PANJABI: {'male': 'pa-IN-GurdeepNeural', 'female': 'pa-IN-AmanNeural'},
     Language.PASHTO: {'male': 'ps-AF-LatifaNeural', 'female': 'ps-AF-GulNawazNeural'},
     Language.ROMANIAN: {'male': 'ro-RO-EmilNeural', 'female': 'ro-RO-AlinaNeural'},
     Language.RUSSIAN: {'male': 'ru-RU-DmitryNeural', 'female': 'ru-RU-SvetlanaNeural'},
@@ -235,7 +233,7 @@ EDGE_TTS_VOICENAME_MAPPING = {
     Language.SERBIAN: {'male': 'sr-RS-NicholasNeural', 'female': 'sr-RS-SophieNeural'},
     Language.SUNDANESE: {'male': 'su-ID-JajangNeural', 'female': 'su-ID-TutiNeural'},
     Language.SWEDISH: {'male': 'sv-SE-MattiasNeural', 'female': 'sv-SE-SofieNeural'},
-    Language.SWAHILI: {'male': 'sw-TZ-ElimuNeural', 'female': 'sw-TZ-ImaniNeural'},
+    Language.SWAHILI: {'male': 'sw-TZ-DaudiNeural', 'female': 'sw-TZ-DaudiNeural'},
     Language.TAMIL: {'male': 'ta-IN-ValluvarNeural', 'female': 'ta-IN-PallaviNeural'},
     Language.TELUGU: {'male': 'te-IN-MohanNeural', 'female': 'te-IN-ShrutiNeural'},
     Language.THAI: {'male': 'th-TH-NiwatNeural', 'female': 'th-TH-PremwadeeNeural'},
