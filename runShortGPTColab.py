@@ -1,2 +1,4 @@
-from gui.gui import run_app
-run_app(colab=True) 
+from gui.gui import ShortGptUI
+
+app = ShortGptUI()
+app.launch(colab=True)

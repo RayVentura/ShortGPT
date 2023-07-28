@@ -1,11 +1,18 @@
-from shortGPT.audio.voice_module import VoiceModule
 import asyncio
-import edge_tts
-from concurrent.futures import ThreadPoolExecutor
 import os
-from shortGPT.config.languages import Language, LANGUAGE_ACRONYM_MAPPING, EDGE_TTS_VOICENAME_MAPPING
+from concurrent.futures import ThreadPoolExecutor
+
+import edge_tts
+
+from shortGPT.audio.voice_module import VoiceModule
+from shortGPT.config.languages import (EDGE_TTS_VOICENAME_MAPPING,
+                                       LANGUAGE_ACRONYM_MAPPING, Language)
+
+
 def run_async_func(loop, func):
     return loop.run_until_complete(func)
+
+
 class EdgeTTSVoiceModule(VoiceModule):
     def __init__(self, voiceName):
         self.voiceName = voiceName
@@ -32,9 +39,13 @@ class EdgeTTSVoiceModule(VoiceModule):
         return outputfile
 
     async def async_generate_voice(self, text, outputfile):
-        communicate = edge_tts.Communicate(text, self.voiceName)
-        with open(outputfile, "wb") as file:
-            async for chunk in communicate.stream():
-                if chunk["type"] == "audio":
-                    file.write(chunk["data"])
+        try:
+            communicate = edge_tts.Communicate(text, self.voiceName)
+            with open(outputfile, "wb") as file:
+                async for chunk in communicate.stream():
+                    if chunk["type"] == "audio":
+                        file.write(chunk["data"])
+        except Exception as e:
+            print("Error generating audio using edge_tts", e)
+            raise Exception("An error happened during edge_tts audio generation, no output audio generated", e)
         return outputfile
