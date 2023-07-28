@@ -8,11 +8,14 @@ class ElevenLabsAPI:
     def __init__(self, api_key):
         self.api_key = api_key
         self.url_base = 'https://api.elevenlabs.io/v1/'
+        self.get_voices()
 
     def get_voices(self):
         '''Get the list of voices available'''
         url = self.url_base + 'voices'
-        headers = {'accept': 'application/json', 'xi-api-key': self.api_key}
+        headers = {'accept': 'application/json'}
+        if self.api_key:
+            headers['xi-api-key'] = self.api_key
         response = requests.get(url, headers=headers)
         self.voices = {voice['name']: voice['voice_id'] for voice in response.json()['voices']}
         return self.voices

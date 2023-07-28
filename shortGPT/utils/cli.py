@@ -40,13 +40,14 @@ d8'   .8P 88     88  Y8.   .8P 88  88     88    88    Y8.   .88  88           88
             print(f"{req_name}=={req_version}")
 
         print("")
-        if not requirements_manager.is_all_requirements_installed():
-            CLI.display_red_text("Error : Some requirements are missing")
-            print("Please install the missing requirements using the following command :")
-            print("pip install -r requirements.txt")
-            print("")
-            requirements_manager.get_all_requirements_not_installed()
-            print("")
+        # Skipping for now, because it assumes package have the same name as the python import itself, which is not true most sometimes.
+        # if not requirements_manager.is_all_requirements_installed():
+        #     CLI.display_red_text("Error : Some requirements are missing")
+        #     print("Please install the missing requirements using the following command :")
+        #     print("pip install -r requirements.txt")
+        #     print("")
+        #     requirements_manager.get_all_requirements_not_installed()
+        #     print("")
 
     class bcolors:
         HEADER = '\033[95m'

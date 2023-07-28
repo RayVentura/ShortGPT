@@ -89,11 +89,12 @@ class Requirements:
 if __name__ == '__main__':
     '''Display information about the system and requirements'''
     requirements_manager = Requirements()
-    if not requirements_manager.is_all_requirements_installed():
-        print("Error : Some requirements are missing")
-        print("Please install all requirements from requirements.txt")
-        print("You can install them by running the following command:")
-        print("pip install -r requirements.txt")
+    # Skipping for now, because it assumes package have the same name as the python import itself, which is not true most sometimes.
+    # if not requirements_manager.is_all_requirements_installed():
+    #     print("Error : Some requirements are missing")
+    #     print("Please install all requirements from requirements.txt")
+    #     print("You can install them by running the following command:")
+    #     print("pip install -r requirements.txt")
 
     print(f"System information:")
     print(f"OS name : {requirements_manager.get_os_name()}")

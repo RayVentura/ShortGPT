@@ -35,6 +35,7 @@ class EdgeTTSVoiceModule(VoiceModule):
         finally:
             loop.close()
         if not os.path.exists(outputfile):
+            print("An error happened during edge_tts audio generation, no output audio generated")
             raise Exception("An error happened during edge_tts audio generation, no output audio generated")
         return outputfile
 
