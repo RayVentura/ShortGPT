@@ -11,7 +11,8 @@ from shortGPT.config.api_db import ApiKeyManager
 class ConfigUI:
     def __init__(self):
         self.api_key_manager = ApiKeyManager()
-        self.eleven_labs_api = None
+        eleven_key = self.api_key_manager.get_api_key('ELEVEN LABS')
+        self.eleven_labs_api = ElevenLabsAPI(eleven_key) if eleven_key else None
 
     def on_show(self, button_text, textbox, button):
         '''Show or hide the API key'''
@@ -24,6 +25,7 @@ class ConfigUI:
         if (eleven_key and self.api_key_manager.get_api_key('ELEVEN LABS') != eleven_key):
             try:
                 self.eleven_labs_api = ElevenLabsAPI(eleven_key)
+                print(self.eleven_labs_api)
                 return self.eleven_labs_api.get_remaining_characters()
             except Exception as e:
                 raise gr.Error(e.args[0])
@@ -50,9 +52,9 @@ class ConfigUI:
             gr.Radio.update(visible=True),\
             gr.Radio.update(visible=True)
 
-    def get_eleven_remaining(self, key):
+    def get_eleven_remaining(self,):
         '''Get the remaining characters from ElevenLabs API'''
-        if (key):
+        if (self.eleven_labs_api):
             try:
                 return self.eleven_labs_api.get_remaining_characters()
             except Exception as e:
@@ -75,7 +77,7 @@ class ConfigUI:
                         show_openai_key.click(self.on_show, [show_openai_key], [openai_textbox, show_openai_key])
                     with gr.Row():
                         eleven_labs_textbox = gr.Textbox(value=self.api_key_manager.get_api_key("ELEVEN LABS"), label=f"ELEVEN LABS API KEY", show_label=True, interactive=True, show_copy_button=True, type="password", scale=40)
-                        eleven_characters_remaining = gr.Textbox(value=self.get_eleven_remaining(self.api_key_manager.get_api_key("ELEVEN LABS")), label=f"CHARACTERS REMAINING", show_label=True, interactive=False, type="text", scale=40)
+                        eleven_characters_remaining = gr.Textbox(value=self.get_eleven_remaining(), label=f"CHARACTERS REMAINING", show_label=True, interactive=False, type="text", scale=40)
                         show_eleven_key = gr.Button("Show", size="sm", scale=1)
                         show_eleven_key.click(self.on_show, [show_eleven_key], [eleven_labs_textbox, show_eleven_key])
                     with gr.Row():

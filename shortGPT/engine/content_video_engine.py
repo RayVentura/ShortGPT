@@ -1,6 +1,7 @@
 from shortGPT.api_utils.pexels_api import getBestVideo
 from shortGPT.audio.audio_duration import getAssetDuration
 from shortGPT.audio.voice_module import VoiceModule
+from shortGPT.config.asset_db import AssetDatabase
 from shortGPT.gpt import  gpt_editing, gpt_translate, gpt_yt
 from shortGPT.audio import audio_utils
 from shortGPT.editing_utils import captions
@@ -95,7 +96,7 @@ class ContentVideoEngine(AbstractContentEngine):
 
     def _chooseBackgroundMusic(self):
         if self._db_background_music_name:
-            self._db_background_music_url = self.assetStore.getAssetLink(self._db_background_music_name)
+            self._db_background_music_url = AssetDatabase.getAssetLink(self._db_background_music_name)
 
     def _prepareBackgroundAssets(self):
         self.verifyParameters(voiceover_audio_url=self._db_audio_path)

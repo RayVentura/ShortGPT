@@ -8,19 +8,15 @@ from shortGPT.api_utils.eleven_api import ElevenLabsAPI
 from shortGPT.config.api_db import ApiKeyManager
 from shortGPT.config.asset_db import AssetDatabase
 
-AssetDatabase().sync_local_assets()
-
 
 def getBackgroundVideoChoices():
-    asset_db = AssetDatabase()
-    df = asset_db.get_df()
+    df = AssetDatabase.get_df()
     choices = list(df.loc['background video' == df['type']]['name'])[:20]
     return choices
 
 
 def getBackgroundMusicChoices():
-    asset_db = AssetDatabase()
-    df = asset_db.get_df()
+    df = AssetDatabase.get_df()
     choices = list(df.loc['background music' == df['type']]['name'])[:20]
     return choices
 

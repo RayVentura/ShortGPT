@@ -20,7 +20,6 @@ class AbstractContentEngine(ABC):
         self.prepareEditingPaths()
         self._db_language = language.value
         self.voiceModule = voiceModule
-        self.assetStore = AssetDatabase()
         self.stepDict = {}
         self.logger = lambda _: print(_)
 
