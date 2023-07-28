@@ -141,7 +141,6 @@ LANGUAGE_ACRONYM_MAPPING={
     Language.DUTCH : "nl",
     Language.NORWEGIAN_BOKMAL : "nb",
     Language.NORWEGIAN_NYNORSK : "nn",
-    Language.PANJABI : "pa",
     Language.PASHTO : "ps",
     Language.ROMANIAN : "ro",
     Language.RUSSIAN : "ru",
