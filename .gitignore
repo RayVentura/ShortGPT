@@ -24,3 +24,4 @@ dist
 build
 setup.py
 test.ipynb
+.venv/
