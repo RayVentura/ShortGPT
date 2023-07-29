@@ -4,9 +4,9 @@ import traceback
 
 import gradio as gr
 
-from gui.asset_components import (EDGE_TTS, ELEVEN_TTS, start_file,
-                                  voiceChoiceTranslation)
-from gui.gradio_components_html import GradioComponentsHTML
+from gui.asset_components import AssetComponentsUtils
+from gui.ui_abstract_component import AbstractComponentUI
+from gui.ui_components_html import GradioComponentsHTML
 from shortGPT.audio.edge_voice_module import EdgeTTSVoiceModule
 from shortGPT.audio.eleven_voice_module import ElevenLabsVoiceModule
 from shortGPT.config.api_db import ApiKeyManager
@@ -15,7 +15,7 @@ from shortGPT.config.languages import (EDGE_TTS_VOICENAME_MAPPING,
 from shortGPT.engine.content_translation_engine import ContentTranslationEngine
 
 
-class VideoTranslationUI:
+class VideoTranslationUI(AbstractComponentUI):
     def __init__(self, shortGptUI: gr.Blocks):
         self.shortGptUI = shortGptUI
         self.eleven_language_choices = [lang.value.upper() for lang in ELEVEN_SUPPORTED_LANGUAGES]
@@ -23,21 +23,21 @@ class VideoTranslationUI:
         self.progress_counter = 0
         self.video_translation_ui = None
 
-    def create_video_translation_ui(self):
+    def create_ui(self):
         with gr.Row(visible=False) as video_translation_ui:
             with gr.Column():
                 videoType = gr.Radio(["Youtube link", "Video file"], label="Input your video", value="Video file", interactive=True)
                 video_path = gr.Video(source="upload", interactive=True, width=533.33, height=300)
                 yt_link = gr.Textbox(label="Youtube link (https://youtube.com/xyz): ", interactive=True, visible=False)
                 videoType.change(lambda x: (gr.update(visible=x == "Video file"), gr.update(visible=x == "Youtube link")), [videoType], [video_path, yt_link])
-                tts_engine = gr.Radio([ELEVEN_TTS, EDGE_TTS], label="Text to speech engine", value=ELEVEN_TTS, interactive=True)
+                tts_engine = gr.Radio([AssetComponentsUtils.ELEVEN_TTS, AssetComponentsUtils.EDGE_TTS], label="Text to speech engine", value=AssetComponentsUtils.ELEVEN_TTS, interactive=True)
 
                 with gr.Column(visible=True) as eleven_tts:
                     language_eleven = gr.Radio(self.eleven_language_choices, label="Language", value="ENGLISH", interactive=True)
-                    voiceChoiceTranslation.render()
+                    AssetComponentsUtils.voiceChoiceTranslation()
                 with gr.Column(visible=False) as edge_tts:
                     language_edge = gr.Dropdown([lang.value.upper() for lang in Language], label="Language", value="ENGLISH", interactive=True)
-                tts_engine.change(lambda x: (gr.update(visible=x == ELEVEN_TTS), gr.update(visible=x == EDGE_TTS)), tts_engine, [eleven_tts, edge_tts])
+                tts_engine.change(lambda x: (gr.update(visible=x == AssetComponentsUtils.ELEVEN_TTS), gr.update(visible=x == AssetComponentsUtils.EDGE_TTS)), tts_engine, [eleven_tts, edge_tts])
 
                 useCaptions = gr.Checkbox(label="Caption video", value=False)
 
@@ -47,18 +47,18 @@ class VideoTranslationUI:
                 video_folder = gr.Button("📁", visible=True)
                 output = gr.HTML()
 
-            video_folder.click(lambda _: start_file(os.path.abspath("videos/")))
+            video_folder.click(lambda _: AssetComponentsUtils.start_file(os.path.abspath("videos/")))
             translateButton.click(self.inspect_create_inputs, inputs=[videoType, video_path, yt_link, ], outputs=[generation_error]).success(self.translate_video, inputs=[
-                videoType, yt_link, video_path, tts_engine, language_eleven, language_edge, useCaptions, voiceChoiceTranslation
+                videoType, yt_link, video_path, tts_engine, language_eleven, language_edge, useCaptions, AssetComponentsUtils.voiceChoiceTranslation()
             ], outputs=[output, video_folder, generation_error])
         self.video_translation_ui = video_translation_ui
         return self.video_translation_ui
 
     def translate_video(self, videoType, yt_link, video_path, tts_engine, language_eleven, language_edge, use_captions: bool, voice: str, progress=gr.Progress()) -> str:
-        if tts_engine == ELEVEN_TTS:
+        if tts_engine == AssetComponentsUtils.ELEVEN_TTS:
             language = Language(language_eleven.lower().capitalize())
             voice_module = ElevenLabsVoiceModule(ApiKeyManager.get_api_key('ELEVEN LABS'), voice, checkElevenCredits=True)
-        elif tts_engine == EDGE_TTS:
+        elif tts_engine == AssetComponentsUtils.EDGE_TTS:
             language = Language(language_edge.lower().capitalize())
             voice_module = EdgeTTSVoiceModule(EDGE_TTS_VOICENAME_MAPPING[language]['male'])
         print(EDGE_TTS_VOICENAME_MAPPING[language]['male'], Language)

@@ -1,11 +1,11 @@
-from abc import ABC, abstractmethod
 import threading
+from abc import ABC, abstractmethod
 
 import tinydb
 import tinymongo as tm
 
 
-class DatabaseDocument(ABC):
+class AbstractDatabaseDocument(ABC):
 
     @abstractmethod
     def _save(self, key, data):
@@ -42,8 +42,9 @@ class TinyMongoClient(tm.TinyMongoClient):
 TINY_MONGO_DATABASE = TinyMongoClient("./.database")
 
 
-class TinyMongoDocument(DatabaseDocument):
+class TinyMongoDocument(AbstractDatabaseDocument):
     _lock = threading.Lock()
+
     def __init__(self, db_name: str, collection_name: str, document_id: str, create=False):
         self.collection = TINY_MONGO_DATABASE[db_name][collection_name]
         self.collection_name = collection_name

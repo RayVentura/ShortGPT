@@ -2,13 +2,13 @@ import time
 
 import gradio as gr
 
-from gui.asset_components import (getElevenlabsVoices, voiceChoice,
-                                  voiceChoiceTranslation)
+from gui.asset_components import AssetComponentsUtils
+from gui.ui_abstract_component import AbstractComponentUI
 from shortGPT.api_utils.eleven_api import ElevenLabsAPI
 from shortGPT.config.api_db import ApiKeyManager
 
 
-class ConfigUI:
+class ConfigUI(AbstractComponentUI):
     def __init__(self):
         self.api_key_manager = ApiKeyManager()
         eleven_key = self.api_key_manager.get_api_key('ELEVEN LABS')
@@ -39,7 +39,7 @@ class ConfigUI:
             self.api_key_manager.set_api_key("PEXELS", pexels_key)
         if (self.api_key_manager.get_api_key('ELEVEN LABS') != eleven_key):
             self.api_key_manager.set_api_key("ELEVEN LABS", eleven_key)
-            new_eleven_voices = getElevenlabsVoices()
+            new_eleven_voices = AssetComponentsUtils.getElevenlabsVoices()
             return gr.Textbox.update(value=openai_key),\
                 gr.Textbox.update(value=eleven_key),\
                 gr.Textbox.update(value=pexels_key),\
@@ -66,7 +66,7 @@ class ConfigUI:
         time.sleep(3)
         return gr.Button.update(value="save")
 
-    def create_config_ui(self):
+    def create_ui(self):
         '''Create the config UI'''
         with gr.Tab("Config") as config_ui:
             with gr.Row():
@@ -86,7 +86,7 @@ class ConfigUI:
                         show_pexels_key.click(self.on_show, [show_pexels_key], [pexels_textbox, show_pexels_key])
                     save_button = gr.Button("save", size="sm", scale=1)
                     save_button.click(self.verify_eleven_key, [eleven_labs_textbox, eleven_characters_remaining], [eleven_characters_remaining]).success(
-                        self.save_keys, [openai_textbox, eleven_labs_textbox, pexels_textbox], [openai_textbox, eleven_labs_textbox, pexels_textbox, voiceChoice, voiceChoiceTranslation])
+                        self.save_keys, [openai_textbox, eleven_labs_textbox, pexels_textbox], [openai_textbox, eleven_labs_textbox, pexels_textbox, AssetComponentsUtils.voiceChoice(), AssetComponentsUtils.voiceChoiceTranslation()])
                     save_button.click(lambda _: gr.Button.update(value="Keys Saved !"), [], [save_button])
                     save_button.click(self.back_to_normal, [], [save_button])
         return config_ui

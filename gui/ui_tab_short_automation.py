@@ -1,14 +1,11 @@
 import os
-import random
-import time
 import traceback
 
 import gradio as gr
 
-from gui.asset_components import (background_music_checkbox,
-                                  background_video_checkbox, start_file,
-                                  voiceChoice)
-from gui.gradio_components_html import GradioComponentsHTML
+from gui.asset_components import AssetComponentsUtils
+from gui.ui_abstract_component import AbstractComponentUI
+from gui.ui_components_html import GradioComponentsHTML
 from shortGPT.audio.edge_voice_module import EdgeTTSVoiceModule
 from shortGPT.audio.eleven_voice_module import ElevenLabsVoiceModule
 from shortGPT.config.api_db import ApiKeyManager
@@ -17,34 +14,32 @@ from shortGPT.config.languages import (EDGE_TTS_VOICENAME_MAPPING,
 from shortGPT.engine.facts_short_engine import FactsShortEngine
 from shortGPT.engine.reddit_short_engine import RedditShortEngine
 
-EDGE_TTS = "Free EdgeTTS (medium quality)"
-ELEVEN_TTS = "ElevenLabs(High Quality)"
 
-
-class ShortAutomationUI:
+class ShortAutomationUI(AbstractComponentUI):
     def __init__(self, shortGptUI: gr.Blocks):
         self.shortGptUI = shortGptUI
         self.embedHTML = '<div style="display: flex; overflow-x: auto; gap: 20px;">'
         self.progress_counter = 0
         self.short_automation = None
 
-    def create_short_automation_ui(self):
+    def create_ui(self):
         with gr.Row(visible=False) as short_automation:
             with gr.Column():
                 numShorts = gr.Number(label="Number of shorts", minimum=1, value=1)
                 short_type = gr.Radio(["Reddit Story shorts", "Historical Facts shorts", "Scientific Facts shorts", "Custom Facts shorts"], label="Type of shorts generated", value="Scientific Facts shorts", interactive=True)
                 facts_subject = gr.Textbox(label="Write a subject for your facts (example: Football facts)", interactive=True, visible=False)
                 short_type.change(lambda x: gr.update(visible=x == "Custom Facts shorts"), [short_type], [facts_subject])
-                tts_engine = gr.Radio([ELEVEN_TTS, EDGE_TTS], label="Text to speech engine", value=ELEVEN_TTS, interactive=True)
+                tts_engine = gr.Radio([AssetComponentsUtils.ELEVEN_TTS, AssetComponentsUtils.EDGE_TTS], label="Text to speech engine", value=AssetComponentsUtils.ELEVEN_TTS, interactive=True)
                 self.tts_engine = tts_engine.value
                 with gr.Column(visible=True) as eleven_tts:
                     language_eleven = gr.Radio([lang.value for lang in ELEVEN_SUPPORTED_LANGUAGES], label="Language", value="English", interactive=True)
-                    voiceChoice.render()
+                    AssetComponentsUtils.voiceChoice()
                 with gr.Column(visible=False) as edge_tts:
                     language_edge = gr.Dropdown([lang.value.upper() for lang in Language], label="Language", value="ENGLISH", interactive=True)
+
                 def tts_engine_change(x):
                     self.tts_engine = x
-                    return gr.update(visible=x == ELEVEN_TTS), gr.update(visible=x == EDGE_TTS)
+                    return gr.update(visible=x == AssetComponentsUtils.ELEVEN_TTS), gr.update(visible=x == AssetComponentsUtils.EDGE_TTS)
                 tts_engine.change(tts_engine_change, tts_engine, [eleven_tts, edge_tts])
 
                 useImages = gr.Checkbox(label="Use images", value=True)
@@ -55,8 +50,8 @@ class ShortAutomationUI:
                 watermark = gr.Textbox(label="Watermark (your channel name)", visible=False)
                 addWatermark.change(lambda x: gr.update(visible=x), [addWatermark], [watermark])
 
-                background_video_checkbox.render()
-                background_music_checkbox.render()
+                AssetComponentsUtils.background_video_checkbox()
+                AssetComponentsUtils.background_music_checkbox()
 
                 createButton = gr.Button(label="Create Shorts")
 
@@ -64,9 +59,9 @@ class ShortAutomationUI:
                 video_folder = gr.Button("📁", visible=True)
                 output = gr.HTML()
 
-            video_folder.click(lambda _: start_file(os.path.abspath("videos/")))
+            video_folder.click(lambda _: AssetComponentsUtils.start_file(os.path.abspath("videos/")))
 
-            createButton.click(self.inspect_create_inputs, inputs=[background_video_checkbox, background_music_checkbox, watermark, short_type, facts_subject], outputs=[generation_error]).success(self.create_short, inputs=[
+            createButton.click(self.inspect_create_inputs, inputs=[AssetComponentsUtils.background_video_checkbox(), AssetComponentsUtils.background_music_checkbox(), watermark, short_type, facts_subject], outputs=[generation_error]).success(self.create_short, inputs=[
                 numShorts,
                 short_type,
                 tts_engine,
@@ -74,30 +69,31 @@ class ShortAutomationUI:
                 language_edge,
                 numImages,
                 watermark,
-                background_video_checkbox,
-                background_music_checkbox,
+                AssetComponentsUtils.background_video_checkbox(),
+                AssetComponentsUtils.background_music_checkbox(),
                 facts_subject,
-                voiceChoice
+                AssetComponentsUtils.voiceChoice()
             ], outputs=[output, video_folder, generation_error])
         self.short_automation = short_automation
         return self.short_automation
 
     def create_short(self, numShorts, short_type, tts_engine, language_eleven, language_edge, numImages, watermark, background_video_list, background_music_list, facts_subject, voice, progress=gr.Progress()):
+        '''Creates a short'''
         try:
             numShorts = int(numShorts)
             numImages = int(numImages) if numImages else None
             background_videos = (background_video_list * ((numShorts // len(background_video_list)) + 1))[:numShorts]
             background_musics = (background_music_list * ((numShorts // len(background_music_list)) + 1))[:numShorts]
-            if tts_engine == ELEVEN_TTS:
+            if tts_engine == AssetComponentsUtils.ELEVEN_TTS:
                 language = Language(language_eleven.lower().capitalize())
                 voice_module = ElevenLabsVoiceModule(ApiKeyManager.get_api_key('ELEVEN LABS'), voice, checkElevenCredits=True)
-            elif tts_engine == EDGE_TTS:
+            elif tts_engine == AssetComponentsUtils.EDGE_TTS:
                 language = Language(language_edge.lower().capitalize())
                 voice_module = EdgeTTSVoiceModule(EDGE_TTS_VOICENAME_MAPPING[language]['male'])
 
             for i in range(numShorts):
                 shortEngine = self.create_short_engine(short_type=short_type, voice_module=voice_module, language=language, numImages=numImages, watermark=watermark,
-                                                    background_video=background_videos[i], background_music=background_musics[i], facts_subject=facts_subject)
+                                                       background_video=background_videos[i], background_music=background_musics[i], facts_subject=facts_subject)
                 num_steps = shortEngine.get_total_steps()
 
                 def logger(prog_str):
@@ -152,7 +148,7 @@ class ShortAutomationUI:
         if not openai_key:
             raise gr.Error("OPENAI API key is missing. Please go to the config tab and enter the API key.")
         eleven_labs_key = ApiKeyManager.get_api_key("ELEVEN LABS")
-        if self.tts_engine == ELEVEN_TTS and not eleven_labs_key:
+        if self.tts_engine == AssetComponentsUtils.ELEVEN_TTS and not eleven_labs_key:
             raise gr.Error("ELEVEN LABS API key is missing. Please go to the config tab and enter the API key.")
         return gr.update(visible=False)
 

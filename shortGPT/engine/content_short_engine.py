@@ -1,23 +1,26 @@
-from shortGPT.audio.audio_duration import getAssetDuration
+import datetime
+import os
+import re
+import shutil
+from abc import abstractmethod
+
+from shortGPT.audio import audio_utils
+from shortGPT.audio.audio_duration import get_asset_duration
 from shortGPT.audio.voice_module import VoiceModule
 from shortGPT.config.asset_db import AssetDatabase
-from shortGPT.gpt import  gpt_editing, gpt_translate, gpt_yt
-from shortGPT.audio import audio_utils
+from shortGPT.config.languages import Language
+from shortGPT.editing_framework.editing_engine import (EditingEngine,
+                                                       EditingStep)
 from shortGPT.editing_utils import captions, editing_images
 from shortGPT.editing_utils.handle_videos import extract_random_clip_from_video
 from shortGPT.engine.abstract_content_engine import AbstractContentEngine
-from shortGPT.config.languages import Language
-from shortGPT.editing_framework.editing_engine import EditingEngine, EditingStep
-from abc import  abstractmethod
-import re
-import shutil
-import os
-import datetime
+from shortGPT.gpt import gpt_editing, gpt_translate, gpt_yt
+
 
 class ContentShortEngine(AbstractContentEngine):
 
     def __init__(self, short_type: str, background_video_name: str, background_music_name: str, voiceModule: VoiceModule, short_id="",
-                 num_images=None, watermark=None, language:Language = Language.ENGLISH,):
+                 num_images=None, watermark=None, language: Language = Language.ENGLISH,):
         super().__init__(short_id, short_type, language, voiceModule)
         if not short_id:
             if (num_images):
@@ -26,7 +29,7 @@ class ContentShortEngine(AbstractContentEngine):
                 self._db_watermark = watermark
             self._db_background_video_name = background_video_name
             self._db_background_music_name = background_music_name
-        
+
         self.stepDict = {
             1:  self._generateScript,
             2:  self._generateTempAudio,
@@ -41,11 +44,10 @@ class ContentShortEngine(AbstractContentEngine):
             11: self._editAndRenderShort,
             12: self._addYoutubeMetadata
         }
-    
+
     @abstractmethod
     def _generateScript(self):
         self._db_script = ""
-
 
     def _generateTempAudio(self):
         if not self._db_script:
@@ -85,39 +87,38 @@ class ContentShortEngine(AbstractContentEngine):
                 self._db_timed_image_searches)
 
     def _chooseBackgroundMusic(self):
-        self._db_background_music_url = AssetDatabase.getAssetLink(self._db_background_music_name)
+        self._db_background_music_url = AssetDatabase.get_asset_link(self._db_background_music_name)
 
     def _chooseBackgroundVideo(self):
-        self._db_background_video_url = AssetDatabase.getAssetLink(
+        self._db_background_video_url = AssetDatabase.get_asset_link(
             self._db_background_video_name)
-        self._db_background_video_duration = AssetDatabase.getAssetDuration(
+        self._db_background_video_duration = AssetDatabase.get_asset_duration(
             self._db_background_video_name)
 
     def _prepareBackgroundAssets(self):
         self.verifyParameters(
-                              voiceover_audio_url=self._db_audio_path,
-                              video_duration=self._db_background_video_duration,
-                              background_video_url=self._db_background_video_url, music_url=self._db_background_music_url)
+            voiceover_audio_url=self._db_audio_path,
+            video_duration=self._db_background_video_duration,
+            background_video_url=self._db_background_video_url, music_url=self._db_background_music_url)
         if not self._db_voiceover_duration:
             self.logger("Rendering short: (1/4) preparing voice asset...")
-            self._db_audio_path, self._db_voiceover_duration = getAssetDuration(
+            self._db_audio_path, self._db_voiceover_duration = get_asset_duration(
                 self._db_audio_path, isVideo=False)
         if not self._db_background_trimmed:
             self.logger("Rendering short: (2/4) preparing background video asset...")
             self._db_background_trimmed = extract_random_clip_from_video(
                 self._db_background_video_url, self._db_background_video_duration, self._db_voiceover_duration, self.dynamicAssetDir + "clipped_background.mp4")
-      
+
     def _prepareCustomAssets(self):
         self.logger("Rendering short: (3/4) preparing custom assets...")
         pass
-    
 
     def _editAndRenderShort(self):
         self.verifyParameters(
-                              voiceover_audio_url=self._db_audio_path,
-                              video_duration=self._db_background_video_duration, 
-                              music_url=self._db_background_music_url)
-        
+            voiceover_audio_url=self._db_audio_path,
+            video_duration=self._db_background_video_duration,
+            music_url=self._db_background_music_url)
+
         outputPath = self.dynamicAssetDir+"rendered_video.mp4"
         if not (os.path.exists(outputPath)):
             self.logger("Rendering short: Starting automated editing...")
@@ -134,12 +135,12 @@ class ContentShortEngine(AbstractContentEngine):
             if self._db_watermark:
                 videoEditor.addEditingStep(EditingStep.ADD_WATERMARK, {
                                            'text': self._db_watermark})
-            
-            caption_type = EditingStep.ADD_CAPTION_SHORT_ARABIC if self._db_language == Language.ARABIC.value else EditingStep.ADD_CAPTION_SHORT 
+
+            caption_type = EditingStep.ADD_CAPTION_SHORT_ARABIC if self._db_language == Language.ARABIC.value else EditingStep.ADD_CAPTION_SHORT
             for timing, text in self._db_timed_captions:
                 videoEditor.addEditingStep(caption_type, {'text': text.upper(),
-                                                                     'set_time_start': timing[0],
-                                                                     'set_time_end': timing[1]})
+                                                          'set_time_start': timing[0],
+                                                          'set_time_end': timing[1]})
             if self._db_num_images:
                 for timing, image_url in self._db_timed_image_urls:
                     videoEditor.addEditingStep(EditingStep.SHOW_IMAGE, {'url': image_url,
@@ -151,7 +152,7 @@ class ContentShortEngine(AbstractContentEngine):
         self._db_video_path = outputPath
 
     def _addYoutubeMetadata(self):
-        
+
         self._db_yt_title, self._db_yt_description = gpt_yt.generate_title_description_dict(self._db_script)
 
         now = datetime.datetime.now()

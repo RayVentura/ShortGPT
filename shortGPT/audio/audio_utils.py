@@ -1,10 +1,14 @@
-from shortGPT.audio.audio_duration import getAssetDuration
 import os
 import subprocess
+
 import yt_dlp
-CONST_CHARS_PER_SEC = 20.5 # Arrived to this result after whispering a ton of shorts and calculating the average number of characters per second of speech.
+
+from shortGPT.audio.audio_duration import get_asset_duration
+
+CONST_CHARS_PER_SEC = 20.5  # Arrived to this result after whispering a ton of shorts and calculating the average number of characters per second of speech.
 
 WHISPER_MODEL = None
+
 
 def downloadYoutubeAudio(url, outputFile):
     ydl_opts = {
@@ -28,17 +32,19 @@ def downloadYoutubeAudio(url, outputFile):
         print("Failed downloading audio from the following video/url", e.args[0])
     return None
 
-def speedUpAudio(tempAudioPath, outputFile, expected_duration=None): # Speeding up the audio to make it under 60secs, otherwise the output video is not considered as a short.
-    tempAudioPath, duration = getAssetDuration(tempAudioPath, False)
+
+def speedUpAudio(tempAudioPath, outputFile, expected_duration=None):  # Speeding up the audio to make it under 60secs, otherwise the output video is not considered as a short.
+    tempAudioPath, duration = get_asset_duration(tempAudioPath, False)
     if not expected_duration:
-        if(duration > 57):
+        if (duration > 57):
             subprocess.run(['ffmpeg', '-i', tempAudioPath, '-af', f'atempo={(duration/57):.5f}', outputFile])
         else:
             subprocess.run(['ffmpeg', '-i', tempAudioPath, outputFile])
     else:
         subprocess.run(['ffmpeg', '-i', tempAudioPath, '-af', f'atempo={(duration/expected_duration):.5f}', outputFile])
-    if(os.path.exists(outputFile)):
-            return outputFile
+    if (os.path.exists(outputFile)):
+        return outputFile
+
 
 def ChunkForAudio(alltext, chunk_size=2500):
     alltext_list = alltext.split('.')
@@ -54,17 +60,20 @@ def ChunkForAudio(alltext, chunk_size=2500):
         chunks.append(curr_chunk)
     return chunks
 
+
 def audioToText(filename, model_size="base"):
     from whisper_timestamped import load_model, transcribe_timestamped
     global WHISPER_MODEL
-    if(WHISPER_MODEL == None):
+    if (WHISPER_MODEL == None):
         WHISPER_MODEL = load_model(model_size)
-    gen = transcribe_timestamped(WHISPER_MODEL, filename,verbose=False, fp16=False)
+    gen = transcribe_timestamped(WHISPER_MODEL, filename, verbose=False, fp16=False)
     return gen
+
 
 def getWordsPerSec(filename):
     a = audioToText(filename)
     return len(a['text'].split()) / a['segments'][-1]['end']
+
 
 def getCharactersPerSec(filename):
     a = audioToText(filename)

@@ -4,8 +4,9 @@ from enum import Enum
 
 import gradio as gr
 
-from gui.asset_components import start_file
-from gui.gradio_components_html import GradioComponentsHTML
+from gui.asset_components import AssetComponentsUtils
+from gui.ui_abstract_component import AbstractComponentUI
+from gui.ui_components_html import GradioComponentsHTML
 from shortGPT.audio.edge_voice_module import EdgeTTSVoiceModule
 from shortGPT.audio.eleven_voice_module import ElevenLabsVoiceModule
 from shortGPT.config.api_db import ApiKeyManager
@@ -26,7 +27,7 @@ class Chatstate(Enum):
     ASK_CORRECTION = 8
 
 
-class VideoAutomationUI:
+class VideoAutomationUI(AbstractComponentUI):
     def __init__(self, shortGptUI: gr.Blocks):
         self.shortGptUI = shortGptUI
         self.state = Chatstate.ASK_ORIENTATION
@@ -79,7 +80,7 @@ class VideoAutomationUI:
 
     def chatbot_conversation(self):
         def respond(message, chat_history, progress=gr.Progress()):
-            #global self.state, isVertical, voice_module, language, script, videoVisible, video_html
+            # global self.state, isVertical, voice_module, language, script, videoVisible, video_html
             error_html = ""
             errorVisible = False
             inputVisible = True
@@ -96,7 +97,7 @@ class VideoAutomationUI:
                 if "elevenlabs" in message.lower():
                     eleven_labs_key = ApiKeyManager.get_api_key("ELEVEN LABS")
                     if not eleven_labs_key:
-                        bot_message =  "Your Eleven Labs API key is missing. Please go to the config tab and enter the API key."
+                        bot_message = "Your Eleven Labs API key is missing. Please go to the config tab and enter the API key."
                         return
                     self.voice_module = ElevenLabsVoiceModule
                     language_choices = [lang.value for lang in ELEVEN_SUPPORTED_LANGUAGES]
@@ -184,14 +185,14 @@ class VideoAutomationUI:
         self.video_html = ""
         self.videoVisible = False
 
-    def create_video_automation_ui(self):
+    def create_ui(self):
         with gr.Row(visible=False) as self.video_automation:
             with gr.Column():
                 self.chatbot = gr.Chatbot(self.initialize_conversation, height=365)
                 self.msg = gr.Textbox()
                 self.restart_button = gr.Button("Restart")
                 self.video_folder = gr.Button("📁", visible=False)
-                self.video_folder.click(lambda _: start_file(os.path.abspath("videos/")))
+                self.video_folder.click(lambda _: AssetComponentsUtils.start_file(os.path.abspath("videos/")))
                 respond = self.chatbot_conversation()
 
             self.errorHTML = gr.HTML(visible=False)

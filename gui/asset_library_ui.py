@@ -1,3 +1,4 @@
+"""
 import re
 
 import gradio as gr
@@ -6,14 +7,15 @@ from gui.asset_components import (background_music_checkbox,
                                   background_video_checkbox,
                                   getBackgroundMusicChoices,
                                   getBackgroundVideoChoices)
+from gui.ui_abstract_component import AbstractComponentUI
 from shortGPT.config.asset_db import AssetDatabase
 
 
-class AssetLibrary:
+class AssetLibrary(AbstractComponentUI):
     def __init__(self):
         pass
 
-    def create_asset_library_ui(self):
+    def create_ui(self):
         '''Create the asset library UI'''
         with gr.Tab("Asset library") as asset_library_ui:
             with gr.Column():
@@ -25,22 +27,22 @@ class AssetLibrary:
                         add_youtube_link = gr.Button("ADD")
                 with gr.Row():
                     with gr.Column(scale=3):
-                        asset_dataframe_ui = gr.Dataframe(self.fulfill_df, interactive=False)
+                        asset_dataframe_ui = gr.Dataframe(self.__fulfill_df, interactive=False)
                     with gr.Column(scale=2):
                         gr.Markdown("Preview")
-                        asset_preview_ui = gr.HTML(self._get_first_preview)
+                        asset_preview_ui = gr.HTML(self.__get_first_preview)
                         delete_button = gr.Button("🗑️ Delete", scale=0, variant="primary")
-                        delete_button.click(self.delete_clicked, [delete_button], [asset_dataframe_ui, asset_preview_ui, delete_button, background_video_checkbox, background_music_checkbox])
-                        asset_dataframe_ui.select(self.preview_asset, [asset_dataframe_ui], [asset_preview_ui, delete_button])
-                add_youtube_link.click(self.verify_youtube_asset_inputs, [asset_name, youtube_url, asset_type], []).success(self.add_youtube_asset, [asset_name, youtube_url,
-                                                                                                                                                     asset_type], [asset_dataframe_ui, asset_preview_ui, delete_button, accordion, background_video_checkbox, background_music_checkbox])
+                        delete_button.click(self.__delete_clicked, [delete_button], [asset_dataframe_ui, asset_preview_ui, delete_button, background_video_checkbox, background_music_checkbox])
+                        asset_dataframe_ui.select(self.__preview_asset, [asset_dataframe_ui], [asset_preview_ui, delete_button])
+                add_youtube_link.click(
+                    self.__verify_youtube_asset_inputs, [asset_name, youtube_url, asset_type], []).success(self.__add_youtube_asset, [asset_name, youtube_url, asset_type], [asset_dataframe_ui, asset_preview_ui, delete_button, accordion, background_video_checkbox, background_music_checkbox])
         return asset_library_ui
 
-    def fulfill_df(self):
+    def __fulfill_df(self):
         '''Get the asset dataframe'''
         return AssetDatabase.get_df()
 
-    def verify_youtube_asset_inputs(self, asset_name, yt_url, type):
+    def __verify_youtube_asset_inputs(self, asset_name, yt_url, type):
         if not asset_name or not re.match("^[A-Za-z0-9 _-]*$", asset_name):
             raise gr.Error('Invalid asset name. Please provide a valid name that you will recognize (Only use letters and numbers)')
         if not yt_url.startswith("https://youtube.com/") and not yt_url.startswith("https://www.youtube.com/"):
@@ -48,28 +50,28 @@ class AssetLibrary:
         if AssetDatabase.asset_exists(asset_name):
             raise gr.Error('An asset already exists with this name, please choose a different name.')
 
-    def add_youtube_asset(self, asset_name, yt_url, type):
+    def __add_youtube_asset(self, asset_name, yt_url, type):
         '''Add a youtube asset'''
         AssetDatabase.add_remote_asset(asset_name, type, yt_url)
         latest_df = AssetDatabase.get_df()
-        return gr.DataFrame.update(value=latest_df), gr.HTML.update(value=self.get_asset_embed(latest_df, 0)),\
+        return gr.DataFrame.update(value=latest_df), gr.HTML.update(value=self.__get_asset_embed(latest_df, 0)),\
             gr.update(value=f"🗑️ Delete {latest_df.iloc[0]['name']}"),\
             gr.Accordion.update(open=False),\
             gr.CheckboxGroup.update(choices=getBackgroundVideoChoices(), interactive=True),\
             gr.CheckboxGroup.update(choices=getBackgroundMusicChoices(), interactive=True)
 
-    def _get_first_preview(self):
+    def __get_first_preview(self):
         '''Get the first preview'''
-        return self.get_asset_embed(AssetDatabase.get_df(), 0)
+        return self.__get_asset_embed(AssetDatabase.get_df(), 0)
 
-    def delete_clicked(self, button_name):
+    def __delete_clicked(self, button_name):
         '''Delete an asset'''
         asset_name = button_name.split("🗑️ Delete ")[-1]
         AssetDatabase.remove_asset(asset_name)
         data = AssetDatabase.get_df()
         if len(data) > 0:
             return gr.update(value=data),\
-                gr.HTML.update(value=self.get_asset_embed(data, 0)),\
+                gr.HTML.update(value=self.__get_asset_embed(data, 0)),\
                 gr.update(value=f"🗑️ Delete {data.iloc[0]['name']}"),\
                 gr.CheckboxGroup.update(choices=getBackgroundVideoChoices(), interactive=True),\
                 gr.CheckboxGroup.update(choices=getBackgroundMusicChoices(), interactive=True)
@@ -79,12 +81,12 @@ class AssetLibrary:
             gr.CheckboxGroup.update(choices=getBackgroundVideoChoices(), interactive=True),\
             gr.CheckboxGroup.update(choices=getBackgroundMusicChoices(), interactive=True)
 
-    def preview_asset(self, data, evt: gr.SelectData):
+    def __preview_asset(self, data, evt: gr.SelectData):
         '''Preview an asset'''
-        html_embed = self.get_asset_embed(data, evt.index[0])
+        html_embed = self.__get_asset_embed(data, evt.index[0])
         return gr.HTML.update(value=html_embed), gr.update(value=f"🗑️ Delete {data.iloc[evt.index[0]]['name']}")
 
-    def get_asset_embed(self, data, row):
+    def __get_asset_embed(self, data, row):
         '''Get the asset embed'''
         embed_height = 300
         embed_width = 300
@@ -108,3 +110,5 @@ class AssetLibrary:
             else:
                 embed_html = 'Unsupported file type'
         return embed_html
+
+"""
