@@ -1,22 +1,26 @@
-import yt_dlp
-import subprocess
 import json
+import subprocess
+
+import yt_dlp
+
 from shortGPT.editing_utils.handle_videos import getYoutubeVideoLink
+
 
 def get_duration_yt_dlp(url):
     ydl_opts = {
-    "quiet": True,
-    "no_warnings": True,
-    "no_color": True,
-    "no_call_home": True,
-    "no_check_certificate": True
-}
+        "quiet": True,
+        "no_warnings": True,
+        "no_color": True,
+        "no_call_home": True,
+        "no_check_certificate": True
+    }
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             dictMeta = ydl.extract_info(url, download=False, )
             return dictMeta['duration'], ""
     except Exception as e:
         return None, f"Failed getting duration from the following video/audio url/path using yt_dlp. {e.args[0]}"
+
 
 def get_duration_ffprobe(signed_url):
     try:
@@ -42,13 +46,14 @@ def get_duration_ffprobe(signed_url):
         print("Failed getting the duration of the asked ressource", e.args[0])
     return None, ""
 
-def getAssetDuration(url, isVideo=True):
-    if("youtube.com" in url):
+
+def get_asset_duration(url, isVideo=True):
+    if ("youtube.com" in url):
         if not isVideo:
             url, _ = getYoutubeAudioLink(url)
         else:
             url, _ = getYoutubeVideoLink(url)
-    #Trying two different method to get the duration of the video / audio
+    # Trying two different method to get the duration of the video / audio
     duration, err_ffprobe = get_duration_ffprobe(url)
     if duration is not None:
         return url, duration
@@ -64,12 +69,12 @@ def getAssetDuration(url, isVideo=True):
 
 def getYoutubeAudioLink(url):
     ydl_opts = {
-    "quiet": True,
-    "no_warnings": True,
-    "no_color": True,
-    "no_call_home": True,
-    "no_check_certificate": True,
-    "format": "bestaudio/best"
+        "quiet": True,
+        "no_warnings": True,
+        "no_color": True,
+        "no_call_home": True,
+        "no_check_certificate": True,
+        "format": "bestaudio/best"
     }
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
