@@ -95,34 +95,34 @@ class ShortAutomationUI:
                 language = Language(language_edge.lower().capitalize())
                 voice_module = EdgeTTSVoiceModule(EDGE_TTS_VOICENAME_MAPPING[language]['male'])
 
-                for i in range(numShorts):
-                    shortEngine = self.create_short_engine(short_type=short_type, voice_module=voice_module, language=language, numImages=numImages, watermark=watermark,
-                                                        background_video=background_videos[i], background_music=background_musics[i], facts_subject=facts_subject)
-                    num_steps = shortEngine.get_total_steps()
+            for i in range(numShorts):
+                shortEngine = self.create_short_engine(short_type=short_type, voice_module=voice_module, language=language, numImages=numImages, watermark=watermark,
+                                                    background_video=background_videos[i], background_music=background_musics[i], facts_subject=facts_subject)
+                num_steps = shortEngine.get_total_steps()
 
-                    def logger(prog_str):
-                        progress(self.progress_counter / (num_steps * numShorts), f"Making short {i+1}/{numShorts} - {prog_str}")
-                    shortEngine.set_logger(logger)
+                def logger(prog_str):
+                    progress(self.progress_counter / (num_steps * numShorts), f"Making short {i+1}/{numShorts} - {prog_str}")
+                shortEngine.set_logger(logger)
 
-                    for step_num, step_info in shortEngine.makeContent():
-                        progress(self.progress_counter / (num_steps * numShorts), f"Making short {i+1}/{numShorts} - {step_info}")
-                        self.progress_counter += 1
+                for step_num, step_info in shortEngine.makeContent():
+                    progress(self.progress_counter / (num_steps * numShorts), f"Making short {i+1}/{numShorts} - {step_info}")
+                    self.progress_counter += 1
 
-                    video_path = shortEngine.get_video_output_path()
-                    current_url = self.shortGptUI.share_url+"/" if self.shortGptUI.share else self.shortGptUI.local_url
-                    file_url_path = f"{current_url}file={video_path}"
-                    file_name = video_path.split("/")[-1].split("\\")[-1]
-                    self.embedHTML += f'''
-                    <div style="display: flex; flex-direction: column; align-items: center;">
-                        <video width="{250}" height="{500}" style="max-height: 100%;" controls>
-                            <source src="{file_url_path}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                        <a href="{file_url_path}" download="{file_name}" style="margin-top: 10px;">
-                            <button style="font-size: 1em; padding: 10px; border: none; cursor: pointer; color: white; background: #007bff;">Download Video</button>
-                        </a>
-                    </div>'''
-                    yield self.embedHTML + '</div>', gr.Button.update(visible=True), gr.update(visible=False)
+                video_path = shortEngine.get_video_output_path()
+                current_url = self.shortGptUI.share_url+"/" if self.shortGptUI.share else self.shortGptUI.local_url
+                file_url_path = f"{current_url}file={video_path}"
+                file_name = video_path.split("/")[-1].split("\\")[-1]
+                self.embedHTML += f'''
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <video width="{250}" height="{500}" style="max-height: 100%;" controls>
+                        <source src="{file_url_path}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <a href="{file_url_path}" download="{file_name}" style="margin-top: 10px;">
+                        <button style="font-size: 1em; padding: 10px; border: none; cursor: pointer; color: white; background: #007bff;">Download Video</button>
+                    </a>
+                </div>'''
+                yield self.embedHTML + '</div>', gr.Button.update(visible=True), gr.update(visible=False)
         except Exception as e:
             traceback_str = ''.join(traceback.format_tb(e.__traceback__))
             error_name = type(e).__name__.capitalize() + " : " + f"{e.args[0]}"
