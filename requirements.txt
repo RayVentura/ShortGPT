@@ -19,4 +19,4 @@ termcolor
 progress
 questionary
 edge-tts
-spleeter
+git+https://github.com/deezer/spleeter

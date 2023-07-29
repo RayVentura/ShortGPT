@@ -7,6 +7,7 @@ from tqdm import tqdm
 
 from shortGPT.audio.audio_duration import get_asset_duration
 from shortGPT.audio.audio_utils import (audioToText, get_asset_duration,
+                                        run_background_audio_split,
                                         speedUpAudio)
 from shortGPT.audio.voice_module import VoiceModule
 from shortGPT.config.languages import ACRONYM_LANGUAGE_MAPPING, Language
@@ -88,12 +89,21 @@ class ContentTranslationEngine(AbstractContentEngine):
         editing_engine = EditingEngine()
         editing_engine.addEditingStep(EditingStep.ADD_BACKGROUND_VIDEO, {'url': input_video, "set_time_start": 0, "set_time_end": video_length})
         last_t2 = 0
+        background_audio = run_background_audio_split(video_audio)
+        if background_audio:
+            editing_engine.addEditingStep(EditingStep.EXTRACT_AUDIO, {"url": video_audio,
+                                                                      "subclip": {"t_start": 0, "t_end": video_length},
+                                                                      "set_time_start": 0, "set_time_end":  video_length})
         for (t1, t2), audio_path in self._db_audio_bits:
             t2 += -0.05
             editing_engine.addEditingStep(EditingStep.INSERT_AUDIO, {'url': audio_path, 'set_time_start': t1, 'set_time_end': t2})
-            if t1-last_t2 > 4:
-                editing_engine.addEditingStep(EditingStep.EXTRACT_AUDIO, {"url": video_audio, "subclip": {"t_start": last_t2, "t_end": t1}, "set_time_start": last_t2, "set_time_end":  t1})
+            if not background_audio:
+                if t1-last_t2 > 4:
+                    editing_engine.addEditingStep(EditingStep.EXTRACT_AUDIO, {"url": video_audio, "subclip": {"t_start": last_t2, "t_end": t1}, "set_time_start": last_t2, "set_time_end":  t1})
             last_t2 = t2
+            if not background_audio:
+                if video_length - last_t2 > 4:
+                    editing_engine.addEditingStep(EditingStep.EXTRACT_AUDIO, {"url": video_audio, "subclip": {"t_start": last_t2, "t_end": video_length}, "set_time_start": last_t2, "set_time_end":  video_length})
 
         if video_length - last_t2 > 4:
             editing_engine.addEditingStep(EditingStep.EXTRACT_AUDIO, {"url": video_audio, "subclip": {"t_start": last_t2, "t_end": video_length}, "set_time_start": last_t2, "set_time_end":  video_length})
