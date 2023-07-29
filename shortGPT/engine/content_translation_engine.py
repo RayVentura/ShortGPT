@@ -6,7 +6,7 @@ from shortGPT.config.languages import Language, ACRONYM_LANGUAGE_MAPPING
 from shortGPT.editing_utils.handle_videos import get_aspect_ratio
 from shortGPT.editing_framework.editing_engine import EditingEngine, EditingStep
 from shortGPT.editing_utils.captions import getSpeechBlocks, getCaptionsWithTime
-from shortGPT.audio.audio_utils import audioToText, getAssetDuration, speedUpAudio
+from shortGPT.audio.audio_utils import audioToText, getAssetDuration, speedUpAudio, run_background_audio_split
 from tqdm import tqdm
 from shortGPT.editing_framework.editing_engine import EditingEngine, EditingStep
 import re
@@ -83,15 +83,21 @@ class ContentTranslationEngine(AbstractContentEngine):
         editing_engine = EditingEngine()
         editing_engine.addEditingStep(EditingStep.ADD_BACKGROUND_VIDEO, {'url': input_video, "set_time_start": 0, "set_time_end": video_length})
         last_t2 = 0
+        background_audio = run_background_audio_split(video_audio)
+        if background_audio:
+            editing_engine.addEditingStep(EditingStep.EXTRACT_AUDIO, {"url": video_audio, 
+                                            "subclip": {"t_start": 0, "t_end": video_length}, 
+                                            "set_time_start": 0, "set_time_end":  video_length})
         for (t1, t2), audio_path in self._db_audio_bits:
             t2+=-0.05
             editing_engine.addEditingStep(EditingStep.INSERT_AUDIO, {'url': audio_path, 'set_time_start': t1, 'set_time_end': t2})
-            if t1-last_t2 >4:
-                editing_engine.addEditingStep(EditingStep.EXTRACT_AUDIO, {"url": video_audio, "subclip": {"t_start": last_t2, "t_end": t1}, "set_time_start": last_t2, "set_time_end":  t1})
+            if not background_audio:
+                if t1-last_t2 >4:
+                    editing_engine.addEditingStep(EditingStep.EXTRACT_AUDIO, {"url": video_audio, "subclip": {"t_start": last_t2, "t_end": t1}, "set_time_start": last_t2, "set_time_end":  t1})
             last_t2 = t2
-
-        if video_length - last_t2 >4:
-            editing_engine.addEditingStep(EditingStep.EXTRACT_AUDIO, {"url": video_audio, "subclip": {"t_start": last_t2, "t_end": video_length}, "set_time_start": last_t2, "set_time_end":  video_length})
+        if not background_audio:
+            if video_length - last_t2 >4:
+                editing_engine.addEditingStep(EditingStep.EXTRACT_AUDIO, {"url": video_audio, "subclip": {"t_start": last_t2, "t_end": video_length}, "set_time_start": last_t2, "set_time_end":  video_length})
 
         if self._db_use_captions:
             is_landscape = get_aspect_ratio(input_video) > 1

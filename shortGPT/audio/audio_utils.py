@@ -69,3 +69,21 @@ def getWordsPerSec(filename):
 def getCharactersPerSec(filename):
     a = audioToText(filename)
     return len(a['text']) / a['segments'][-1]['end']
+
+def run_background_audio_split(sound_file_path):
+    try:
+        # Run spleeter command
+        # Get absolute path of sound file 
+        output_dir = os.path.dirname(sound_file_path)
+        command = f"spleeter separate -p spleeter:2stems -o '{output_dir}' '{sound_file_path}'"
+
+        process = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+        # If spleeter runs successfully, return the path to the background music file
+        if process.returncode == 0:
+            return os.path.join(output_dir, sound_file_path.split("/")[-1].split(".")[0], "accompaniment.wav")
+        else:
+            return None
+    except Exception:
+        # If spleeter crashes, return None
+        return None
