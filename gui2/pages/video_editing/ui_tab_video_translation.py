@@ -32,7 +32,8 @@ class VideoTranslationUI():
             voice = st.selectbox(
                 "Elevenlabs voice",
                 options=AssetComponentsUtils.getElevenlabsVoices(),
-                index=AssetComponentsUtils.getElevenlabsVoices().index("Antoni")
+                index=AssetComponentsUtils.getElevenlabsVoices().index("Antoni"),
+                key="voice_eleven_translator"
             )  # Assuming this is a function that returns the voice choice
         else:
             language_edge = st.selectbox("Language", [lang.value.upper() for lang in Language], index=0, key="language_edge")
