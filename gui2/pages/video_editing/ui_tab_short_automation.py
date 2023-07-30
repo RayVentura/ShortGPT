@@ -37,7 +37,11 @@ class ShortAutomationUI:
         if tts_engine_radio_btn == AssetComponentsUtils.ELEVEN_TTS:
             language_eleven_radio_items = [lang.value for lang in ELEVEN_SUPPORTED_LANGUAGES]
             language_eleven_radio_btn = st.radio("Language", language_eleven_radio_items)
-            language_eleven_voice_selected = AssetComponentsUtils.voiceChoice()
+            language_eleven_voice_selected = st.selectbox(
+                "Elevenlabs voice",
+                options=AssetComponentsUtils.getElevenlabsVoices(),
+                index=AssetComponentsUtils.getElevenlabsVoices().index("Antoni")
+            )
         elif tts_engine_radio_btn == AssetComponentsUtils.EDGE_TTS:
             language_edge_radio_items = [lang.value.upper() for lang in Language]
             language_edge_radio_btn = st.selectbox("Language", language_edge_radio_items)
