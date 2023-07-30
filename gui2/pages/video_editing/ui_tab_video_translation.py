@@ -39,9 +39,8 @@ class VideoTranslationUI():
             language_edge = st.selectbox("Language", [lang.value.upper() for lang in Language], index=0, key="language_edge")
 
         useCaptions = st.checkbox("Caption video", key="use_captions")
-
-        translateButton = st.button("Create Shorts", key="translate_button")
-
+        translateButton = st.button("Translate video", key="translate_button")
+        progress_bar = st.progress(0, text="Ready for generation")
         if translateButton:
             if tts_engine == AssetComponentsUtils.ELEVEN_TTS:
                 language = Language(language_eleven.lower().capitalize())
@@ -56,26 +55,26 @@ class VideoTranslationUI():
                 num_steps = content_translation_engine.get_total_steps()
 
                 def logger(prog_str):
-                    st.progress(self.progress_counter / (num_steps), prog_str)
+                    progress_bar.progress(self.progress_counter / (num_steps), prog_str)
                 content_translation_engine.set_logger(logger)
 
                 for step_num, step_info in content_translation_engine.makeContent():
-                    st.progress(self.progress_counter / (num_steps), step_info)
+                    progress_bar.progress(self.progress_counter / (num_steps), step_info)
                     self.progress_counter += 1
 
                 video_path = content_translation_engine.get_video_output_path()
                 file_name = video_path.split("/")[-1].split("\\")[-1]
                 self.embedHTML += f'''
                 <div style="display: flex; flex-direction: column; align-items: center;">
-                    <video width="{500}"  style="max-height: 100%;" controls>
-                        <source src="{video_path}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
                     <a href="{video_path}" download="{file_name}" style="margin-top: 10px;">
                         <button style="font-size: 1em; padding: 10px; border: none; cursor: pointer; color: white; background: #007bff;">Download Video</button>
                     </a>
                 </div>'''
-                st.markdown(self.embedHTML, unsafe_allow_html=True)
+                col1, col2 = st.columns(2)
+                with col1:
+                    vid_download_button = st.markdown(self.embedHTML, unsafe_allow_html=True)
+                with col2:
+                    my_new_vid = st.video(video_path)
 
             except Exception as e:
                 traceback_str = ''.join(traceback.format_tb(e.__traceback__))
