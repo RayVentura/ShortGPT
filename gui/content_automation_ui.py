@@ -15,7 +15,7 @@ class GradioContentAutomationUI:
         with gr.Tab("Content Automation") as self.content_automation_ui:
             gr.Markdown("# 🏆 Content Automation 🚀")
             gr.Markdown("## Choose your desired automation task.")
-            choice = gr.Radio(['🎬 Automate the creation of shorts', '🎞️ Automate a video with stock assets', '📹 Automate video translation'], label="Choose an option")
+            choice = gr.Radio(['🎬 Automate the creation of shorts', '🎞️ Automate a video with stock assets', '🌐 Automate multilingual video dubbing'], label="Choose an option")
             video_automation_ui = VideoAutomationUI(self.shortGPTUI).create_ui()
             short_automation_ui = ShortAutomationUI(self.shortGPTUI).create_ui()
             video_translation_ui = VideoTranslationUI(self.shortGPTUI).create_ui()

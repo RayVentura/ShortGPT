@@ -10,8 +10,8 @@ from shortGPT.config.asset_db import AssetDatabase
 
 
 class AssetComponentsUtils:
-    EDGE_TTS = "Free EdgeTTS (medium quality)"
-    ELEVEN_TTS = "ElevenLabs(High Quality)"
+    EDGE_TTS = "Free EdgeTTS (lower quality)"
+    ELEVEN_TTS = "ElevenLabs(Very High Quality)"
     instance_background_video_checkbox = None
     instance_background_music_checkbox = None
     instance_voiceChoice = None

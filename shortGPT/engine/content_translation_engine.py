@@ -83,29 +83,20 @@ class ContentTranslationEngine(AbstractContentEngine):
     def _edit_and_render_video(self):
         self.verifyParameters(_db_audio_bits=self._db_audio_bits)
         self.logger(f"4.1 / 5 - Preparing automated editing")
-        target_language = Language(self._db_target_language)
+        target_language =  Language(self._db_target_language)
         input_video, video_length = get_asset_duration(self._db_src_url)
         video_audio, _ = get_asset_duration(self._db_src_url, isVideo=False)
         editing_engine = EditingEngine()
         editing_engine.addEditingStep(EditingStep.ADD_BACKGROUND_VIDEO, {'url': input_video, "set_time_start": 0, "set_time_end": video_length})
         last_t2 = 0
-        background_audio = run_background_audio_split(video_audio)
-        if background_audio:
-            editing_engine.addEditingStep(EditingStep.EXTRACT_AUDIO, {"url": video_audio,
-                                                                      "subclip": {"t_start": 0, "t_end": video_length},
-                                                                      "set_time_start": 0, "set_time_end":  video_length})
         for (t1, t2), audio_path in self._db_audio_bits:
-            t2 += -0.05
+            t2+=-0.05
             editing_engine.addEditingStep(EditingStep.INSERT_AUDIO, {'url': audio_path, 'set_time_start': t1, 'set_time_end': t2})
-            if not background_audio:
-                if t1-last_t2 > 4:
-                    editing_engine.addEditingStep(EditingStep.EXTRACT_AUDIO, {"url": video_audio, "subclip": {"t_start": last_t2, "t_end": t1}, "set_time_start": last_t2, "set_time_end":  t1})
+            if t1-last_t2 >4:
+                editing_engine.addEditingStep(EditingStep.EXTRACT_AUDIO, {"url": video_audio, "subclip": {"t_start": last_t2, "t_end": t1}, "set_time_start": last_t2, "set_time_end":  t1})
             last_t2 = t2
-            if not background_audio:
-                if video_length - last_t2 > 4:
-                    editing_engine.addEditingStep(EditingStep.EXTRACT_AUDIO, {"url": video_audio, "subclip": {"t_start": last_t2, "t_end": video_length}, "set_time_start": last_t2, "set_time_end":  video_length})
 
-        if video_length - last_t2 > 4:
+        if video_length - last_t2 >4:
             editing_engine.addEditingStep(EditingStep.EXTRACT_AUDIO, {"url": video_audio, "subclip": {"t_start": last_t2, "t_end": video_length}, "set_time_start": last_t2, "set_time_end":  video_length})
 
         if self._db_use_captions:
@@ -117,17 +108,16 @@ class ContentTranslationEngine(AbstractContentEngine):
                     self._db_translated_voiceover_path = self.dynamicAssetDir+"translated_voiceover.wav"
                 whispered_translated = audioToText(self._db_translated_voiceover_path, model_size='base')
                 timed_translated_captions = getCaptionsWithTime(whispered_translated, maxCaptionSize=50 if is_landscape else 15, considerPunctuation=True)
-                self._db_timed_translated_captions = [[[t1, t2], text] for (t1, t2), text in timed_translated_captions if t2 - t1 <= 4]
+                self._db_timed_translated_captions = [[[t1,t2], text] for (t1, t2), text in timed_translated_captions if t2 - t1 <= 4]
             for (t1, t2), text in self._db_timed_translated_captions:
                 caption_key = "LANDSCAPE" if is_landscape else "SHORT"
                 caption_key += "_ARABIC" if target_language == Language.ARABIC else ""
                 caption_type = getattr(EditingStep, f"ADD_CAPTION_{caption_key}")
                 editing_engine.addEditingStep(caption_type, {'text': text, "set_time_start": t1, "set_time_end": t2})
-
+    
         self._db_video_path = self.dynamicAssetDir+"translated_content.mp4"
 
         editing_engine.renderVideo(self._db_video_path, logger=self.logger)
-
     def _add_metadata(self):
         self.logger(f"5 / 5 - Saving translated video")
         now = datetime.datetime.now()
