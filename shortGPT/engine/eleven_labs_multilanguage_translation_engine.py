@@ -9,7 +9,7 @@ from shortGPT.audio.audio_duration import get_asset_duration
 from shortGPT.audio.audio_utils import (audioToText, get_asset_duration,
                                         run_background_audio_split,
                                         speedUpAudio)
-from shortGPT.audio.eleven_voice_module import ElevenLabsVoiceModule
+from shortGPT.audio.eleven_voice_module import VoiceModule
 from shortGPT.config.languages import ACRONYM_LANGUAGE_MAPPING, Language
 from shortGPT.editing_framework.editing_engine import (EditingEngine,
                                                        EditingStep)
@@ -19,9 +19,9 @@ from shortGPT.editing_utils.handle_videos import get_aspect_ratio
 from shortGPT.engine.abstract_content_engine import CONTENT_DB, AbstractContentEngine, ContentDatabase
 from shortGPT.gpt.gpt_translate import translateContent
 
-class ElevenLabsMultiLanguageTranslationEngine(AbstractContentEngine):
+class MultiLanguageTranslationEngine(AbstractContentEngine):
 
-    def __init__(self, voiceModule: ElevenLabsVoiceModule, src_url: str = "", target_language: Language = Language.ENGLISH, use_captions=False, id=""):
+    def __init__(self, voiceModule: VoiceModule, src_url: str = "", target_language: Language = Language.ENGLISH, use_captions=False, id=""):
         super().__init__(id, "content_translation", target_language, voiceModule)
         if not id:
             self._db_should_translate = True
