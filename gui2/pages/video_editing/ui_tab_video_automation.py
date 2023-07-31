@@ -1,7 +1,10 @@
+import time
 import traceback
 from enum import Enum
 
 import streamlit as st
+from click import progressbar
+from streamlit_chat import message as streamlit_chat_message
 
 from gui2.ui_components_html import StreamlitComponentsHTML
 from shortGPT.audio.edge_voice_module import EdgeTTSVoiceModule
@@ -55,10 +58,11 @@ class VideoAutomationUI:
         progress_counter = 0
 
         def logger(prog_str):
-            st.write(f"Creating video - {progress_counter} - {prog_str}")
+            progressbar.progress(progress_counter, f"Creating video - {progress_counter} - {prog_str}")
+
         videoEngine.set_logger(logger)
         for step_num, step_info in videoEngine.makeContent():
-            st.write(f"Creating video - {step_info}")
+            progressbar.progress(progress_counter, f"Creating video - {progress_counter} - {step_info}")
             progress_counter += 1
 
         video_path = videoEngine.get_video_output_path()
@@ -162,7 +166,24 @@ class VideoAutomationUI:
         self.script = ""
         self.video_html = ""
         self.videoVisible = False
-        return [[None, "🤖 Welcome to ShortGPT! 🚀 I'm a python framework aiming to simplify and automate your video editing tasks.\nLet's get started! 🎥🎬\n\n Do you want your video to be in landscape or vertical format? (landscape OR vertical)"]]
+
+        prompt = "🤖 Welcome to ShortGPT! 🚀 I'm a python framework aiming to simplify and automate your video editing tasks.\nLet's get started! 🎥🎬\n\n Do you want your video to be in landscape or vertical format? (landscape OR vertical)"
+        st.session_state.messages = []
+        st.session_state.messages.append({"role": "assistant", "content": prompt})
+        st.session_state.setdefault(
+            'past',
+            ['plan text with line break',
+             'play the song "Dancing Vegetables"',
+             'show me image of cat',
+             'and video of it',
+             'show me some markdown sample',
+             'table in markdown']
+        )
+        st.session_state.setdefault(
+            'generated',
+            [{'type': 'normal', 'data': 'Line 1 \n Line 2 \n Line 3'},
+             {'type': 'normal', 'data': f'<audio controls src="{prompt}"></audio>'}]
+        )
 
     def reset_conversation(self):
         '''
@@ -177,34 +198,56 @@ class VideoAutomationUI:
 
     def create_ui(self):
         '''
-        Create the video automation UI'''
+        Create the video automation UI
+        '''
+
+        def on_input_change():
+            user_input = st.session_state.user_input
+            st.session_state.past.append(user_input)
+            st.session_state.generated.append("The messages from Bot\nWith new line")
+
+        def on_btn_click():
+            del st.session_state.past[:]
+            del st.session_state.generated[:]
+
         st.title("Video Automation")
 
-        # Initialize chatbot conversation
-        conversation = self.initialize_conversation()
-        for message in conversation:
-            if message[0]:
-                st.write("You: " + message[0])
-            else:
-                st.write("Bot: " + message[1])
+        chat_placeholder = st.empty()
+        self.initialize_conversation()
+        with chat_placeholder.container():
+            for i in range(len(st.session_state['generated'])):
+                streamlit_chat_message(st.session_state['past'][i], is_user=True, key=f"{i}_user")
+                streamlit_chat_message(
+                    st.session_state['generated'][i]['data'],
+                    key=f"{i}",
+                    allow_html=True,
+                    is_table=True if st.session_state['generated'][i]['type'] == 'table' else False
+                )
 
-        while True:
-            message = st.text_input("You: ", key="chatbot_input2")
-            respond = self.chatbot_conversation()
-            bot_message = respond(message)
-            st.write("Bot: " + bot_message)
+            st.button("Clear message", on_click=on_btn_click)
 
-            if self.state == Chatstate.MAKE_VIDEO:
-                try:
-                    video_path = self.make_video(self.script, self.voice_module, self.isVertical)
-                    st.video(video_path)
-                    st.write("Your video is completed !🎬. Scroll down below to open its file location.")
-                except Exception as e:
-                    traceback_str = ''.join(traceback.format_tb(e.__traceback__))
-                    error_name = type(e).__name__.capitalize() + " : " + f"{e.args[0]}"
-                    errorVisible = True
-                    st_content_automation_ui_error_template = StreamlitComponentsHTML.get_html_error_template()
-                    error_html = st_content_automation_ui_error_template.format(error_message=error_name, stack_trace=traceback_str)
-                    st.write("We encountered an error while making this video ❌")
-                    st.write(error_html)
-                break
+        with st.container():
+            st.text_input("User Input:", on_change=on_input_change, key="user_input")
+
+            """
+            while True:
+                message = st.text_input("You: ", key="chatbot_input2")
+                respond = self.chatbot_conversation()
+                bot_message = respond(message)
+                st.write("Bot: " + bot_message)
+
+                if self.state == Chatstate.MAKE_VIDEO:
+                    try:
+                        video_path = self.make_video(self.script, self.voice_module, self.isVertical)
+                        st.video(video_path)
+                        st.write("Your video is completed !🎬. Scroll down below to open its file location.")
+                    except Exception as e:
+                        traceback_str = ''.join(traceback.format_tb(e.__traceback__))
+                        error_name = type(e).__name__.capitalize() + " : " + f"{e.args[0]}"
+                        errorVisible = True
+                        st_content_automation_ui_error_template = StreamlitComponentsHTML.get_html_error_template()
+                        error_html = st_content_automation_ui_error_template.format(error_message=error_name, stack_trace=traceback_str)
+                        st.write("We encountered an error while making this video ❌")
+                        st.write(error_html)
+                    break
+                """

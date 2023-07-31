@@ -7,6 +7,13 @@ from gui2.ui_components_html import StreamlitComponentsHTML
 from shortGPT.api_utils.eleven_api import ElevenLabsAPI
 from shortGPT.config.api_db import ApiKeyManager
 
+st.set_page_config(
+    page_title="Configuration",
+    page_icon="⚙️",
+)
+
+StreamlitComponentsHTML.add_logo("assets/img/logo.png", st)
+
 
 class ConfigUI():
     def __init__(self):

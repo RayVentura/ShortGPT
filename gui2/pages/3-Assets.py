@@ -14,6 +14,8 @@ st.set_page_config(
     layout="wide"
 )
 
+StreamlitComponentsHTML.add_logo("assets/img/logo.png", st)
+
 
 class AssetLibrary:
     def __init__(self):
@@ -22,7 +24,6 @@ class AssetLibrary:
     def create_ui(self):
         '''Create the asset library UI'''
         st.title("Asset library")
-        StreamlitComponentsHTML.add_logo("assets/img/logo.png", st)
         accordion = st.expander("➕ Add your own local assets or from Youtube", False)
 
         with accordion:

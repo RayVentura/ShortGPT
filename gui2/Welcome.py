@@ -3,6 +3,13 @@ import streamlit as st
 
 from gui2.ui_components_html import StreamlitComponentsHTML
 
+st.set_page_config(
+    page_title="ShortGPT - video automation",
+    page_icon="🎬",
+    layout="wide"
+)
+StreamlitComponentsHTML.add_logo("assets/img/logo.png", st)
+
 
 class WelcomePageUI():
 

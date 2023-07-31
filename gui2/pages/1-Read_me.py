@@ -1,5 +1,15 @@
 import streamlit as st
 
+from gui2.ui_components_html import StreamlitComponentsHTML
+
+st.set_page_config(
+    page_title="Read me",
+    page_icon="📖",
+    layout="wide"
+)
+StreamlitComponentsHTML.add_logo("assets/img/logo.png", st)
+
+
 st.markdown("""
 
 
