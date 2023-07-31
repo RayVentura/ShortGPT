@@ -1,11 +1,11 @@
 import numpy as np
 import streamlit as st
 
-from gui2.pages.video_editing.ui_tab_short_automation import ShortAutomationUI
-from gui2.pages.video_editing.ui_tab_video_automation import VideoAutomationUI
-from gui2.pages.video_editing.ui_tab_video_translation import \
+from streamlit_gui.pages.video_editing.ui_tab_short_automation import ShortAutomationUI
+from streamlit_gui.pages.video_editing.ui_tab_video_automation import VideoAutomationUI
+from streamlit_gui.pages.video_editing.ui_tab_video_translation import \
     VideoTranslationUI
-from gui2.ui_components_html import StreamlitComponentsHTML
+from streamlit_gui.ui_components_html import StreamlitComponentsHTML
 
 st.set_page_config(
     page_title="Video Engine",

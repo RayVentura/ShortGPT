@@ -5,7 +5,7 @@ import shutil
 import streamlit as st
 from st_aggrid import AgGrid, GridOptionsBuilder
 
-from gui2.ui_components_html import StreamlitComponentsHTML
+from streamlit_gui.ui_components_html import StreamlitComponentsHTML
 from shortGPT.config.asset_db import AssetDatabase
 
 st.set_page_config(
@@ -125,7 +125,6 @@ class AssetLibrary:
             print(f"Loading youtube video: {asset_link}")
             st.video(asset_link)
         elif 'public/' in asset_link:
-            #asset_link = f"http://localhost:31415/file={asset_link}"
             asset_link = os.path.abspath(asset_link)
             file_ext = asset_link.split('.')[-1]
             if file_ext in ['mp3', 'wav', 'ogg']:
@@ -136,7 +135,8 @@ class AssetLibrary:
                 st.video(asset_link)
             elif file_ext in ['jpg', 'jpeg', 'png', 'gif']:
                 print(f"Loading image: {asset_link}")
-                st.image(asset_link, width=embed_width, height=embed_height)
+                from PIL import Image
+                st.image(Image.open(asset_link), width=embed_width)
 
     @staticmethod
     def __clean_filename(filename):

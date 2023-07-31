@@ -4,7 +4,7 @@ from shortGPT.database.db_document import TINY_MONGO_DATABASE, TinyMongoDocument
 from shortGPT.database.content_data_manager import ContentDataManager
 class ContentDatabase:
     def __init__(self, ):
-        self.shorts_collections = TINY_MONGO_DATABASE["content_db"]["content_documents"]
+        self.content_collection = TINY_MONGO_DATABASE["content_db"]["content_documents"]
 
     def instanciateContentDataManager(self, id: str, content_type: str, new=False):
         db_doc = TinyMongoDocument("content_db", "content_documents", id)

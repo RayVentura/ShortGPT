@@ -1,4 +1,4 @@
-from gui2.gui_streamlit import ShortGptUI
+from gui.gui_gradio import ShortGptUI
 
-app = ShortGptUI()
+app = ShortGptUI(colab=False)
 app.launch()

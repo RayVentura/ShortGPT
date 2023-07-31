@@ -2,8 +2,8 @@ import time
 
 import streamlit as st
 
-from gui2.asset_components import AssetComponentsUtils
-from gui2.ui_components_html import StreamlitComponentsHTML
+from streamlit_gui.asset_components import AssetComponentsUtils
+from streamlit_gui.ui_components_html import StreamlitComponentsHTML
 from shortGPT.api_utils.eleven_api import ElevenLabsAPI
 from shortGPT.config.api_db import ApiKeyManager
 

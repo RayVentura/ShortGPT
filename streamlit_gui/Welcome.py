@@ -1,7 +1,7 @@
 
 import streamlit as st
 
-from gui2.ui_components_html import StreamlitComponentsHTML
+from streamlit_gui.ui_components_html import StreamlitComponentsHTML
 
 st.set_page_config(
     page_title="ShortGPT - video automation",

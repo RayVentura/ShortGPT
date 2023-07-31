@@ -18,7 +18,6 @@ termcolor
 progress
 questionary
 edge-tts
-git+https://github.com/deezer/spleeter
 streamlit
 streamlit-aggrid
 streamlit-chat

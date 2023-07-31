@@ -2,8 +2,8 @@ import traceback
 
 import streamlit as st
 
-from gui2.asset_components import AssetComponentsUtils
-from gui2.ui_components_html import StreamlitComponentsHTML
+from streamlit_gui.asset_components import AssetComponentsUtils
+from streamlit_gui.ui_components_html import StreamlitComponentsHTML
 from shortGPT.audio.edge_voice_module import EdgeTTSVoiceModule
 from shortGPT.audio.eleven_voice_module import ElevenLabsVoiceModule
 from shortGPT.config.api_db import ApiKeyManager

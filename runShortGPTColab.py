@@ -1,4 +1,4 @@
 from gui.gui_gradio import ShortGptUI
 
-app = ShortGptUI(colab=False)
+app = ShortGptUI(colab=True)
 app.launch()

@@ -6,7 +6,7 @@ import streamlit as st
 from click import progressbar
 from streamlit_chat import message as streamlit_chat_message
 
-from gui2.ui_components_html import StreamlitComponentsHTML
+from streamlit_gui.ui_components_html import StreamlitComponentsHTML
 from shortGPT.audio.edge_voice_module import EdgeTTSVoiceModule
 from shortGPT.audio.eleven_voice_module import ElevenLabsVoiceModule
 from shortGPT.config.api_db import ApiKeyManager
@@ -153,11 +153,6 @@ class VideoAutomationUI:
 
         return respond
 
-        return respond
-        # ... (same as the original function)
-        return bot_message
-
-        return respond
 
     def initialize_conversation(self):
         self.state = Chatstate.ASK_ORIENTATION
