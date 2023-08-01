@@ -113,10 +113,10 @@ class VideoTranslationUI(AbstractComponentUI):
             if file_ext not in supported_extensions:
                 raise gr.Error('Invalid video file. Supported video file extensions are: {}'.format(', '.join(supported_extensions)))
         if tts_engine == AssetComponentsUtils.ELEVEN_TTS:
-            if not len(language_eleven) >1:
+            if not len(language_eleven) >0:
                 raise gr.Error('You must select one or more target languages')
         if tts_engine == AssetComponentsUtils.EDGE_TTS:
-            if not len(language_edge) >1:
+            if not len(language_edge) >0:
                 raise gr.Error('You must select one or more target languages')
         return gr.update(visible=False)
 
