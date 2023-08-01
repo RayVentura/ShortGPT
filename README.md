@@ -162,23 +162,6 @@ Follow these steps to add your OpenAI and ElevenLabs API keys:
 
 That's it! You have successfully set up your API keys and can now utilize the functionality of ShortGPT in the Gradio interface.
 
-## 💁 Contributing
-
-As an open-source project in a rapidly developing field, we are extremely open to contributions, whether it would be in the form of a new feature, improved infrastructure, or better documentation.
-
-## Framework overview
-
-- 🎬 The `ContentShortEngine` is designed for creating shorts, handling tasks from script generation to final rendering, including adding YouTube metadata.
-
-- 🎥 The `ContentVideoEngine` is ideal for longer videos, taking care of tasks like generating audio, automatically sourcing background video footage, timing captions, and preparing background assets.
-  
-- 🎞️ The automated `EditingEngine`, using Editing Markup Language and JSON, breaks down the editing process into manageable and customizable blocks, comprehensible to Large Language Models.
-
-💡 ShortGPT offers customization options to suit your needs, from language selection to watermark addition.
-
-🔧 As a framework, ShortGPT is adaptable and flexible, offering the potential for efficient, creative content creation.
-
-More documentation incomming, please be patient.
 
 ## Technologies Used
 
@@ -195,6 +178,24 @@ ShortGPT utilizes the following technologies to power its functionality:
 - **Bing Image**: Bing Image is used for sourcing images, providing a comprehensive database for ShortGPT to retrieve relevant visuals.
 
 These technologies work together to provide a seamless and efficient experience in automating video and short content creation with AI.
+
+## Framework overview
+
+- 🎬 The `ContentShortEngine` is designed for creating shorts, handling tasks from script generation to final rendering, including adding YouTube metadata.
+
+- 🎥 The `ContentVideoEngine` is ideal for longer videos, taking care of tasks like generating audio, automatically sourcing background video footage, timing captions, and preparing background assets.
+  
+- 🎞️ The automated `EditingEngine`, using Editing Markup Language and JSON, breaks down the editing process into manageable and customizable blocks, comprehensible to Large Language Models.
+
+💡 ShortGPT offers customization options to suit your needs, from language selection to watermark addition.
+
+🔧 As a framework, ShortGPT is adaptable and flexible, offering the potential for efficient, creative content creation.
+
+More documentation incomming, please be patient.
+
+## 💁 Contributing
+
+As an open-source project in a rapidly developing field, we are extremely open to contributions, whether it would be in the form of a new feature, improved infrastructure, or better documentation.
 
 ## 🔗 Get in touch on Twitter 🐦
 
