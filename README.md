@@ -27,9 +27,8 @@ https://github.com/RayVentura/ShortGPT/assets/121462835/06f51b2d-f8b1-4a23-b299-
 We hope you find ShortGPT helpful! If you do, let us know by giving us a star ⭐ on the repo. It's easy, just click on the 'Star' button at the top right of the page. Your support means a lot to us and keeps us motivated to improve and expand ShortGPT. Thank you and happy content creating! 🎉 
 
 [![GitHub star chart](https://img.shields.io/github/stars/rayventura/shortgpt?style=social)](https://github.com/RayVentura/ShortGPT/stargazers)
-
-
-
+## 🛠️ How it works
+![alt text](https://github.com/RayVentura/ShortGPT/assets/121462835/fcee74d4-f856-4481-949f-244558bf3bfa)
 ## 📝 Introduction to ShortGPT 
 ShortGPT is a powerful framework for automating content creation. It simplifies video creation, footage sourcing, voiceover synthesis, and editing tasks.
 
@@ -45,9 +44,6 @@ ShortGPT is a powerful framework for automating content creation. It simplifies 
 
 - 🧠 **Memory and persistency**: Ensures long-term persistency of automated editing variables with TinyDB.
 
-## 🛠️ How it works
-![alt text](https://github.com/RayVentura/ShortGPT/assets/121462835/fcee74d4-f856-4481-949f-244558bf3bfa)
-
 ## 🚀 Quick Start: Run ShortGPT on Google Colab (https://colab.research.google.com/drive/1_2UKdpF6lqxCqWaAcZb3rwMVQqtbisdE?usp=sharing)
 
 If you prefer not to install the prerequisites on your local system, you can use the Google Colab notebook. This option is free and requires no installation setup.
@@ -57,26 +53,21 @@ If you prefer not to install the prerequisites on your local system, you can use
 2. Once you're in the notebook, simply run the cells in order from top to bottom. You can do this by clicking on each cell and pressing the 'Play' button, or by using the keyboard . Enjoy using ShortGPT!
 
 # Instructions for running shortGPT
-
 This guide provides step-by-step instructions for installing ImageMagick and FFmpeg on your system, which are both required to do automated editing. Once installed, you can proceed to run `runShortGPT.py` successfully.
 
 ## Prerequisites
-
 Before you begin, ensure that you have the following prerequisites installed on your system:
 - Python 3.x
 - Pip (Python package installer)
 
 ## Installation Steps
-
 Follow the instructions below to install ImageMagick, FFmpeg, and clone the shortGPT repository:
 
 ### Step 1: Install ImageMagick
-
 1. For `Windows` download the installer from the official ImageMagick website and follow the installation instructions.
       
       [https://imagemagick.org/script/download.php](https://imagemagick.org/script/download.php)
-      
-     
+          
 2. For Ubuntu/Debian-based systems, use the command:
      ```
      sudo apt-get install imagemagick
@@ -89,17 +80,13 @@ Follow the instructions below to install ImageMagick, FFmpeg, and clone the shor
      ```
      brew install imagemagick
      ```
-     
-
 2. Verify the installation by running the following command:
    ```
    convert --version
    ```
-
    You should see the ImageMagick version information if the installation was successful.
 
 ### Step 2: Install FFmpeg (REQUIRED FOR SHORTGPT TO WORK)
-
 1. For `Windows`Download the FFmpeg binaries from this Windows Installer (It will download ffmpeg, ffprobe and add it to your path).
       
       [https://github.com/icedterminal/ffmpeg-installer/releases/tag/6.0.0.20230306](https://github.com/icedterminal/ffmpeg-installer/releases/tag/6.0.0.20230306)
@@ -116,7 +103,6 @@ Follow the instructions below to install ImageMagick, FFmpeg, and clone the shor
    ```
    ffmpeg -version
    ```
-
    You should see the FFmpeg version information if the installation was successful.
 
 ### Step 3: Clone the shortGPT Repository
