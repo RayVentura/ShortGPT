@@ -4,6 +4,7 @@ import re
 from time import sleep, time
 
 import openai
+import litellm
 import tiktoken
 import yaml
 
@@ -97,5 +98,45 @@ def gpt3Turbo_completion(chat_prompt="", system="You are an AI that can give the
             retry += 1
             if retry >= max_retry:
                 raise Exception("GPT3 error: %s" % oops)
+            print('Error communicating with OpenAI:', oops)
+            sleep(1)
+
+
+def liteLLM_completion(chat_prompt="", system="You are an AI that can give the answer to anything", temp=0.7, model="gpt-3.5-turbo", max_tokens=1000, remove_nl=True, conversation=None):
+    # use this for cohere, anthropic by 
+    # liteLLM_completion(chat_prompt, model="claude-v2")
+    # liteLLM_completion(chat_prompt, model="claude-instant-1")
+    # liteLLM_completion(chat_prompt, model="command-nightly")
+    # liteLLM checks env/.env for API keys and handles AUTH
+    # eg os.environ['OPENAI_API_KEY'], more info on supported models here: https://litellm.readthedocs.io/en/latest/supported/
+    max_retry = 5
+    retry = 0
+    while True:
+        try:
+            if conversation:
+                messages = conversation
+            else:
+                messages = [
+                    {"role": "system", "content": system},
+                    {"role": "user", "content": chat_prompt}
+                ]
+            response = litellm.completion(
+                model=model,
+                messages=messages,
+                max_tokens=max_tokens,
+                temperature=temp)
+            text = response['choices'][0]['message']['content'].strip()
+            if remove_nl:
+                text = re.sub('\s+', ' ', text)
+            filename = '%s_gpt3.txt' % time()
+            if not os.path.exists('.logs/gpt_logs'):
+                os.makedirs('.logs/gpt_logs')
+            with open('.logs/gpt_logs/%s' % filename, 'w', encoding='utf-8') as outfile:
+                outfile.write(f"System prompt: ===\n{system}\n===\n"+f"Chat prompt: ===\n{chat_prompt}\n===\n" + f'RESPONSE:\n====\n{text}\n===\n')
+            return text
+        except Exception as oops:
+            retry += 1
+            if retry >= max_retry:
+                raise Exception("liteLLM error: %s" % oops)
             print('Error communicating with OpenAI:', oops)
             sleep(1)

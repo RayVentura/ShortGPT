@@ -1,6 +1,7 @@
 ffmpeg
 python-dotenv
 gradio==3.38.0
+litellm==0.1.226
 openai
 tiktoken
 tinydb
