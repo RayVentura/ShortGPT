@@ -162,11 +162,6 @@ That's it! You have successfully set up your API keys and can now utilize the fu
 
 More documentation incomming, please be patient.
 
-## 💁 Contributing
-
-As an open-source project in a rapidly developing field, we are extremely open to contributions, whether it would be in the form of a new feature, improved infrastructure, or better documentation.
-
-
 
 ## Technologies Used
 
@@ -183,6 +178,12 @@ ShortGPT utilizes the following technologies to power its functionality:
 - **Bing Image**: Bing Image is used for sourcing images, providing a comprehensive database for ShortGPT to retrieve relevant visuals.
 
 These technologies work together to provide a seamless and efficient experience in automating video and short content creation with AI.
+
+## 💁 Contributing
+
+As an open-source project in a rapidly developing field, we are extremely open to contributions, whether it would be in the form of a new feature, improved infrastructure, or better documentation.
+
+
 ## 🔗 Get in touch on Twitter 🐦
 
 Keep up with the latest happenings, announcements, and insights about Short-GPT by checking out our Twitter accounts. Spark a conversation with our developer and the AI's own account for fascinating dialogues, latest news about the project, and more.
