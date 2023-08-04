@@ -183,7 +183,7 @@ function Home() {
                         Automated Editing Framework
                       </h5>
                       <p className="mt-2 text-base leading-6 text-gray-600">
-                      ShortGPT employs a heavy usage of LLMs and automated video editing libraries to streamline the video creation process (Ffmpeg, moviepy, ffprobe).
+                      ShortGPT employs a heavy usage of LLMs to streamline the video creation process.
                       </p>
                     </div>
                   </div>
@@ -201,7 +201,7 @@ function Home() {
                         Voiceover / Content Creation
                       </h5>
                       <p className="mt-2 text-base leading-6 text-gray-600">
-                      ShortGPT integrates multiple neural voice synthesis engines (ElevenLabs, EdgeTTS), to allow human-like voice quality in the audio generated.
+                      ShortGPT integrates a multi-lingual voiceover synthesis module, supporting a wide range of languages. It comes with support with the Elevenlabs api, and also comes integrated with Microsoft's EdgeTTS free voice synthesis engine. This feature facilitates the creation of diverse content, catering to a global audience.
                       </p>
                     </div>
                   </div>
@@ -219,7 +219,7 @@ function Home() {
                         Asset Sourcing
                       </h5>
                       <p className="mt-2 text-base leading-6 text-gray-600">
-                      ShortGPT is equipped with an advanced asset sourcing module that can retrieve images and video footage from the internet. This feature allows for the easy incorporation of relevant visuals into the content (Pexels, youtube, and more soon).
+                      ShortGPT is equipped with an advanced asset sourcing module that can retrieve images and video footage from the internet. This feature allows for the easy incorporation of relevant visuals into the content.
                       </p>
                     </div>
                   </div>
