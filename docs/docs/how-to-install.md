@@ -1,121 +1,101 @@
 ---
-title: Step-by-Step Guide to Installing ShortGPT
-sidebar_label: Installation Guide
+title: What is shortGPT?
+sidebar_label: What is shortGPT?
 ---
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+# Getting Started with shortGPT
 
-# Launching Your ShortGPT Experience
+This documentation provides guidelines for setting up your machine to run **shortGPT** script. The script requires two prerequisites, ImageMagick and FFmpeg. This guide provides step-by-step instructions for installing these dependencies. 
 
-This guide will walk you through the process of setting up your machine to run the **ShortGPT** library. The setup requires two key components, ImageMagick and FFmpeg. Follow the steps below to get these dependencies installed.
+## Prerequisites
 
-## Before You Begin
-
-Make sure you have the following installed on your machine:
+Ensure you have the following installed on your machine.
 
 - Python 3.x
 - Pip (Python package installer)
 
-## Installation Process
+## Installation 
 
-Here are the steps to install ImageMagick, FFmpeg, and the ShortGPT library.
+Below are the instructions for installing ImageMagick, FFmpeg, and shortGPT library.
 
 <Tabs groupId="operating-systems">
   <TabItem value="win" label="Windows">
 
-### Step 1: Install ImageMagick 
+  ### Step 1: Install ImageMagick
 
-ImageMagick is a crucial component for ShortGPT. Download the installer from the official ImageMagick website. Click on the link below to get started.
+  Download the installer from the official [ImageMagick](https://imagemagick.org/script/download.php) website and follow the installation instructions.
 
-> **[👉 Download ImageMagick Here 👈](https://imagemagick.org/script/download.php)** 
+  ### Step 2: Install FFmpeg (REQUIRED FOR SHORTGPT TO WORK)
 
-After downloading, follow the installation instructions provided on the website.
+  Download the FFmpeg binaries from this [Windows Installer](https://github.com/icedterminal/ffmpeg-installer/releases/tag/6.0.0.20230306). It will download ffmpeg, ffprobe and add it to your path.
 
-### Step 2: Install FFmpeg (Essential for ShortGPT)
+  ### Step 3: Install shortGPT library
 
-FFmpeg is another key component for ShortGPT. Download the FFmpeg binaries from the link below:
+  - Open a terminal or command prompt.
+  - Execute the following command:
 
-> **[👉 Download FFmpeg Here (click on 
-FFmpeg_Full.msi ) 👈](https://github.com/icedterminal/ffmpeg-installer/releases/tag/6.0.0.20230306)**
-
-The download will include ffmpeg and ffprobe and will add it to your path. Follow the installation instructions as guided.
-<details open>
-<summary><b>Step 3: Install ShortGPT Library</b></summary>
-
-- Open a terminal or command prompt.
-- Execute the following command:
-
-```bash
-pip install --upgrade shortgpt
-```
-
-</details>
+  ```bash
+  pip install --upgrade shortgpt
+  ```
 
   </TabItem>
 
   <TabItem value="mac" label="macOS">
 
-### Step 1: Install ImageMagick
+  ### Step 1: Install ImageMagick
 
-Run the command below in your command line:
+  Run the command below in your command line:
 
-```bash
-brew install imagemagick
-```
+  ```bash
+  brew install imagemagick
+  ```
 
-### Step 2: Install FFmpeg (Essential for ShortGPT)
+  ### Step 2: Install FFmpeg (REQUIRED FOR SHORTGPT TO WORK)
 
-Run the command below in your command line:
+  Run the command below in your command line:
 
-```bash
-brew install ffmpeg
-```
+  ```bash
+  brew install ffmpeg
+  ```
 
-<details open>
-<summary><b>Step 3: Install ShortGPT Library</b></summary>
+  ### Step 3: Install shortGPT library
 
-- Open a terminal or command prompt.
-- Execute the following command:
+  - Open a terminal or command prompt.
+  - Execute the following command:
 
-```bash
-pip install --upgrade shortgpt
-```
-
-</details>
+  ```bash
+  pip install --upgrade shortgpt
+  ```
 
   </TabItem>
 
   <TabItem value="ubuntu" label="Ubuntu/Debian-based systems">
 
-### Step 1: Install ImageMagick
+  ### Step 1: Install ImageMagick
 
-Execute the following command:
+  Execute the following command:
 
-```bash
-sudo apt-get install imagemagick
-```
+  ```bash
+  sudo apt-get install imagemagick
+  ```
 
-### Step 2: Install FFmpeg
+  ### Step 2: Install FFmpeg (REQUIRED FOR SHORTGPT TO WORK)
 
-Execute the following command:
+  Execute the following command:
 
-```bash
-sudo apt-get install ffmpeg
-```
+  ```bash
+  sudo apt-get install ffmpeg
+  ```
 
-<details open>
-<summary><b>Step 3: Install ShortGPT Library</b></summary>
+  ### Step 3: Install shortGPT library
 
-- Open a terminal or command prompt.
-- Execute the following command:
+  - Open a terminal or command prompt.
+  - Execute the following command:
 
-```bash
-pip install --upgrade shortgpt
-```
-
-</details>
+  ```bash
+  pip install --upgrade shortgpt
+  ```
 
   </TabItem>
 </Tabs>
 
-And there you have it! Your machine is now ready to run ShortGPT. Dive into the world of automated video content creation with ShortGPT!
+That’s it! Your machine is now ready to run shortGPT. Enjoy automating your work with shortGPT!
