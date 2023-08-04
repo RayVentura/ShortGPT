@@ -183,7 +183,6 @@ These technologies work together to provide a seamless and efficient experience 
 
 As an open-source project in a rapidly developing field, we are extremely open to contributions, whether it would be in the form of a new feature, improved infrastructure, or better documentation.
 
-
 ## 🔗 Get in touch on Twitter 🐦
 
 Keep up with the latest happenings, announcements, and insights about Short-GPT by checking out our Twitter accounts. Spark a conversation with our developer and the AI's own account for fascinating dialogues, latest news about the project, and more.
