@@ -12,7 +12,7 @@
 </div>
 
 <div align="center">
-⚡ Automating video and short content creation with AI ⚡
+⚡ Automating video and short content creation with AI X⚡
 </div>
 
 ## 🎥 Showcase ([Full video on YouTube](https://youtu.be/hpoSHq-ER8U))
