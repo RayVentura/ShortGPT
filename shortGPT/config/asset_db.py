@@ -91,8 +91,10 @@ class AssetDatabase:
                              })
 
         df = pd.DataFrame(data)
-        df.sort_values(by='ts', ascending=False, inplace=True)
-        return df.drop(columns='ts')
+        if (not df.empty):
+            df.sort_values(by='ts', ascending=False, inplace=True)
+            return df.drop(columns='ts')
+        return df
 
     @classmethod
     def sync_local_assets(cls):
