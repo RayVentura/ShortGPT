@@ -1,0 +1,51 @@
+{
+  "name": "shortgpt-documentation",
+  "version": "3.5.1",
+  "private": true,
+  "scripts": {
+    "build:clean": "rm -rf dist build .docusaurus node_modules",
+    "docusaurus": "docusaurus",
+    "start": "docusaurus start",
+    "build": "docusaurus build",
+    "swizzle": "docusaurus swizzle",
+    "deploy": "docusaurus deploy",
+    "clear": "docusaurus clear",
+    "serve": "docusaurus serve",
+    "write-translations": "docusaurus write-translations",
+    "write-heading-ids": "docusaurus write-heading-ids"
+  },
+  "dependencies": {
+    "@algolia/ui-library": "^4.0.0",
+    "@docsearch/react": "3.5.1",
+    "@docusaurus/core": "2.4.1",
+    "@docusaurus/preset-classic": "2.4.1",
+    "@mdx-js/react": "^1.6.22",
+    "clsx": "^1.1.1",
+    "file-loader": "6.2.0",
+    "my-loaders": "file:plugins/my-loaders",
+    "postcss": "8.4.25",
+    "postcss-import": "15.0.0",
+    "postcss-preset-env": "7.8.2",
+    "prism-react-renderer": "1.2.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tailwind-loader": "file:plugins/tailwind-loader",
+    "url-loader": "4.1.1"
+  },
+  "devDependencies": {
+    "postcss-loader": "6.2.1",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
+  },
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
