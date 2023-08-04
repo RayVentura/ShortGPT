@@ -161,7 +161,7 @@ function Home() {
                   How it works
                 </h2>
                 <p className="mt-4 max-w-2xl text-xl leading-7 text-gray-500 lg:mx-auto">
-                  ShortGPT automates the content creation process, from generating scripts and prompts to sourcing assets and editing videos.
+                ShortGPT is an AI-powered framework that automates the process of content creation, from script generation to asset sourcing and video editing.
                 </p>
               </div>
             </div>
@@ -183,7 +183,7 @@ function Home() {
                         Automated Editing Framework
                       </h5>
                       <p className="mt-2 text-base leading-6 text-gray-600">
-                        ShortGPT streamlines the video creation process with an LLM oriented video editing language, making it easier to automate editing tasks.
+                      ShortGPT employs a heavy usage of LLMs to streamline the video creation process.
                       </p>
                     </div>
                   </div>
@@ -201,7 +201,7 @@ function Home() {
                         Voiceover / Content Creation
                       </h5>
                       <p className="mt-2 text-base leading-6 text-gray-600">
-                        ShortGPT supports multiple languages for voiceover synthesis, making it easy to create content in various languages.
+                      ShortGPT integrates a multi-lingual voiceover synthesis module, supporting a wide range of languages. It comes with support with the Elevenlabs api, and also comes integrated with Microsoft's EdgeTTS free voice synthesis engine. This feature facilitates the creation of diverse content, catering to a global audience.
                       </p>
                     </div>
                   </div>
@@ -219,7 +219,7 @@ function Home() {
                         Asset Sourcing
                       </h5>
                       <p className="mt-2 text-base leading-6 text-gray-600">
-                        ShortGPT can source images and video footage from the internet, allowing you to easily find and use relevant visuals.
+                      ShortGPT is equipped with an advanced asset sourcing module that can retrieve images and video footage from the internet. This feature allows for the easy incorporation of relevant visuals into the content.
                       </p>
                     </div>
                   </div>
