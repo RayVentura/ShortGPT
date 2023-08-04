@@ -35,7 +35,7 @@ function Home() {
         cta={[
           <Link
             key="get-started"
-            to="/docs/what-is-shortgpt"
+            to="/docs/how-to-install"
             className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-semibold rounded-full text-white bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 hover:no-underline"
           >
             Get started
