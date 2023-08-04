@@ -7,11 +7,11 @@ here = os.path.abspath(os.path.dirname(__file__))
 with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
     long_description = "\n" + fh.read()
 
-VERSION = '0.0.1'
+VERSION = '0.0.2'
 DESCRIPTION = 'Automating video and short content creation with AI'
 LONG_DESCRIPTION = 'A powerful tool for automating content creation. It simplifies video creation, footage sourcing, voiceover synthesis, and editing tasks.'
 
-# Setting up
+
 setup(
     name="shortgpt",
     version=VERSION,
@@ -31,11 +31,13 @@ setup(
         'tinymongo',
         'proglog',
         'yt-dlp',
-        'torch', 
+        'torch',
+        'whisper-timestamped',
         'torchaudio',
+        'pillow==9.0.0',
         'protobuf==3.20.0',
-        'langchain',
-        'moviepy',
+        'edge-tts',
+        'moviepy==1.0.3',
         'termcolor',
         'progress',
         'questionary',

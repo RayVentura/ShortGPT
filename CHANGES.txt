@@ -1,0 +1,6 @@
+# CHANGES
+
+## Version 0.0.2
+- Implemented the content_translation_engine; a multilingual video dubbing content engine. The source can be found at shortGPT/engine/content_translation_engine.py.
+- Implemented the new EdgeTTS voice module; it can be found at shortgpt/audio/edge_voice_module.
+- Added documentation which can be found under docs/.
