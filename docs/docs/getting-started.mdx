@@ -40,12 +40,12 @@ else:
     voice_module = EdgeTTSVoiceModule(voice_name)
 
 # Configure Content Engine
-facts_video_topic = "Random facts on dolphins"
+facts_video_topic = "Interesting scientific facts from the 19th century"
 content_engine = FactsShortEngine(voiceModule=voice_module,
     facts_type=facts_video_topic,
     background_video_name="minecraft background cube", # <--- use the same name you've saved in  the AssetDatabase
     background_music_name='chill music', # <--- use the same name you've saved in  the AssetDatabase
-    num_images=0, # If you want images, put a number, preferrably below 25
+    num_images=5, # If you don't want images in your video, put 0 or None
     language=Language.GERMAN)
 
 # Generate Content
