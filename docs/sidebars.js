@@ -20,11 +20,13 @@ module.exports = {
       type: 'category',
       label: 'Content Engines',
       items: ['content-video-engine', 'content-translation-engine', 'facts-short-engine'],
+      collapsed: false,
     },
     {
       type: 'category',
       label: 'API Key and Asset',
       items: ['api-key-manager', 'asset-database'],
+      collapsed: false,
     },
   ],
 };
