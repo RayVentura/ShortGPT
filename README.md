@@ -17,13 +17,12 @@
   </a>  
 </p>
 
-<div align="center">
-    <img src="https://github.com/RayVentura/ShortGPT/assets/121462835/083c8dc3-bac5-42c1-a08d-3ff9686d18c5" alt="ShortGPT-logo" style="border-radius: 20px;" width="22%"/>
-    <!-- <img src="https://github.com/RayVentura/ShortGPT/assets/121462835/a29c020b-e43b-4ede-80a3-51dc520c4f8d" alt="ShortGPT-logo" style="border-radius: 20px;" width="22%"/> -->
+<div align="center" style="border-radius: 20px;" width="18%">
+    <img src="https://github.com/RayVentura/ShortGPT/assets/121462835/083c8dc3-bac5-42c1-a08d-3ff9686d18c5" alt="ShortGPT-logo" style="border-radius: 20px;" width="18%"/>
 </div>
 <div align="center">
   <a href="https://discord.gg/uERx39ru3R">
-    <img src="https://img.shields.io/badge/discord-join%20chat-blue.svg" alt="Join our Discord" height="34">
+    <img src="https://img.shields.io/discord/1126042224979886160?color=7289da&logo=discord&logoColor=blue&labelColor=white&color=cyan" alt="Join our Discord" height="34">
   </a>
 </div>
 
