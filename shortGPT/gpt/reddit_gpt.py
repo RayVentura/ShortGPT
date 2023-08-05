@@ -13,18 +13,18 @@ def generateRedditPostMetadata(title):
 
 
 def getInterestingRedditQuestion():
-    chat, system = gpt_utils.load_yaml_prompt('prompt_templates/reddit_generate_question.yaml')
+    chat, system = gpt_utils.load_local_yaml_prompt('prompt_templates/reddit_generate_question.yaml')
     return gpt_utils.gpt3Turbo_completion(chat_prompt=chat, system=system, temp=1.08)
 
 def createRedditScript(question):
-    chat, system = gpt_utils.load_yaml_prompt('prompt_templates/reddit_generate_script.yaml')
+    chat, system = gpt_utils.load_local_yaml_prompt('prompt_templates/reddit_generate_script.yaml')
     chat = chat.replace("<<QUESTION>>", question)
     result = "Reddit, " + question +" "+gpt_utils.gpt3Turbo_completion(chat_prompt=chat, system=system, temp=1.08)
     return result
     
 
 def getRealisticness(text):
-    chat, system = gpt_utils.load_yaml_prompt('prompt_templates/reddit_filter_realistic.yaml')
+    chat, system = gpt_utils.load_local_yaml_prompt('prompt_templates/reddit_filter_realistic.yaml')
     chat = chat.replace("<<INPUT>>", text)
     while True:
         try:
@@ -38,7 +38,7 @@ def getQuestionFromThread(text):
     if ((text.find("Reddit, ") < 15) and (10 < text.find("?") < 100)):
         question = text.split("?")[0].replace("Reddit, ", "").strip().capitalize()
     else:
-        chat, system = gpt_utils.load_yaml_prompt('prompt_templates/reddit_filter_realistic.yaml')
+        chat, system = gpt_utils.load_local_yaml_prompt('prompt_templates/reddit_filter_realistic.yaml')
         chat = chat.replace("<<STORY>>", text)
         question = gpt_utils.gpt3Turbo_completion(chat_prompt=chat, system=system).replace("\n", "")
         question = question.replace('"', '').replace("?", "")
@@ -46,7 +46,7 @@ def getQuestionFromThread(text):
 
 
 def generateUsername():
-    chat, system = gpt_utils.load_yaml_prompt('prompt_templates/reddit_username.yaml')
+    chat, system = gpt_utils.load_local_yaml_prompt('prompt_templates/reddit_username.yaml')
     return gpt_utils.gpt3Turbo_completion(chat_prompt=chat, system=system, temp=1.2).replace("u/", "")
 
 
