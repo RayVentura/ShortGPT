@@ -2,7 +2,7 @@ from shortGPT.gpt import gpt_utils
 import json
 def generateScript(script_description, language):
     out = {'script': ''}
-    chat, system = gpt_utils.load_yaml_prompt('shortGPT/prompt_templates/chat_video_script.yaml')
+    chat, system = gpt_utils.load_yaml_prompt('prompt_templates/chat_video_script.yaml')
     chat = chat.replace("<<DESCRIPTION>>", script_description).replace("<<LANGUAGE>>", language)
     while not ('script' in out and out['script']):
         try:
@@ -14,7 +14,7 @@ def generateScript(script_description, language):
 
 def correctScript(script, correction):
     out = {'script': ''}
-    chat, system = gpt_utils.load_yaml_prompt('shortGPT/prompt_templates/chat_video_edit_script.yaml')
+    chat, system = gpt_utils.load_yaml_prompt('prompt_templates/chat_video_edit_script.yaml')
     chat = chat.replace("<<ORIGINAL_SCRIPT>>", script).replace("<<CORRECTIONS>>", correction)
 
     while not ('script' in out and out['script']):
