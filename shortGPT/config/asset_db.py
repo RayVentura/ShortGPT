@@ -87,7 +87,7 @@ class AssetDatabase:
                 data.append({'name': key,
                             'type': asset['type'],
                              'link': asset['url'],
-                             'source': 'youtube',
+                             'source': 'youtube' if 'youtube' in asset['url'] else 'internet',
                              'ts': asset.get('ts')
                              })
 
