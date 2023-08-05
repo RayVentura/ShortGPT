@@ -5,8 +5,8 @@
 [![Downloads](https://static.pepy.tech/personalized-badge/shortgpt?period=month&units=international_system&left_color=blue&right_color=green&left_text=Downloads/month)](https://pepy.tech/project/shortgpt)
 [![Documentation](https://img.shields.io/badge/docs-visit-blue)](https://docs.shortgpt.ai/)
 <div align="center">
-    <!-- <img src="https://github.com/RayVentura/ShortGPT/assets/121462835/083c8dc3-bac5-42c1-a08d-3ff9686d18c5" alt="ShortGPT-logo" style="border-radius: 20px;" width="22%"/> -->
-    <img src="https://github.com/RayVentura/ShortGPT/assets/121462835/a29c020b-e43b-4ede-80a3-51dc520c4f8d" alt="ShortGPT-logo" style="border-radius: 20px;" width="22%"/>
+    <img src="https://github.com/RayVentura/ShortGPT/assets/121462835/083c8dc3-bac5-42c1-a08d-3ff9686d18c5" alt="ShortGPT-logo" style="border-radius: 20px;" width="22%"/>
+    <!-- <img src="https://github.com/RayVentura/ShortGPT/assets/121462835/a29c020b-e43b-4ede-80a3-51dc520c4f8d" alt="ShortGPT-logo" style="border-radius: 20px;" width="22%"/> -->
 </div>
 <div align="center">
   <a href="https://discord.gg/uERx39ru3R">
