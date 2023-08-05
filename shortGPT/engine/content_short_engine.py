@@ -152,7 +152,8 @@ class ContentShortEngine(AbstractContentEngine):
         self._db_video_path = outputPath
 
     def _addYoutubeMetadata(self):
-
+        if not os.path.exists('videos/'):
+            os.makedirs('videos')
         self._db_yt_title, self._db_yt_description = gpt_yt.generate_title_description_dict(self._db_script)
 
         now = datetime.datetime.now()
