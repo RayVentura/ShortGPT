@@ -26,3 +26,4 @@ setup.py
 test.ipynb
 setup
 .venv/
+MANIFEST.in

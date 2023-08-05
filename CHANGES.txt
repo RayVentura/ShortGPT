@@ -1,7 +1,11 @@
 # CHANGES
 
-
-
+## Version 0.1.2
+- Improving logs in content engines
+## Version 0.1.1
+- Adding AssetType in AssetDatabase
+- Adding ApiProvider in api_db
+- Fixing pip libary missing editing_framework module, prompt_template module
 ## Version 0.1.0
 - Fixing the AssetDatabase when it's empty
 ## Version 0.0.2

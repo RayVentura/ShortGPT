@@ -3,7 +3,7 @@ from shortGPT.audio.voice_module import VoiceModule
 
 
 class ElevenLabsVoiceModule(VoiceModule):
-    def __init__(self, api_key, voiceName, checkElevenCredits):
+    def __init__(self, api_key, voiceName, checkElevenCredits=False):
         self.api_key = api_key
         self.voiceName = voiceName
         self.remaining_credits = None

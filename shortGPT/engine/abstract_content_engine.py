@@ -23,7 +23,8 @@ class AbstractContentEngine(ABC):
         self._db_language = language.value
         self.voiceModule = voiceModule
         self.stepDict = {}
-        self.logger = lambda _: print(_)
+        self.default_logger = lambda _: print(_)
+        self.logger = self.default_logger
 
     def __getattr__(self, name):
         if name.startswith('_db_'):

@@ -98,7 +98,7 @@ class RedditShortEngine(ContentShortEngine):
                                                                         'set_time_start': timing[0],
                                                                         'set_time_end': timing[1]})
 
-            videoEditor.renderVideo(outputPath, logger=self.logger)
+            videoEditor.renderVideo(outputPath, logger= self.logger if self.logger is not self.default_logger else None)
 
         self._db_video_path = outputPath
 

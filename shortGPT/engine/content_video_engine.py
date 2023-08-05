@@ -137,7 +137,7 @@ class ContentVideoEngine(AbstractContentEngine):
                                                           'set_time_start': t1,
                                                           'set_time_end': t2})
 
-            videoEditor.renderVideo(outputPath, logger=self.logger)
+            videoEditor.renderVideo(outputPath, logger= self.logger if self.logger is not self.default_logger else None)
 
         self._db_video_path = outputPath
 
