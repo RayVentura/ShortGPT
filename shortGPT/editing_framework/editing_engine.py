@@ -34,9 +34,11 @@ class EditingStep(Enum):
 class Flow(Enum):
     WHITE_REDDIT_IMAGE_FLOW = "build_reddit_image.json"
 
-STEPS_PATH = "shortGPT/editing_framework/editing_steps/"
-FLOWS_PATH = "shortGPT/editing_framework/flows/"
+from pathlib import Path
 
+_here = Path(__file__).parent
+STEPS_PATH = (_here / 'editing_steps/').resolve()
+FLOWS_PATH = (_here / 'flows/').resolve()
 
 class EditingEngine:
     def __init__(self,):
@@ -45,7 +47,7 @@ class EditingEngine:
 
     def addEditingStep(self, editingStep: EditingStep, args: Dict[str, any] = {}):
         json_step = json.loads(
-            open(STEPS_PATH+editingStep.value, 'r', encoding='utf-8').read())
+            open(STEPS_PATH / f"{editingStep.value}", 'r', encoding='utf-8').read())
         step_name, editingStepDict = list(json_step.items())[0]
         if 'inputs' in editingStepDict:
             required_args = (editingStepDict['inputs']['actions'] if 'actions' in editingStepDict['inputs'] else []) + (editingStepDict['inputs']['parameters'] if 'parameters' in editingStepDict['inputs'] else [])
@@ -76,7 +78,7 @@ class EditingEngine:
 
 
     def ingestFlow(self, flow: Flow, args):
-        json_flow = json.loads(open(FLOWS_PATH+flow.value, 'r', encoding='utf-8').read())
+        json_flow = json.loads(open(FLOWS_PATH / f"{flow.value}", 'r', encoding='utf-8').read())
         for required_argument in list(json_flow['inputs'].keys()):
                 if required_argument not in args:
                     raise Exception(
