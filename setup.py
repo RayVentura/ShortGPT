@@ -38,7 +38,6 @@ setup(
         'protobuf==3.20.0',
         'edge-tts',
         'moviepy==1.0.3',
-        'termcolor',
         'progress',
         'questionary',
     ],

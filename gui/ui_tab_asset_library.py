@@ -6,7 +6,7 @@ import gradio as gr
 
 from gui.asset_components import AssetComponentsUtils
 from gui.ui_abstract_component import AbstractComponentUI
-from shortGPT.config.asset_db import AssetDatabase
+from shortGPT.config.asset_db import AssetDatabase, AssetType
 
 
 class AssetLibrary(AbstractComponentUI):
@@ -23,13 +23,13 @@ class AssetLibrary(AbstractComponentUI):
                     assetFlows = gr.Radio([remote, local], label="", value=remote)
                     with gr.Column(visible=True) as youtubeFlow:
                         asset_name = gr.Textbox(label="Name (required)")
-                        asset_type = gr.Radio(["background video", "background music"], value="background video", label="Type")
+                        asset_type = gr.Radio([AssetType.BACKGROUND_VIDEO.value, AssetType.BACKGROUND_MUSIC.value,], value=AssetType.BACKGROUND_VIDEO.value, label="Type")
                         youtube_url = gr.Textbox(label="URL (https://youtube.com/xyz)")
                         add_youtube_link = gr.Button("ADD")
 
                     with gr.Column(visible=False) as localFileFlow:
                         local_upload_name = gr.Textbox(label="Name (required)")
-                        upload_type = gr.Radio(["background video", "background music", "image"], value="background video", interactive=True, label="Type")
+                        upload_type = gr.Radio([AssetType.BACKGROUND_VIDEO.value, AssetType.BACKGROUND_MUSIC.value, AssetType.IMAGE.value], value="background video", interactive=True, label="Type")
                         video_upload = gr.Video(visible=True, source="upload", type="filepath", interactive=True)
                         audio_upload = gr.Audio(visible=False, source="upload", type="filepath", interactive=True)
                         image_upload = gr.Image(visible=False, source="upload", type="filepath", interactive=True)
@@ -90,7 +90,7 @@ class AssetLibrary(AbstractComponentUI):
 
     def __add_youtube_asset(self, asset_name, yt_url, type):
         '''Add a youtube asset'''
-        AssetDatabase.add_remote_asset(asset_name, type, yt_url)
+        AssetDatabase.add_remote_asset(asset_name, AssetType(type), yt_url)
         latest_df = AssetDatabase.get_df()
         return gr.DataFrame.update(value=latest_df), gr.HTML.update(value=self.__get_asset_embed(latest_df, 0)),\
             gr.update(value=f"🗑️ Delete {latest_df.iloc[0]['name']}"),\
@@ -167,11 +167,11 @@ class AssetLibrary(AbstractComponentUI):
         '''Verify and upload a local asset to the database'''
         self.__validate_asset_name(upload_name)
         path_dict = {
-            'video': video_path,
-            'background video': video_path,
-            'audio': audio_path,
-            'background music': audio_path,
-            'image': image_path
+            AssetType.VIDEO.value: video_path,
+            AssetType.BACKGROUND_VIDEO.value: video_path,
+            AssetType.AUDIO.value: audio_path,
+            AssetType.BACKGROUND_MUSIC.value: audio_path,
+            AssetType.IMAGE.value: image_path
         }
         if not os.path.exists(path_dict[upload_type]):
             raise gr.Error(f'The file does not exist at the given path.')
@@ -180,15 +180,15 @@ class AssetLibrary(AbstractComponentUI):
     def __upload_local_asset(self, upload_type, upload_name, video_path, audio_path, image_path):
         '''Upload a local asset to the database'''
         path_dict = {
-            'video': video_path,
-            'background video': video_path,
-            'audio': audio_path,
-            'background music': audio_path,
-            'image': image_path
+            AssetType.VIDEO.value: video_path,
+            AssetType.BACKGROUND_VIDEO.value: video_path,
+            AssetType.AUDIO.value: audio_path,
+            AssetType.BACKGROUND_MUSIC.value: audio_path,
+            AssetType.IMAGE.value: image_path
         }
         new_path = "public/" + self.__clean_filename(upload_name) + "." + path_dict[upload_type].split(".")[-1]
         shutil.move(path_dict[upload_type], new_path)
-        AssetDatabase.add_local_asset(upload_name, upload_type, new_path)
+        AssetDatabase.add_local_asset(upload_name, AssetType(upload_type), new_path)
         latest_df = AssetDatabase.get_df()
         return gr.DataFrame.update(value=latest_df), gr.HTML.update(value=self.__get_asset_embed(latest_df, 0)),\
             gr.update(value=f"🗑️ Delete {latest_df.iloc[0]['name']}"),\
