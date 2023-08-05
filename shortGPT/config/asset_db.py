@@ -31,12 +31,19 @@ class AssetDatabase:
     It uses a MongoDB-like database to store information about the assets.
     """
 
-    if not Path(ASSETS_DB_PATH).exists() and Path(TEMPLATE_ASSETS_DB_PATH).exists():
+    if not Path(ASSETS_DB_PATH).exists():
         shutil.copy(TEMPLATE_ASSETS_DB_PATH, ASSETS_DB_PATH)
 
     local_assets = TinyMongoDocument("asset_db", "asset_collection", "local_assets", create=True)
     remote_assets = TinyMongoDocument("asset_db", "asset_collection", "remote_assets", create=True)
-
+    if not remote_assets._get('subscribe animation'):
+        remote_assets._save({
+            'subscribe animation':{
+                "type": AssetType.VIDEO.value,
+                "url": "https://www.youtube.com/watch?v=72WhUT0OM98",
+                "ts": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            }
+        })
 
     @classmethod
     def asset_exists(cls, name: str) -> bool:
