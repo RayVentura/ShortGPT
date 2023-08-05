@@ -1,9 +1,22 @@
 # 🚀🎬 ShortGPT
-[![](https://dcbadge.vercel.app/api/server/uERx39ru3R?compact=true&style=flat)](https://discord.gg/uERx39ru3R)
-[![Twitter](https://img.shields.io/twitter/url/https/twitter.com/rayventurahq.svg?style=social&label=Follow%20%40RayVentura)](https://twitter.com/RayVenturaHQ)
-[![GitHub star chart](https://img.shields.io/github/stars/rayventura/shortgpt?style=social)](https://star-history.com/#rayventura/shortgpt)
-[![Downloads](https://static.pepy.tech/personalized-badge/shortgpt?period=month&units=international_system&left_color=blue&right_color=green&left_text=Downloads/month)](https://pepy.tech/project/shortgpt)
-[![Documentation](https://img.shields.io/badge/docs-visit-blue)](https://docs.shortgpt.ai/)
+<p align="center">
+  <a href="https://discord.gg/uERx39ru3R">
+    <img src="https://dcbadge.vercel.app/api/server/uERx39ru3R?compact=true&style=flat">
+  </a>
+  <a href="https://twitter.com/RayVenturaHQ">
+    <img src="https://img.shields.io/twitter/url/https/twitter.com/rayventurahq.svg?style=social&label=Follow%20%40RayVentura">
+  </a>
+  <a href="https://star-history.com/#rayventura/shortgpt)">
+    <img src="https://img.shields.io/github/stars/rayventura/shortgpt?style=social">
+  </a>
+  <a href="https://pypi.org/project/shortgpt/">
+    <img src="https://static.pepy.tech/personalized-badge/shortgpt?period=month&units=international_system&left_color=blue&right_color=green&left_text=Downloads/month">
+  </a>
+  <a href="https://docs.shortgpt.ai/">
+    <img src="https://img.shields.io/badge/docs-visit-blue">
+  </a>  
+</p>
+
 <div align="center">
     <img src="https://github.com/RayVentura/ShortGPT/assets/121462835/083c8dc3-bac5-42c1-a08d-3ff9686d18c5" alt="ShortGPT-logo" style="border-radius: 20px;" width="22%"/>
     <!-- <img src="https://github.com/RayVentura/ShortGPT/assets/121462835/a29c020b-e43b-4ede-80a3-51dc520c4f8d" alt="ShortGPT-logo" style="border-radius: 20px;" width="22%"/> -->
