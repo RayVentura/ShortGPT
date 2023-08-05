@@ -1,0 +1,84 @@
+---
+title: FactsShortEngine
+sidebar_label: FactsShortEngine
+---
+
+The `FactsShortEngine` in ShortGPT is a content engine specifically designed for generating short videos that present interesting facts. This guide will provide you with an overview of how to use the `FactsShortEngine`.
+
+## Importing FactsShortEngine
+
+```python
+from shortGPT.engine.facts_short_engine import FactsShortEngine
+```
+
+## Initializing FactsShortEngine
+
+The `FactsShortEngine` requires a `VoiceModule`, the type of facts you want to generate, a background video name, a background music name,  the number of images to include in the video, a watermark (string with the name of your channel / brand), and a language.
+
+```python
+content_engine = FactsShortEngine(voice_module, facts_type, background_video_name, background_music_name, num_images=None, watermark=None, language=Language.ENGLISH)
+```
+
+## Example
+
+```python
+from shortGPT.config.api_db import ApiKeyManager, ApiProvider
+from shortGPT.config.asset_db import AssetDatabase, AssetType
+from shortGPT.engine.facts_short_engine import FactsShortEngine
+from shortGPT.config.languages import Language
+from shortGPT.audio.edge_voice_module import EdgeTTSVoiceModule, EDGE_TTS_VOICENAME_MAPPING
+
+# Set API Keys
+ApiKeyManager.set_api_key(ApiProvider.OPENAI, "your_openai_key")
+
+# Add Assets
+AssetDatabase.add_remote_asset("minecraft background cube", AssetType.BACKGROUND_VIDEO, "https://www.youtube.com/watch?v=Pt5_GSKIWQM")
+AssetDatabase.add_remote_asset('chill music', AssetType.BACKGROUND_MUSIC, "https://www.youtube.com/watch?v=uUu1NcSHg2E")
+
+# Configure the Voice Module
+voice_name = EDGE_TTS_VOICENAME_MAPPING[Language.GERMAN]['male']
+voice_module = EdgeTTSVoiceModule(voice_name)
+
+# Configure Content Engine
+facts_video_topic = "Interesting scientific facts from the 19th century"
+content_engine = FactsShortEngine(voice_module=voice_module,
+    facts_type=facts_video_topic,
+    background_video_name="minecraft background cube", # <--- use the same name you saved in the AssetDatabase
+    background_music_name='chill music', # <--- use the same name you saved in the AssetDatabase
+    num_images=5, # If you don't want images in your video, put 0 or None
+    language=Language.GERMAN)
+
+# Generate Content
+for step_num, step_logs in content_engine.makeContent():
+    print(f" {step_logs}")
+
+# Get Video Output Path
+print(content_engine.get_video_output_path())
+```
+
+In this example, we first set the API keys for OpenAI. We then add remote assets for the background video and background music. We configure the voice module to use EdgeTTS for voice synthesis. We configure the `FactsShortEngine` with the voice module, facts type, background video name, background music name, number of images, and language. We then generate the content and print the output path of the video.
+
+## How FactsShortEngine Works
+
+The `FactsShortEngine` works by executing a series of steps defined in the `stepDict` dictionary. Each step is a method that performs a specific task in the video creation process. Here's what each step does:
+
+1. `_generateScript`: Generates the script for the facts short using the provided `facts_type`.
+2. `_generateTempAudio`: Generates a temporary audio file from the generated script using the specified `VoiceModule`.
+3. `_speedUpAudio`: Speeds up the generated audio file to match the pace of a typical video.
+4. `_timeCaptions`: Generates timed captions for the video based on the script.
+5. `_generateImageSearchTerms`: Generates search terms to find relevant images using the Bing search engine based on the script.
+6. `_generateImageUrls`: Retrieves image URLs from Bing using the generated search terms.
+7. `_chooseBackgroundMusic`: Chooses background music for the video.
+8. `_chooseBackgroundVideo`: Chooses a background video for the video.
+9. `_prepareBackgroundAssets`: Prepares the background assets for the video.
+10. `_prepareCustomAssets`: Prepares any custom assets for the video.
+11. `_editAndRenderShort`: Edits and renders the video.
+12. `_addYoutubeMetadata`: Adds metadata to the video.
+
+
+## Providing a Facts Type
+
+The `FactsShortEngine` requires a facts type to generate the script. The facts type should be a string indicating the specific category or topic of facts you want to include in the video.
+
+
+That's it! You have now successfully generated a facts short video using the FactsShortEngine in the ShortGPT framework.

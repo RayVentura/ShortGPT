@@ -1,0 +1,77 @@
+---
+title: ContentVideoEngine
+sidebar_label: ContentVideoEngine
+---
+
+The `ContentVideoEngine` in ShortGPT is a powerful tool that encapsulates all the automation required to create a video. This guide will provide you with an overview of how to use the `ContentVideoEngine`.
+
+## Importing ContentVideoEngine
+
+```python
+from shortGPT.engine.content_video_engine import ContentVideoEngine
+```
+
+## Initializing ContentVideoEngine
+
+The `ContentVideoEngine` requires a `VoiceModule`, a script, and optionally a background music name, a watermark (string with the name of your channel / brand), a flag indicating whether the video you want is in vertical format, and a language.
+
+```python
+content_engine = ContentVideoEngine(voice_module, script, background_music_name="", watermark=None, isVerticalFormat=False, language=Language.ENGLISH)
+```
+## Example
+
+```python
+from shortGPT.config.api_db import ApiKeyManager, ApiProvider
+from shortGPT.config.asset_db import AssetDatabase, AssetType
+from shortGPT.engine.content_video_engine import ContentVideoEngine
+from shortGPT.config.languages import Language
+from shortGPT.audio.edge_voice_module import EdgeTTSVoiceModule, EDGE_TTS_VOICENAME_MAPPING
+
+# Set API Keys
+ApiKeyManager.set_api_key(ApiProvider.OPENAI, "your_openai_key")
+ApiKeyManager.set_api_key(ApiProvider.PEXELS, "your_pexels_key")
+
+# Add Assets
+AssetDatabase.add_remote_asset('chill music', AssetType.BACKGROUND_MUSIC, "https://www.youtube.com/watch?v=uUu1NcSHg2E")
+
+# Configure the Voice Module
+voice_name = EDGE_TTS_VOICENAME_MAPPING[Language.SPANISH]['male']
+voice_module = EdgeTTSVoiceModule(voice_name)
+
+# Prepare the script
+script = "La inteligencia artificial (IA) está revolucionando nuestro mundo de manera sorprendente. Los robots y asistentes virtuales nos ayudan en nuestras tareas diarias y simplifican nuestra vida. En la medicina, la IA permite diagnósticos más precisos y avances en tratamientos. En la industria automotriz, los vehículos autónomos están cambiando la forma en que nos desplazamos. Sin embargo, surgen interrogantes sobre el impacto en el empleo y la ética de su uso. A pesar de los desafíos, la IA promete un futuro emocionante y lleno de posibilidades. ¿Estamos preparados para abrazar este avance tecnológico?"
+
+# Configure Content Engine
+content_engine = ContentVideoEngine(voice_module, script, background_music_name='chill music', language=Language.SPANISH)
+
+# Generate Content
+for step_num, step_logs in content_engine.makeContent():
+    print(f" {step_logs}")
+
+# Get Video Output Path
+print(content_engine.get_video_output_path())
+```
+
+In this example, we first set the API keys for OpenAI, and Pexels. We then add a remote asset for background music. We configure the voice module to use EdgeTTS for voice synthesis. We prepare a script for the video and then configure the `ContentVideoEngine` with the voice module, script, and background music. We then generate the content and print the output path of the video.
+## How ContentVideoEngine Works
+
+The `ContentVideoEngine` works by executing a series of steps defined in the `stepDict` dictionary. Each step is a method that performs a specific task in the video creation process. Here's what each step does:
+
+1. `_generateTempAudio`: Generates a temporary audio file from the provided script using the specified `VoiceModule`.
+2. `_speedUpAudio`: Speeds up the generated audio file to match the pace of a typical video.
+3. `_timeCaptions`: Generates timed captions for the video based on the script.
+4. `_generateVideoSearchTerms`: Generates search terms to find relevant videos on Pexels based on the script.
+5. `_generateVideoUrls`: Retrieves video URLs from Pexels using the generated search terms.
+6. `_chooseBackgroundMusic`: Chooses background music for the video.
+7. `_prepareBackgroundAssets`: Prepares the background assets for the video.
+8. `_prepareCustomAssets`: Prepares any custom assets for the video.
+9. `_editAndRenderShort`: Edits and renders the video.
+10. `_addMetadata`: Adds metadata to the video.
+
+## Using Pexels API
+
+The `ContentVideoEngine` sources video assets from the Pexels API. To use it, you need to provide your Pexels API key. The engine uses this key to retrieve relevant videos based on the search terms generated from the script.
+
+## Providing a Script
+
+The `ContentVideoEngine` requires a script to generate the video. The script is used to generate the audio, captions, and search terms for sourcing videos from Pexels. The script should be a string containing the narration for the video.
