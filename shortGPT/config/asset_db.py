@@ -31,7 +31,7 @@ class AssetDatabase:
     It uses a MongoDB-like database to store information about the assets.
     """
 
-    if not Path(ASSETS_DB_PATH).exists():
+    if not Path(ASSETS_DB_PATH).exists() and Path(TEMPLATE_ASSETS_DB_PATH).exists():
         shutil.copy(TEMPLATE_ASSETS_DB_PATH, ASSETS_DB_PATH)
 
     local_assets = TinyMongoDocument("asset_db", "asset_collection", "local_assets", create=True)
