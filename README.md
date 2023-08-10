@@ -18,6 +18,8 @@
 
 ### Installation and Use
 
+#### *
+The Main branch relies on the paid OpenAI API to work. This has been resolved (not released yet❗) by implementing LlamaCpp for locally hosted Langchain agents instead.
 For setup refer to the main [repo](https://docs.shortgpt.ai/docs/how-to-install) and installation [guide](https://docs.shortgpt.ai/docs/how-to-install)
 ### Update 
 - includes youtube_api.py without rate time throtteling or oauth authentication errors (we gather streamable with pytube to avoid bans)
@@ -48,5 +50,3 @@ https://github.com/su77ungr/FreeShortGPT/assets/69374354/4b561ba1-008a-4b91-b97b
 
 
 deprecated_demo shows the accuracy of Google's YouTube v3, you can find it here: https://vimeo.com/851101834?share=copy.
-
-*Disclaimer: This repo relies on paid OpenAI access to work - this has been resolved by implementing LlamaCpp and therefore the capability to use a locally hosted LLM instead. Though communication with the main repo's RayVentura stalled. So I see no reason to release it. The Files for the image contest can be submitted to lyrical(at)skiff.com (Vanilla SDXL1.0 without LoRAs) 
