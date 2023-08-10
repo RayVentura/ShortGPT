@@ -1,5 +1,12 @@
 # 🆓 FreeShortGPT
 
+<div align="center">
+  
+![image-removebg-preview](https://github.com/su77ungr/FreeShortGPT/assets/69374354/5701e291-d4b3-497e-aa84-f5c6339884e0)
+
+</div>
+
+
 ### Installation and Use
 
 For setup refer to the main [repo](https://docs.shortgpt.ai/docs/how-to-install) and installation [guide](https://docs.shortgpt.ai/docs/how-to-install)
