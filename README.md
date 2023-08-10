@@ -19,7 +19,7 @@ Integration of `shortGPT.api_utils.youtube_api`, which serves as an additional s
 
 ### Demo
 
-demo_new shows the accuracy of the newly added youtube query policy without further guidance, backtesting or content analysis
+demo_new shows the accuracy of the newly added youtube query policy ***without*** further guidance, backtesting or content analysis. This can be improved dramatically by adding a content triage based on Clip2 and transcript analysis. 
 
 
 
