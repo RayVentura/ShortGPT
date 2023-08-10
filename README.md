@@ -18,6 +18,14 @@ Integration of `shortGPT.api_utils.youtube_api`, which serves as an additional s
 
 
 ### Demo
-The demo shows the accuracy of the yotube query without further guidance, backtesting or content analysis, you can find it here: https://vimeo.com/851101834?share=copy. 
 
+demo_new
+
+
+
+https://github.com/su77ungr/FreeShortGPT/assets/69374354/4b561ba1-008a-4b91-b97b-eb14ec37f74a
+
+
+
+deprecated_demo shows the accuracy of the yotube query without further guidance, backtesting or content analysis, you can find it here: https://vimeo.com/851101834?share=copy. 
 ![image](https://github.com/RayVentura/ShortGPT/assets/69374354/2f4b93fc-cb96-46db-9602-e2f1c7e3da28)
