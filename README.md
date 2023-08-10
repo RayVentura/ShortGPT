@@ -22,6 +22,7 @@ For setup refer to the main [repo](https://docs.shortgpt.ai/docs/how-to-install)
 ### Update 
 - includes youtube_api.py without rate time throtteling or oauth authentication errors (done)
 - works out of the box without google's YouTube v3 and credentials
+- not rate limited like pexels API
 
 ### Features 
 
