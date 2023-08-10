@@ -6,7 +6,6 @@ For setup refer to the main [repo](https://docs.shortgpt.ai/docs/how-to-install)
 ### Update 
 - includes youtube_api.py without rate time throtteling or oauth authentication errors (done)
 - works out of the box without google's YouTube v3 and credentials
-inside # Module: api_utils
 
 ### Features 
 
@@ -22,7 +21,7 @@ Integration of `shortGPT.api_utils.youtube_api`, which serves as an additional s
 
 ### Demo
 
-demo_new shows the accuracy of the newly added youtube query policy ***without*** further guidance, backtesting or content analysis. This can be improved dramatically by adding a content triage based on Clip2 and transcript analysis. 
+demo_new shows the accuracy of the newly added youtube query policy ***without*** further guidance, backtesting or content analysis. This can be improved by adding a content triage based on Clip2 and transcript analysis. 
 
 
 
@@ -30,4 +29,4 @@ https://github.com/su77ungr/FreeShortGPT/assets/69374354/4b561ba1-008a-4b91-b97b
 
 
 
-deprecated_demo showed the accuracy of the Google YouTube v3 API, you can find it here: https://vimeo.com/851101834?share=copy. 
+deprecated_demo shows the accuracy of Google's YouTube v3, you can find it here: https://vimeo.com/851101834?share=copy.
