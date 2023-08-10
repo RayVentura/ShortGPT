@@ -4,6 +4,12 @@
   
 ![image-removebg-preview](https://github.com/su77ungr/FreeShortGPT/assets/69374354/5701e291-d4b3-497e-aa84-f5c6339884e0)
 
+
+
+![image-removebg-preview](https://github.com/su77ungr/FreeShortGPT/assets/69374354/2b98b086-12cc-4dc0-bebd-c34fb856ad01)
+
+files for the image contest can be submitted to lyrical(at)skiff.com
+
 </div>
 
 
