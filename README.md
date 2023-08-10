@@ -21,7 +21,8 @@
 #### *
 The Main branch relies on the paid OpenAI API to work. This has been resolved (not released yet❗) by implementing LlamaCpp for locally hosted Langchain agents instead.
 For setup refer to the main [repo](https://docs.shortgpt.ai/docs/how-to-install) and installation [guide](https://docs.shortgpt.ai/docs/how-to-install)
-### Update 
+### Upgrades
+- access YouTube as the main video asset provider (outperforms stock footage by a large)
 - avoids bans by using download streams with PyTube
 - avoids YouTube v3 API's rate limit and auth
 - avoids Pexels hard rate limit 
