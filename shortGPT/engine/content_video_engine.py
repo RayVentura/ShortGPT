@@ -4,6 +4,7 @@ import re
 import shutil
 
 from shortGPT.api_utils.pexels_api import getBestVideo
+from shortGPT.api_utils.youtube_api import search_videos_YouTube
 from shortGPT.audio import audio_utils
 from shortGPT.audio.audio_duration import get_asset_duration
 from shortGPT.audio.voice_module import VoiceModule
@@ -87,11 +88,32 @@ class ContentVideoEngine(AbstractContentEngine):
         for (t1, t2), search_terms in timed_video_searches:
             url = ""
             for query in reversed(search_terms):
-                url = getBestVideo(query, orientation_landscape=not self._db_format_vertical, used_vids=used_links)
-                if url:
+                try:   
+                 url = getBestVideo(query, orientation_landscape=not self._db_format_vertical, used_vids=used_links)
+                except:
+                 pass
+                
+                #uses returned url via ytdl
+                yt_url = search_videos_YouTube(query_string=query)
+                if yt_url: 
+                  print(yt_url) # video url_ in youtube style; does not work if video is age-restricted
+                  from pytube import YouTube
+                  yt = YouTube(yt_url)     
+                  try:                       
+                    download_url = yt.streams.get_highest_resolution().url
+                    url = download_url
+                  except:
+                    url=url
+
+                else: 
+                    print("back to pexels")
+                    url=url
                     used_links.append(url.split('.hd')[0])
                     break
+
             timed_video_urls.append([[t1, t2], url])
+            print(timed_video_urls)
+
         self._db_timed_video_urls = timed_video_urls
 
     def _chooseBackgroundMusic(self):
