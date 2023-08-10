@@ -2,7 +2,7 @@
 
 ### Update 
 - includes youtube_api.py without rate time throtteling or oauth authentication errors (done)
-- 
+- works out of the box without google's YouTube v3 and credentials
 
 Integration of `shortGPT.api_utils.youtube_api`, which serves as an additional source for gathering footage based on the queried keyword. This is particularly useful when dealing with niche / comedy / meme topics where stock footage is not available. If nothing matches we backtrack to the pexels API. 
 
