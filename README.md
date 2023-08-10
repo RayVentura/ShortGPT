@@ -27,7 +27,7 @@ For setup refer to the main [repo](https://docs.shortgpt.ai/docs/how-to-install)
 ### Features 
 
 
-The `api_utils` module provides utility functions for working with different APIs. It includes three files: `image_api.py`, `pexels_api.py`, and  `youtube_api.py` `eleven_api.py`. Each file contains functions related to a specific API.
+Inside `api_utils` functions provide utility for working with different APIs. Files: `image_api.py`, `pexels_api.py`,  `youtube_api.py` and `eleven_api.py`. We added  `youtube_api.py` to source video assets directly from YouTube. Feel free to modify `the _generateVideoUrls` function for the hierachy of video asset sources. 
 
 #### `search_videos_YouTube(query_string)`
 
