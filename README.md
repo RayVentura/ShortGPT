@@ -1,14 +1,17 @@
-# 🆓 FreeShortGPT
+#
+<div align="center">
+
+  🆓 Free* video and short content creation with AI 🆓
+
+</div>
 
 <div align="center">
-  
-![image-removebg-preview](https://github.com/su77ungr/FreeShortGPT/assets/69374354/5701e291-d4b3-497e-aa84-f5c6339884e0)
+  <div style="display: flex;">
+    <img width="300" src="https://github.com/su77ungr/FreeShortGPT/assets/69374354/5701e291-d4b3-497e-aa84-f5c6339884e0" alt="Image 1">
+    <img width="300" src="https://github.com/su77ungr/FreeShortGPT/assets/69374354/2b98b086-12cc-4dc0-bebd-c34fb856ad01" alt="Image 2">
+  </div>
+</div>
 
-
-
-![image-removebg-preview](https://github.com/su77ungr/FreeShortGPT/assets/69374354/2b98b086-12cc-4dc0-bebd-c34fb856ad01)
-
-files for the image contest can be submitted to lyrical(at)skiff.com
 
 </div>
 
@@ -43,3 +46,5 @@ https://github.com/su77ungr/FreeShortGPT/assets/69374354/4b561ba1-008a-4b91-b97b
 
 
 deprecated_demo shows the accuracy of Google's YouTube v3, you can find it here: https://vimeo.com/851101834?share=copy.
+
+*Disclaimer: This repo relies on paid OpenAI access to work - this has been resolved by implementing LlamaCpp and therefore the capability to use a locally hosted LLM instead. Though communication with the main repo's RayVentura stalled. So I see no reason to release it. The Files for the image contest can be submitted to lyrical(at)skiff.com (Vanilla SDXL1.0 without LoRAs) 
