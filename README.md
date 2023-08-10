@@ -8,7 +8,7 @@ For setup refer to the main repo "ShortGPT" and https://docs.shortgpt.ai/docs/ho
 - works out of the box without google's YouTube v3 and credentials
 inside # Module: api_utils
 
-### Changes in this repo 
+### Features 
 
 
 The `api_utils` module provides utility functions for working with different APIs. It includes three files: `image_api.py`, `pexels_api.py`, and  `youtube_api.py` `eleven_api.py`. Each file contains functions related to a specific API.
