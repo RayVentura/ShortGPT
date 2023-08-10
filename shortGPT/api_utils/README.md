@@ -56,4 +56,4 @@ This function takes a text input, a character name, a file name, and optional pa
 
 #### `search_videos_YouTube(query_string)`
 
-This function takes an string as input and retrieves urls from the given youtube search. It returns null if not found or age-restricted
+The search_videos_YouTube function takes a query string as input and searches for a video on YouTube based on that query. It returns the URL of the first search result if found, or None if no video is found.
