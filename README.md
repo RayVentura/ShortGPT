@@ -3,9 +3,10 @@
 
   🆓 Free* video and short content creation with AI 🆓
 
-RayVentura's ShortGPT: Estimated monthly earnings: €0.45  -  €7 (Socialblade @AskRedditors) 
-
-Su77ungr's FreeShortGPT    : Estimated mongtly earnings: €10  -  €153 (Socialblade @Mid9ine within a week)  
+ | Creator                  | GPT Model           | Estimated Monthly Earnings (€) | Source                       |
+| ------------------------ | ------------------- | ----------------------------- | ---------------------------- |
+| RayVentura               | ShortGPT            | €0.45 - €7                    | Socialblade (@AskRedditors)  |
+| Su77ungr                 | FreeShortGPT        | €10 - €153                    | Socialblade (@Mid9ine within a week) |
 
 </div>
 
