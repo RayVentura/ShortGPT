@@ -3,10 +3,10 @@
 
   🆓 Free* video and short content creation with AI 🆓
 
- | Creator                  | GPT Model           | Estimated Monthly Earnings (€) | Source                       |
+ | Creator                  | GPT Model           | Estimated Monthly Earnings (€) | Source (estimated)                      |
 | ------------------------ | ------------------- | ----------------------------- | ---------------------------- |
 | RayVentura               | ShortGPT            | €0.45 - €7                    | Socialblade (@AskRedditors)  |
-| Su77ungr                 | FreeShortGPT        | €10 - €153                    | Socialblade (@Mid9ine within a week) |
+| Su77ungr                 | FreeShortGPT        | [€17 - €273](https://socialblade.com/youtube/channel/UCr4m948YKIMVpq4bBTyTH6w)                    | Socialblade (@Mid9ine) |
 
 </div>
 
