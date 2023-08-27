@@ -1,4 +1,7 @@
 # CHANGES
+
+## Version 0.1.31
+- Fixing issue in AssetDatabase, where it was copying unexisting asset template file
 ## Version 0.1.3
 - Requiring a youtube url as the subscribe animation url in the EditingStep.ADD_SUBSCRIBE_ANIMATION step.
 - Adding a default subscribe animation youtube link by default shipped in the AssetDatabase
