@@ -117,5 +117,5 @@ demo_new shows the accuracy of the newly added youtube query policy ***without**
 
 
 <div align="center">
-<img src="https://github.com/su77ungr/FreeShortGPT/assets/69374354/5a8e3032-982e-48da-bf17-76ed93d08fe5">
+<img width=300 src="https://github.com/su77ungr/FreeShortGPT/assets/69374354/5a8e3032-982e-48da-bf17-76ed93d08fe5">
 </div>
