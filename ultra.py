@@ -7,11 +7,17 @@ from shortGPT.audio.edge_voice_module import EdgeTTSVoiceModule, EDGE_TTS_VOICEN
 from shortGPT.api_utils.youtube_api import search_videos_YouTube
 import random
 
-# Set API Keys
+# Set or get API Keys here
 ApiKeyManager.set_api_key(ApiProvider.OPENAI, "")
 ApiKeyManager.set_api_key(ApiProvider.ELEVEN_LABS, "")
 ApiKeyManager.set_api_key(ApiProvider.PEXELS, "")
 
+# demo on how to leverage youtube as a stock footage aggregator
+try: 
+  new_video_url = search_videos_YouTube("Palmer Luckey Sucks")
+except:
+  new_video_url = "https://www.youtube.com/watch?v=nZEQ4a1ZT8I"
+  
 random_pairs = {
   "abba": ["https://www.youtube.com/watch?v=yJcCoZ34S5k", "https://www.youtube.com/watch?v=SQIawwMwVLs"],
   "onerepublic": ["https://www.youtube.com/watch?v=nZEQ4a1ZT8I", "https://www.youtube.com/watch?v=SQIawwMwVLs"],
@@ -26,10 +32,6 @@ random.shuffle(random_keys)
 random_pair = random.choice(random_keys)
 pair_urls = random_pairs[random_pair]
 
-try: 
-  new_video_url = search_videos_YouTube("Palmer Luckey Sucks")
-except:
-  new_video_url = "https://www.youtube.com/watch?v=nZEQ4a1ZT8I"
 
 video_url = pair_urls[1]
 music_url = pair_urls[0]
