@@ -34,7 +34,18 @@ For setup refer to the main [repo](https://docs.shortgpt.ai/docs/how-to-install)
 
 1. Authentification 
 
-Head to the Google API Console https://console.cloud.google.com/ and create a project, add the youtube v3 API (Important: Add scopes for .upload) and web client. 
+Head to the Google API Console https://console.cloud.google.com/ and create a project
+In the marketplace find 'YouTube v3 API' and enable it 
+
+![IMG_5344](https://github.com/su77ungr/FreeShortGPT/assets/69374354/47fc77a7-2111-489a-9b6e-f2434cbb44ea)
+
+Inside the Oauth Screen create and add google.com as the authorised domain
+
+Add scopes for the YouTube v3 API
+
+![IMG_5345](https://github.com/su77ungr/FreeShortGPT/assets/69374354/dbd2abef-72d4-4303-b739-6be947f525b2)
+
+
 For more information about the client_secrets.json file format, please visit:
 https://developers.google.com/api-client-library/python/guide/aaa_client_s
 
