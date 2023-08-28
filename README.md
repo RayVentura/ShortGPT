@@ -1,6 +1,6 @@
 <div align="center">
 
-# Big Tech is stealing people's time: Show them their abundance
+# Big Tech is stealing people's time: Make them lose their own
 </div>
 
 <div align="center">
