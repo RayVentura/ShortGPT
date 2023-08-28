@@ -2,7 +2,7 @@ import re
 import os
 from typing_extensions import Text
 
-directory = "/home/pi/discordYT/shockYT/videos/"
+directory = "videos/"
 file_names = os.listdir(directory)
 
 # Filter files that are txt or mp4
@@ -34,6 +34,3 @@ with open(os.path.join(directory, text_file), 'r') as file:
 # Run the upload script with the latest mp4 and txt files
 if video_file and text_file:
     os.system(f'python3 upload.py --file="{directory}{video_file}" --privacyStatus="public" --title="{title}" --description="{description}"')
-    print("VIDEO OR TEXT MISSING")
-
-# os.system('rm -r /home/pi/shockYT/videos/*')
