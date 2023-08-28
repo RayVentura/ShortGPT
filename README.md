@@ -115,14 +115,17 @@ Inside `api_utils` functions provide utility for working with different APIs. Fi
 
 demo_new shows the accuracy of the newly added youtube query policy ***without*** further guidance, backtesting or content analysis. This can be improved by adding a content triage based on Clip2 and transcript analysis. 
 
-Short_Video_Creation (Reddit)
-
-https://www.youtube.com/shorts/p5jFrfx00xQ
-
-LongFormat_Video_Creation
-
-https://github.com/su77ungr/FreeShortGPT/assets/69374354/4b561ba1-008a-4b91-b97b-eb14ec37f74a
 
 
+<div align="center">
 
-deprecated_demo shows the accuracy of Google's YouTube v3, you can find it here: https://vimeo.com/851101834?share=copy.
+  Short_Video_Creation (Reddit)
+  <img width="400" src="https://github.com/su77ungr/FreeShortGPT/assets/69374354/5a8e3032-982e-48da-bf17-76ed93d08fe5">
+  https://www.youtube.com/shorts/p5jFrfx00xQ
+
+  LongFormat_Video_Creation
+
+  <img width="400" src="https://github.com/su77ungr/FreeShortGPT/assets/69374354/4b561ba1-008a-4b91-b97b-eb14ec37f74a">
+
+</div>
+
