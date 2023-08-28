@@ -1,4 +1,4 @@
-# Big Tech is stealing people's time: SHow them their abundance
+# Big Tech is stealing people's time: Show them their abundance
 <div align="center">
 
   🆓 Free* video and short content creation with AI 🆓
