@@ -30,56 +30,46 @@
 The Main branch relies on the paid OpenAI API to work. This has been resolved (not released yet❗) by implementing LlamaCpp for locally hosted Langchain agents instead.
 For setup refer to the main [repo](https://docs.shortgpt.ai/docs/how-to-install) and installation [guide](https://docs.shortgpt.ai/docs/how-to-install)
 
+
 ### Upload Automation 
 
 1. Authentification (Gathering the client.secrets.json)
 
-- Head to the Google API Console https://console.cloud.google.com/ and create a project
+- Head to the Google API Console at https://console.cloud.google.com/ and create a project.
 
-- In the marketplace (search bar) find 'YouTube v3 API' and enable it
+- In the marketplace (search bar), find 'YouTube v3 API' and enable it.
 
-- After redirect click on Oauth Screen and create
-  
-- add google.com as the authorised domain
+- After redirect, click on Oauth Screen and create.
+
+- Add google.com as the authorized domain.
 
 <div style="display: flex;">
-
-
-<img width="300" src="https://github.com/su77ungr/FreeShortGPT/assets/69374354/47fc77a7-2111-489a-9b6e-f2434cbb44ea" >
-
-
-Add scopes for the YouTube v3 API
-
-<img width="300" src="https://github.com/su77ungr/FreeShortGPT/assets/69374354/dbd2abef-72d4-4303-b739-6be947f525b2">
-
-
-Add channel's email as the test user (in most cases the email the channel was registered with) 
-
-
-Create Credentials (OAuth Client ID) in the Credentials Menu and select Web App
-
-- For Authorised redirect URIs use
-    http:localhost:8080
-    http:localhost:8080/
-    http:localhost:8090
-    http:localhost:8090/
-
-  <img width="300" src="https://github.com/su77ungr/FreeShortGPT/assets/69374354/e0ca6e19-d466-42f2-bda8-cc477093f036">
-
-
+    <img width="300" height="300" src="https://github.com/su77ungr/FreeShortGPT/assets/69374354/47fc77a7-2111-489a-9b6e-f2434cbb44ea">
+    -> Add scopes for the YouTube v3 API.
+    <img width="300" height="300" src="https://github.com/su77ungr/FreeShortGPT/assets/69374354/dbd2abef-72d4-4303-b739-6be947f525b2">
 </div>
 
-Now download the .JSON file and put it inside this repo's directory 
-For more information about the client_secrets.json file format, please visit:
-https://developers.google.com/api-client-library/python/guide/aaa_client_s
+- Add the channel's email as the test user (in most cases, the email the channel was registered with).
 
+- Create Credentials (OAuth Client ID) in the Credentials Menu and select Web App.
+
+- For Authorized Redirect URIs, use:
+    1. http://localhost:8080
+    2. http://localhost:8080/
+    3. http://localhost:8090
+    4. http://localhost:8090/
+
+- Finish up with downloading the .JSON file and put it inside this repository's directory.
+
+
+> Note:  For more information about the `client_secrets.json` file format, please visit: [api-client-library/python/guide/aaa_client_s](https://developers.google.com/api-client-library/python/guide/aaa_client_s)
 
 2. Oauth2.json
    
-Once a valid client_secrets.json is present in the directory, run `python3 upload.py` and follow further instructions. After succesful authentication an *oauth2*.json will be created inside the directory. 
+- Once a valid `client_secrets.json` is present in the directory, run `python3 upload.py` and follow further instructions. After successful authentication, an `oauth2.json` file will be created inside the directory.
 
 
-Note: You can avoid quota bottlenecks by stacking up projects in the google console and repeat steps before 
+> Note: You can avoid quota bottlenecks by stacking up projects in the google console and repeat steps before 
 
 3. Automation
 
