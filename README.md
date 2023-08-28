@@ -123,6 +123,6 @@ Short_Video_Creation (Reddit)
 
 
 LongFormat_Video_Creation
-<img height="350"> src="https://github.com/su77ungr/FreeShortGPT/assets/69374354/4b561ba1-008a-4b91-b97b-eb14ec37f74a">
+<img height="350" src="https://github.com/su77ungr/FreeShortGPT/assets/69374354/4b561ba1-008a-4b91-b97b-eb14ec37f74a">
 
 </div>
