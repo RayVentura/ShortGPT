@@ -29,6 +29,16 @@
 #### *
 The Main branch relies on the paid OpenAI API to work. This has been resolved (not released yet❗) by implementing LlamaCpp for locally hosted Langchain agents instead.
 For setup refer to the main [repo](https://docs.shortgpt.ai/docs/how-to-install) and installation [guide](https://docs.shortgpt.ai/docs/how-to-install)
+
+### Upload Automation 
+
+1. Authentification 
+
+configure OAuth 2.0 with information from the API Console https://console.cloud.google.com/
+For more information about the client_secrets.json file format, please visit:
+https://developers.google.com/api-client-library/python/guide/aaa_client_s
+
+2. Once client_secrets.json is gathered, run python3 upload.py and use the link with the account that is to be automated, This will be saved as *oauth2*.json. You can avoid quota bottlenecks by stacking up projects in the google console and repeat steps before 
 ### Upgrades
 - access YouTube as provider of video assets, surpassing stock footage by large
 - avoids bans by using download streams with PyTube
