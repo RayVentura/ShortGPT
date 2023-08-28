@@ -33,7 +33,7 @@ For setup refer to the main [repo](https://docs.shortgpt.ai/docs/how-to-install)
 
 ### Upload Automation 
 
-1. Authentification (Gathering the client.secrets.json)
+1. authentication (Gathering the client.secrets.json)
 
 - Head to the Google API Console at https://console.cloud.google.com/ and create a project.
 
