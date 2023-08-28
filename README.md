@@ -33,7 +33,7 @@ For setup refer to the main [repo](https://docs.shortgpt.ai/docs/how-to-install)
 
 ### Upload Automation 
 
-1. authentication (Gathering the client.secrets.json)
+1. Authentication (client-secrets.json from Google API console)
 
 - Head to the Google API Console at https://console.cloud.google.com/ and create a project.
 
@@ -64,7 +64,7 @@ For setup refer to the main [repo](https://docs.shortgpt.ai/docs/how-to-install)
 
 > Note:  For more information about the `client_secrets.json` file format, please visit: [api-client-library/python/guide/aaa_client_s](https://developers.google.com/api-client-library/python/guide/aaa_client_s)
 
-2. Oauth2.json
+2. Oauth2.json (within the repo itself) 
    
 - Once a valid `client_secrets.json` is present in the directory, run `python3 upload.py` and follow further instructions. After successful authentication, an `oauth2.json` file will be created inside the directory.
 
