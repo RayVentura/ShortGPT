@@ -19,3 +19,5 @@ questionary
 edge-tts
 pytube
 typing-extensions==4.7.1
+google-api-python-client
+oauth2client
