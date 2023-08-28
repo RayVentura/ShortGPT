@@ -38,7 +38,21 @@ configure OAuth 2.0 with information from the API Console https://console.cloud.
 For more information about the client_secrets.json file format, please visit:
 https://developers.google.com/api-client-library/python/guide/aaa_client_s
 
-2. Once client_secrets.json is gathered, run python3 upload.py and use the link with the account that is to be automated, This will be saved as *oauth2*.json. You can avoid quota bottlenecks by stacking up projects in the google console and repeat steps before 
+2. Oauth2.json
+   
+Once client_secrets.json is gathered, run `python3 upload.py` and use the link with the account that is to be automated, This will be saved as *oauth2*.json. You can avoid quota bottlenecks by stacking up projects in the google console and repeat steps before 
+
+3. Automation
+
+Once valid oauth2 credentials exist in the directory you can let this run 100% on autopilot. 
+
+- `ultra.py` is the main script to direct the video production pipeling
+- `upload.py` sets the backbone for youtube's v3 api to upload to YouTube without further authentification
+- `final_upload.py` combines the finsished product and uploads it to YouTube (title, description, tags get parsed automatically)
+
+Just craft your own bash script or use `automate.sh`
+
+
 ### Upgrades
 - access YouTube as provider of video assets, surpassing stock footage by large
 - avoids bans by using download streams with PyTube
