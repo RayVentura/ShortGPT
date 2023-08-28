@@ -1,4 +1,4 @@
-#
+# Use this with best intent to end the misery of stealing people's time
 <div align="center">
 
   🆓 Free* video and short content creation with AI 🆓
