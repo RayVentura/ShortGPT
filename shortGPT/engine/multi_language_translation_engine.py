@@ -124,7 +124,7 @@ class MultiLanguageTranslationEngine(AbstractContentEngine):
     
         self._db_video_path = self.dynamicAssetDir+"translated_content.mp4"
 
-        editing_engine.renderVideo(self._db_video_path, logger=self.logger)
+        editing_engine.renderVideo(self._db_video_path, logger= self.logger if self.logger is not self.default_logger else None)
 
     def _add_metadata(self):
         self.logger(f"5 / 5 - Saving translated video")

@@ -1,0 +1,88 @@
+---
+title: AssetDatabase in ShortGPT
+sidebar_label: AssetDatabase
+---
+
+# AssetDatabase in ShortGPT
+
+The `AssetDatabase` in ShortGPT is a powerful tool that allows you to manage both local and remote assets. This guide will provide you with examples of how to use the `AssetDatabase`.
+
+## Importing AssetDatabase and AssetType
+
+```python
+from shortGPT.config.asset_db import AssetDatabase, AssetType
+```
+
+## Adding Assets
+
+You can add both remote and local assets to the `AssetDatabase`.
+
+### Adding Remote Assets
+
+```python
+AssetDatabase.add_remote_asset("minecraft background cube", AssetType.BACKGROUND_VIDEO, "https://www.youtube.com/watch?v=Pt5_GSKIWQM")
+AssetDatabase.add_remote_asset('chill music', AssetType.BACKGROUND_MUSIC, "https://www.youtube.com/watch?v=uUu1NcSHg2E")
+```
+
+### Adding Local Assets
+
+```python
+AssetDatabase.add_local_asset('my_music', AssetType.AUDIO, "./my_music.wav")
+```
+
+## Asset Types
+
+The `AssetType` enum is used to specify the type of asset being added to the `AssetDatabase`. The available asset types are:
+
+- VIDEO
+- AUDIO
+- IMAGE
+- BACKGROUND_MUSIC
+- BACKGROUND_VIDEO
+- OTHER
+
+## Getting Asset Information
+
+You can retrieve information about an asset using the following methods:
+
+### Get Asset Duration
+
+This method returns the duration in seconds of a video or audio asset. If the asset is neither video nor audio, it returns `None`.
+
+```python
+AssetDatabase.get_asset_duration('minecraft background cube')
+```
+
+### Get Asset Link
+
+This method returns a source URL, or the path of the resource. If the asset is a YouTube video or audio, it uses `yt-dlp` to extract a download URL or a direct video/audio link.
+
+```python
+AssetDatabase.get_asset_link('minecraft background cube')
+```
+
+## Synchronizing Local Assets
+
+The `sync_local_assets` method synchronizes the database with local assets found in the `/public` folder. If it doesn't find one, it doesn't do anything.
+
+```python
+AssetDatabase.sync_local_assets()
+```
+
+## Removing Assets
+
+You can remove an asset from the database by providing its name to the `remove_asset` method.
+
+```python
+AssetDatabase.remove_asset('name')
+```
+
+## Getting Database State
+
+You can get the state of the asset database as a pandas dataframe using the `get_df` method.
+
+```python
+AssetDatabase.get_df()
+```
+
+This method returns a dataframe that includes the name, type, link, source, and timestamp of each asset in the database.

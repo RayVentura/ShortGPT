@@ -3,7 +3,7 @@ import json
 
 def generate_title_description_dict(content):
     out = {"title": "", "description":""}
-    chat, system = gpt_utils.load_yaml_prompt('shortGPT/prompt_templates/yt_title_description.yaml')
+    chat, system = gpt_utils.load_local_yaml_prompt('prompt_templates/yt_title_description.yaml')
     chat = chat.replace("<<CONTENT>>", f"{content}")
     
     while out["title"] == "" or out["description"] == "":

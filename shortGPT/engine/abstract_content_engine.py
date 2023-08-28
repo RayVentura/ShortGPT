@@ -23,7 +23,8 @@ class AbstractContentEngine(ABC):
         self._db_language = language.value
         self.voiceModule = voiceModule
         self.stepDict = {}
-        self.logger = lambda _: print(_)
+        self.default_logger = lambda _: None
+        self.logger = self.default_logger
 
     def __getattr__(self, name):
         if name.startswith('_db_'):
@@ -68,7 +69,8 @@ class AbstractContentEngine(ABC):
                 yield currentStep, f'Current step ({currentStep} / {self.get_total_steps()}) : ' + "Preparing rendering assets..."
             else:
                 yield currentStep, f'Current step ({currentStep} / {self.get_total_steps()}) : ' + self.stepDict[currentStep].__name__
-            print(f'Step {currentStep} {self.stepDict[currentStep].__name__}')
+            if self.logger is not self.default_logger:
+                print(f'Step {currentStep} {self.stepDict[currentStep].__name__}')
             self.stepDict[currentStep]()
             self._db_last_completed_step = currentStep
 

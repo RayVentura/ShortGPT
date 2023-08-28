@@ -130,7 +130,7 @@ class ContentShortEngine(AbstractContentEngine):
                                                                           "volume_percentage": 0.11})
             videoEditor.addEditingStep(EditingStep.CROP_1920x1080, {
                                        'url': self._db_background_trimmed})
-            videoEditor.addEditingStep(EditingStep.ADD_SUBSCRIBE_ANIMATION)
+            videoEditor.addEditingStep(EditingStep.ADD_SUBSCRIBE_ANIMATION, {'url': AssetDatabase.get_asset_link('subscribe animation')})
 
             if self._db_watermark:
                 videoEditor.addEditingStep(EditingStep.ADD_WATERMARK, {
@@ -147,12 +147,13 @@ class ContentShortEngine(AbstractContentEngine):
                                                                         'set_time_start': timing[0],
                                                                         'set_time_end': timing[1]})
 
-            videoEditor.renderVideo(outputPath, logger=self.logger)
+            videoEditor.renderVideo(outputPath, logger= self.logger if self.logger is not self.default_logger else None)
 
         self._db_video_path = outputPath
 
     def _addYoutubeMetadata(self):
-
+        if not os.path.exists('videos/'):
+            os.makedirs('videos')
         self._db_yt_title, self._db_yt_description = gpt_yt.generate_title_description_dict(self._db_script)
 
         now = datetime.datetime.now()

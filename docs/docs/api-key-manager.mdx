@@ -1,0 +1,52 @@
+---
+title: ApiKeyManager in ShortGPT
+sidebar_label: ApiKeyManager
+---
+
+# ApiKeyManager in ShortGPT
+
+ApiKeyManager is a class in the ShortGPT framework that manages the API keys for different providers. It interacts with the database to get and set API keys.
+
+## Importing ApiKeyManager
+
+```python
+from shortGPT.config.api_db import ApiKeyManager, ApiProvider
+```
+
+## Using ApiKeyManager
+
+ApiKeyManager provides two main methods: `get_api_key` and `set_api_key`.
+
+### set_api_key
+
+This method is used to set the API key for a specific provider in the database. It takes two arguments: the key (provider name) and the value (API key).
+
+```python
+ApiKeyManager.set_api_key(ApiProvider.OPENAI, "your_openai_key")
+ApiKeyManager.set_api_key(ApiProvider.ELEVEN_LABS, "your_eleven_labs_key")
+```
+
+In the above example, we are setting the API keys for OPENAI and ELEVEN_LABS.
+
+### get_api_key
+
+This method is used to retrieve the API key for a specific provider from the database. It takes one argument: the key (provider name).
+
+```python
+openai_key = ApiKeyManager.get_api_key(ApiProvider.OPENAI)
+eleven_labs_key = ApiKeyManager.get_api_key(ApiProvider.ELEVEN_LABS)
+```
+In the above example, we are retrieving the API keys for OPENAI and ELEVEN_LABS.
+
+## Note
+
+The `key` argument in both methods can either be a string or an instance of the `ApiProvider` enum. If it is an instance of `ApiProvider`, the `value` attribute of the enum instance will be used as the key.
+
+```python
+ApiKeyManager.set_api_key("OPENAI", "your_openai_key")
+ApiKeyManager.set_api_key("ELEVEN LABS", "your_eleven_labs_key")
+
+openai_key = ApiKeyManager.get_api_key("OPENAI")
+eleven_labs_key = ApiKeyManager.get_api_key("ELEVEN LABS")
+```
+In the above example, we are setting and retrieving the API keys using string keys instead of `ApiProvider` instances.

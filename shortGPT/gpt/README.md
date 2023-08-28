@@ -26,7 +26,7 @@ This function reads and returns the contents of a YAML file as a dictionary. It 
 
 This function reads and returns the contents of a JSON file. It takes the file path as input and uses the `json.load()` function to parse the JSON file.
 
-### `load_yaml_prompt(file_path)`
+### `load_local_yaml_prompt(file_path)`
 
 This function loads a YAML file containing chat and system prompts and returns the chat and system prompts as separate strings.
 

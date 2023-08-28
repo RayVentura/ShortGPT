@@ -56,7 +56,7 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
             // left
             {
               label: 'Docs',
-              to: 'docs/what-is-shortGPT',
+              to: 'docs/how-to-install',
               position: 'right',
             },
             // right
@@ -87,7 +87,7 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
               items: [
                 {
                   label: 'Getting Started',
-                  to: 'docs/what-is-shortGPT',
+                  to: 'docs/how-to-install',
                 },
 
               ],

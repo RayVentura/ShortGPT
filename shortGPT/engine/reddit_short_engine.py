@@ -1,4 +1,5 @@
 from shortGPT.audio.voice_module import VoiceModule
+from shortGPT.config.asset_db import AssetDatabase
 from shortGPT.config.languages import Language
 from shortGPT.engine.content_short_engine import ContentShortEngine
 from shortGPT.editing_framework.editing_engine import EditingEngine, EditingStep, Flow
@@ -79,7 +80,7 @@ class RedditShortEngine(ContentShortEngine):
                                                                           "volume_percentage": 0.11})
             videoEditor.addEditingStep(EditingStep.CROP_1920x1080, {
                                        'url': self._db_background_trimmed})
-            videoEditor.addEditingStep(EditingStep.ADD_SUBSCRIBE_ANIMATION)
+            videoEditor.addEditingStep(EditingStep.ADD_SUBSCRIBE_ANIMATION, {'url': AssetDatabase.get_asset_link('subscribe animation')})
 
             if self._db_watermark:
                 videoEditor.addEditingStep(EditingStep.ADD_WATERMARK, {
@@ -98,7 +99,7 @@ class RedditShortEngine(ContentShortEngine):
                                                                         'set_time_start': timing[0],
                                                                         'set_time_end': timing[1]})
 
-            videoEditor.renderVideo(outputPath, logger=self.logger)
+            videoEditor.renderVideo(outputPath, logger= self.logger if self.logger is not self.default_logger else None)
 
         self._db_video_path = outputPath
 

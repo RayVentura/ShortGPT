@@ -1,5 +1,19 @@
 # CHANGES
 
+## Version 0.1.31
+- Fixing issue in AssetDatabase, where it was copying unexisting asset template file
+## Version 0.1.3
+- Requiring a youtube url as the subscribe animation url in the EditingStep.ADD_SUBSCRIBE_ANIMATION step.
+- Adding a default subscribe animation youtube link by default shipped in the AssetDatabase
+- Making path imports relative for gpt prompts and editing blocks and flows.
+## Version 0.1.2
+- Improving logs in content engines
+## Version 0.1.1
+- Adding AssetType in AssetDatabase
+- Adding ApiProvider in api_db
+- Fixing pip libary missing editing_framework module, prompt_template module
+## Version 0.1.0
+- Fixing the AssetDatabase when it's empty
 ## Version 0.0.2
 - Implemented the content_translation_engine; a multilingual video dubbing content engine. The source can be found at shortGPT/engine/content_translation_engine.py.
 - Implemented the new EdgeTTS voice module; it can be found at shortgpt/audio/edge_voice_module.

@@ -1,0 +1,69 @@
+---
+title: ContentTranslationEngine
+sidebar_label: ContentTranslationEngine
+---
+
+The `ContentTranslationEngine` in ShortGPT is a powerful tool that automates the process of translating video content. This guide will provide you with an overview of how to use the `ContentTranslationEngine`.
+
+## Importing ContentTranslationEngine
+
+```python
+from shortGPT.engine.content_translation_engine import ContentTranslationEngine
+```
+
+## Initializing ContentTranslationEngine
+
+The `ContentTranslationEngine` requires a `VoiceModule`, a source URL (either a local video file path or a YouTube link), a target language, and an optional flag indicating whether to use captions for translation.
+
+```python
+content_engine = ContentTranslationEngine(voice_module, src_url, target_language, use_captions=False)
+```
+
+## Example
+
+```python
+from shortGPT.config.api_db import ApiKeyManager, ApiProvider
+from shortGPT.engine.content_translation_engine import ContentTranslationEngine
+from shortGPT.config.languages import Language
+from shortGPT.audio.edge_voice_module import EdgeTTSVoiceModule, EDGE_TTS_VOICENAME_MAPPING
+
+# Set API Keys
+ApiKeyManager.set_api_key(ApiProvider.OPENAI, "your_openai_key")
+ApiKeyManager.set_api_key(ApiProvider.ELEVEN_LABS, "your_eleven_labs_key")
+
+# Configure the Voice Module
+voice_name = EDGE_TTS_VOICENAME_MAPPING[Language.SPANISH]['male']
+voice_module = EdgeTTSVoiceModule(voice_name)
+
+# Configure Content Engine
+src_url = "https://www.youtube.com/watch?v=QQz5hj8y1TE"
+target_language = Language.SPANISH
+use_captions = False
+content_engine = ContentTranslationEngine(voice_module, src_url, target_language, use_captions)
+
+# Generate Content
+for step_num, step_logs in content_engine.makeContent():
+    print(f" {step_logs}")
+
+# Get Video Output Path
+print(content_engine.get_video_output_path())
+```
+
+## How ContentTranslationEngine Works
+
+The `ContentTranslationEngine` works by executing a series of steps defined in the `stepDict` dictionary. Each step is a method that performs a specific task in the video translation process. Here's what each step does:
+
+1. `_transcribe_audio`: Transcribes the audio from the source video
+2. `_translate_content`: Translates the transcribed content from the source language to the target language.
+3. `_generate_translated_audio`: Generates translated audio using the translated content and the specified `VoiceModule`.
+4. `_edit_and_render_video`: Edits and renders the translated video.
+5. `_add_metadata`: Adds metadata to the translated video.
+
+## Providing a Source URL
+
+The `ContentTranslationEngine` requires a source URL, which can be either a local video file path or a YouTube link for a youtube Video, or a Youtube Shorts. The engine uses this source URL to retrieve the audio and video content for translation.
+
+## Using Captions for Translation
+
+Set the `use_captions` flag to `True` to see text captions on the video generated that are timed with the audio voice.
+

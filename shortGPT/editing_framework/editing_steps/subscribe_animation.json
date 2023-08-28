@@ -2,9 +2,11 @@
 	"subscribe_animation": {
 		"type": "video",
 		"z": 6,
-		"inputs":{},
+		"inputs":{
+			"parameters": ["url"]
+		},
 		"parameters": {
-			"url": "public/subscribe-animation.mp4",
+			"url": null,
 			"audio": false
 		},
 		"actions": [

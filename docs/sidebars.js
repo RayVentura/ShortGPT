@@ -14,7 +14,20 @@ module.exports = {
     {
       type: 'category',
       label: 'Introduction',
-      items: ['what-is-shortgpt'],
-    }, 
+      collapsed: false,
+      items: ['how-to-install', 'getting-started'],
+    },
+    {
+      type: 'category',
+      label: 'Content Engines',
+      collapsed: false,
+      items: ['content-video-engine', 'content-translation-engine', 'facts-short-engine'],
+    },
+    {
+      type: 'category',
+      label: 'API Key and Asset',
+      collapsed: false,
+      items: ['api-key-manager', 'asset-database'],
+    },
   ],
 };

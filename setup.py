@@ -7,7 +7,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
     long_description = "\n" + fh.read()
 
-VERSION = '0.0.2'
+VERSION = '0.1.31'
 DESCRIPTION = 'Automating video and short content creation with AI'
 LONG_DESCRIPTION = 'A powerful tool for automating content creation. It simplifies video creation, footage sourcing, voiceover synthesis, and editing tasks.'
 
@@ -21,10 +21,10 @@ setup(
     long_description_content_type="text/markdown",
     long_description=long_description,
     packages=find_packages(),
+    package_data={'': ['*.yaml', '*.json']},    # This will include all yaml files in package
     install_requires=[
         'ffmpeg', 
         'python-dotenv', 
-        'gradio',
         'openai', 
         'tiktoken',
         'tinydb',
@@ -38,7 +38,6 @@ setup(
         'protobuf==3.20.0',
         'edge-tts',
         'moviepy==1.0.3',
-        'termcolor',
         'progress',
         'questionary',
     ],
