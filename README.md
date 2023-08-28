@@ -34,13 +34,13 @@ For setup refer to the main [repo](https://docs.shortgpt.ai/docs/how-to-install)
 
 1. Authentification 
 
-configure OAuth 2.0 with information from the API Console https://console.cloud.google.com/
+Head to the Google API Console https://console.cloud.google.com/ and create a project, add the youtube v3 API (Important: Add scopes for .upload) and web client. 
 For more information about the client_secrets.json file format, please visit:
 https://developers.google.com/api-client-library/python/guide/aaa_client_s
 
 2. Oauth2.json
    
-Once client_secrets.json is gathered, run `python3 upload.py` and use the link with the account that is to be automated, This will be saved as *oauth2*.json. You can avoid quota bottlenecks by stacking up projects in the google console and repeat steps before 
+Once client_secrets.json is gathered from the webclient, run `python3 upload.py` and use the link with the account that is to be automated, This will be saved as *oauth2*.json. You can avoid quota bottlenecks by stacking up projects in the google console and repeat steps before 
 
 3. Automation
 
