@@ -111,7 +111,7 @@ Inside `api_utils` functions provide utility for working with different APIs. Fi
 
 -  #### `triage_videos_Youtube(expected_score_parameter)` ❗not released yet
 
-### Demo (average viewer duration: 143% @ 10k views) 
+### Demo (average view duration: 143% @ 10k views) 
 
 demo_new shows the accuracy of the newly added youtube query policy ***without*** further guidance, backtesting or content analysis. This can be improved by adding a content triage based on Clip2 and transcript analysis.
 
