@@ -32,26 +32,44 @@ For setup refer to the main [repo](https://docs.shortgpt.ai/docs/how-to-install)
 
 ### Upload Automation 
 
-1. Authentification 
+1. Authentification (Gathering the client.secrets.json)
 
-Head to the Google API Console https://console.cloud.google.com/ and create a project
-In the marketplace find 'YouTube v3 API' and enable it 
+- Head to the Google API Console https://console.cloud.google.com/ and create a project
+
+- In the marketplace find 'YouTube v3 API' and enable it 
 
 ![IMG_5344](https://github.com/su77ungr/FreeShortGPT/assets/69374354/47fc77a7-2111-489a-9b6e-f2434cbb44ea)
 
 Inside the Oauth Screen create and add google.com as the authorised domain
 
-Add scopes for the YouTube v3 API
+- Add scopes for the YouTube v3 API
 
 ![IMG_5345](https://github.com/su77ungr/FreeShortGPT/assets/69374354/dbd2abef-72d4-4303-b739-6be947f525b2)
 
+- add your channel's management email as the test user (in most cases the email the channel was registered with) 
 
+
+- Create Credentials (OAuth Client ID) in the Credentials Menu and select Web App
+
+- For Authorised redirect URIs use
+- http:localhost:8080
+- http:localhost:8080/
+- http:localhost:8090
+- http:localhost:8090/
+
+  ![IMG_5346](https://github.com/su77ungr/FreeShortGPT/assets/69374354/e0ca6e19-d466-42f2-bda8-cc477093f036)
+
+
+Now download the .JSON file and put it inside this repo's directory 
 For more information about the client_secrets.json file format, please visit:
 https://developers.google.com/api-client-library/python/guide/aaa_client_s
 
 2. Oauth2.json
    
-Once client_secrets.json is gathered from the webclient, run `python3 upload.py` and use the link with the account that is to be automated, This will be saved as *oauth2*.json. You can avoid quota bottlenecks by stacking up projects in the google console and repeat steps before 
+Once a valid client_secrets.json is present in the directory, run `python3 upload.py` and follow further instructions. After succesful authentication an *oauth2*.json will be created inside the directory. 
+
+
+Note: You can avoid quota bottlenecks by stacking up projects in the google console and repeat steps before 
 
 3. Automation
 
