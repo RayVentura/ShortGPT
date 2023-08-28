@@ -113,16 +113,9 @@ Inside `api_utils` functions provide utility for working with different APIs. Fi
 
 ### Demo
 
-demo_new shows the accuracy of the newly added youtube query policy ***without*** further guidance, backtesting or content analysis. This can be improved by adding a content triage based on Clip2 and transcript analysis. 
-
+demo_new shows the accuracy of the newly added youtube query policy ***without*** further guidance, backtesting or content analysis. This can be improved by adding a content triage based on Clip2 and transcript analysis.
 
 
 <div align="center">
-Short_Video_Creation (Reddit)
-<img width="350" src="https://github.com/su77ungr/FreeShortGPT/assets/69374354/5a8e3032-982e-48da-bf17-76ed93d08fe5">
-
-
-LongFormat_Video_Creation
-<img height="350" src="https://github.com/su77ungr/FreeShortGPT/assets/69374354/4b561ba1-008a-4b91-b97b-eb14ec37f74a">
-
+<img src="https://github.com/su77ungr/FreeShortGPT/assets/69374354/5a8e3032-982e-48da-bf17-76ed93d08fe5">
 </div>
