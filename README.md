@@ -36,11 +36,16 @@ For setup refer to the main [repo](https://docs.shortgpt.ai/docs/how-to-install)
 
 - Head to the Google API Console https://console.cloud.google.com/ and create a project
 
-- In the marketplace find 'YouTube v3 API' and enable it 
+- In the marketplace (search bar) find 'YouTube v3 API' and enable it
+
+- After redirect click on Oauth Screen and create
+  
+- add google.com as the authorised domain
+
 
 ![IMG_5344](https://github.com/su77ungr/FreeShortGPT/assets/69374354/47fc77a7-2111-489a-9b6e-f2434cbb44ea)
 
-Inside the Oauth Screen create and add google.com as the authorised domain
+
 
 - Add scopes for the YouTube v3 API
 
@@ -52,10 +57,10 @@ Inside the Oauth Screen create and add google.com as the authorised domain
 - Create Credentials (OAuth Client ID) in the Credentials Menu and select Web App
 
 - For Authorised redirect URIs use
-- http:localhost:8080
-- http:localhost:8080/
-- http:localhost:8090
-- http:localhost:8090/
+    http:localhost:8080
+    http:localhost:8080/
+    http:localhost:8090
+    http:localhost:8090/
 
   ![IMG_5346](https://github.com/su77ungr/FreeShortGPT/assets/69374354/e0ca6e19-d466-42f2-bda8-cc477093f036)
 
