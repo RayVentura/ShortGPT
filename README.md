@@ -1,4 +1,8 @@
+<div align="center">
+
 # Big Tech is stealing people's time: Show them their abundance
+</div>
+
 <div align="center">
 
   🆓 Free* video and short content creation with AI 🆓
