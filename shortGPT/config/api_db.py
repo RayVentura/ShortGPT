@@ -23,7 +23,7 @@ class ApiKeyManager:
             return api_key
 
         # If not found in the database, check in the environment variables
-        env_key = key.replace(" ", "_").upper()+"_KEY"
+        env_key = key.replace(" ", "_").upper()
         api_key = os.environ.get(env_key)
         if api_key:
             return api_key

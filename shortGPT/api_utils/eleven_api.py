@@ -40,7 +40,7 @@ class ElevenLabsAPI:
         voice_id = self.voices[character]
         url = f'{self.url_base}text-to-speech/{voice_id}/stream'
         headers = {'accept': '*/*', 'xi-api-key': self.api_key, 'Content-Type': 'application/json'}
-        data = json.dumps({"model_id": "eleven_multilingual_v1", "text": text, "stability": stability, "similarity_boost": clarity})
+        data = json.dumps({"model_id": "eleven_multilingual_v2", "text": text, "stability": stability, "similarity_boost": clarity})
         response = requests.post(url, headers=headers, data=data)
 
         if response.status_code == 200:
