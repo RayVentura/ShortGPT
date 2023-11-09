@@ -1,4 +1,5 @@
 ffmpeg
+ffmpeg-python
 python-dotenv
 gradio==3.38.0
 openai==1.2.1
