@@ -85,7 +85,7 @@ For the updated installation steps, please follow Step 1 and 2 in our official d
 1. Open a terminal or command prompt.
 2. Execute the following command to clone the shortGPT repository:
    ```
-   git clone https://github.com/rayventura/shortgpt.git
+   git clone https://github.com/transonit/shortgpt.git
    ```
 
 ### Step 4: Install Python Dependencies
