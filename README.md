@@ -1,4 +1,8 @@
 # 🚀🎬 ShortGPT
+Son Tran (me) forked this repo to fix annoying bugs. The original program won't work on Python <3.11, but works with old ffmpeg :)
+
+Please read "installation-notes.md" for more details.
+
 <p align="center">
   <a href="https://discord.gg/uERx39ru3R">
     <img src="https://dcbadge.vercel.app/api/server/uERx39ru3R?compact=true&style=flat">
