@@ -1,4 +1,4 @@
-I forked this repo to fix annoying bugs. The original program won't work on Python <3.11, but works with old ffmpeg :)
+Son Tran (me) forked this repo to fix annoying bugs. The original program won't work on Python <3.11, but works with old ffmpeg :)
 So, this is an important note, please read it before installing or using ShortGPT:
 
 ### 1. OS: Debian 11 x64
