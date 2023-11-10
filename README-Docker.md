@@ -14,5 +14,8 @@ To run Dockerfile do this:
 ```bash
 docker build -t short_gpt_docker .
 docker run -p 31415:31415 --env-file .env short_gpt_docker:latest
+```
+Export Docker image:
+```bash
 docker save short_gpt_docker > short_gpt_docker.tar
 ```
