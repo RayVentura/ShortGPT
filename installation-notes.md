@@ -93,4 +93,27 @@ source ~/.bashrc
 sudo apt install libjpeg-dev zlib1g-dev
 ```
 
+### 5. This is a list of Python lib and their versions, I'm using them without errors:
+```bash
+edge-tts==6.1.9
+ffmpeg==1.4
+ffmpeg-python==0.2.0
+gradio==3.38.0==3.38.0
+moviepy==1.0.3==1.0.3
+openai==0.28.1==0.28.1
+pillow==9.0.0==9.0.0
+proglog==0.1.10
+progress==1.6
+protobuf==3.20.3==3.20.3
+python-dotenv==1.0.0
+questionary==2.0.1
+tiktoken==0.5.1
+tinydb==4.8.0
+tinymongo==0.2.0
+torch==2.1.0
+torchaudio==2.1.0
+whisper-timestamped==1.12.20
+yt-dlp==2023.10.13
+```
+
 Now you're ready to clone my forked repo and run ShortGPT without errors ;)
