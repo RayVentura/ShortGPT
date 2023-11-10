@@ -13,5 +13,6 @@ PEXELS_API_KEY=put_your_pexels_api_key_here
 To run Dockerfile do this:
 ```bash
 docker build -t short_gpt_docker .
-docker run -p 31415:31415 short_gpt_docker --env-file .env
+docker run -p 31415:31415 --env-file .env short_gpt_docker:latest
+
 ```
