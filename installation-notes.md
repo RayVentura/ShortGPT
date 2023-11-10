@@ -1,9 +1,11 @@
 Son Tran (me) forked this repo to fix annoying bugs. The original program won't work on Python <3.11, but works with old ffmpeg :)
+
 In short, you need to use:
 - Python 3.11.3
 - openai package 0.28.0, then upgrade openai-whisper
 - ffmpeg 4.2.3
 - ImageMagick 7.1.1
+  
 So, this is an important note, please read it before installing or using ShortGPT:
 
 ### 1. OS: Debian 11 x64
