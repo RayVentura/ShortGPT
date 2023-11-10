@@ -24,7 +24,7 @@ pip3.11 install <package-name>
 ```
 
 ### 3. Install ffmpeg version: 4.2.3
-ShortGPT will accept this version of ffmpeg:
+ShortGPT will accept this version of FFmpeg:
 
 3.1. Install Build Dependencies:
 
