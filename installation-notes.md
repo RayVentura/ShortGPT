@@ -1,12 +1,17 @@
 Son Tran (me) forked this repo to fix annoying bugs. The original program won't work on Python <3.11, but works with old ffmpeg :)
+In short, you need to use:
+- Python 3.11.3
+- openai package 0.28.0, then upgrade openai-whisper
+- ffmpeg 4.2.3
+- ImageMagick 7.1.1
 So, this is an important note, please read it before installing or using ShortGPT:
 
 ### 1. OS: Debian 11 x64
+sudo apt update && sudo apt upgrade 
+sudo apt install wget git libltdl-dev libjpeg-dev libpng-dev libtiff-dev libgif-dev libfreetype6-dev liblcms2-dev libxml2-dev wget build-essential libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
 
 ### 2. Install Python version: 3.11.3
 ```bash
-sudo apt update && sudo apt upgrade 
-sudo apt install wget build-essential libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
 wget https://www.python.org/ftp/python/3.11.3/Python-3.11.3.tgz 
 tar xzf Python-3.11.3.tgz 
 cd Python-3.11.3 
@@ -30,7 +35,6 @@ ShortGPT will accept this version of FFmpeg:
 
 ```bash
 sudo apt update
-sudo apt install build-essential git
 sudo apt build-dep ffmpeg
 ```
 
@@ -88,12 +92,40 @@ echo 'export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64/:/usr/local/lib/x86
 source ~/.bashrc
 ```
 
-### 4. Install the needed package for pillow:
+### 4. Install ImageMagick 7.1.1:
+4.1. Clone ImageMagick:
 ```bash
-sudo apt install libjpeg-dev zlib1g-dev
+git clone https://github.com/ImageMagick/ImageMagick.git
+```
+4.2. Go to the ImageMagick folder and run configuration:
+```bash
+cd ImageMagick
+./configure
+```
+4.3. Make:
+```bash
+make
+```
+4.4. Install complied code:
+```bash
+make install
+```
+4.5. Update path:
+```bash
+ldconfig /usr/local/lib
+```
+4.6. (Optional) Check version
+```bash
+$ magick -version
 ```
 
-### 5. This is a list of Python lib and their versions, I'm using them without errors:
+### 5. Upgrade openai-whisper:
+pip3.11 install -U openai-whisper
+
+### 6. (Optional) Install torch 2.1.0:
+pip3.11 install torch==2.1.0
+
+### 7. This is a list of Python lib and their versions, I'm using them without errors:
 ```bash
 edge-tts==6.1.9
 ffmpeg==1.4
