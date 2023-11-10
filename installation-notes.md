@@ -5,7 +5,9 @@ In short, you need to use:
 - openai package 0.28.0, then upgrade openai-whisper
 - ffmpeg 4.2.3
 - ImageMagick 7.1.1
-  
+
+Pease keep in mind, that I WON'T update Dockerfile, please do it by yourself if you need to build a Docker image.
+
 So, this is an important note, please read it before installing or using ShortGPT:
 
 ### 1. OS: Debian 11 x64
