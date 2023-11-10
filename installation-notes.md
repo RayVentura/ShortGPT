@@ -124,10 +124,14 @@ $ magick -version
 ```
 
 ### 5. Upgrade openai-whisper:
+```bash
 pip3.11 install -U openai-whisper
+```
 
 ### 6. (Optional) Install torch 2.1.0:
+```bash
 pip3.11 install torch==2.1.0
+```
 
 ### 7. This is a list of Python lib and their versions, I'm using them without errors:
 ```bash
