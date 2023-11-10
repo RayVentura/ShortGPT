@@ -99,7 +99,7 @@ source ~/.bashrc
 ### 4. Install ImageMagick 7.1.1:
 4.1. Clone ImageMagick:
 ```bash
-git clone https://github.com/ImageMagick/ImageMagick.git
+sudo git clone https://github.com/ImageMagick/ImageMagick.git
 ```
 4.2. Go to the ImageMagick folder and run configuration:
 ```bash
@@ -108,15 +108,15 @@ cd ImageMagick
 ```
 4.3. Make:
 ```bash
-make
+sudo make
 ```
 4.4. Install complied code:
 ```bash
-make install
+sudo make install
 ```
 4.5. Update path:
 ```bash
-ldconfig /usr/local/lib
+sudo ldconfig /usr/local/lib
 ```
 4.6. (Optional) Check version
 ```bash
