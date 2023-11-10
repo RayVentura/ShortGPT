@@ -6,7 +6,7 @@ In short, you need to use:
 - ffmpeg 4.2.3
 - ImageMagick 7.1.1
 
-Pease keep in mind, that I WON'T update Dockerfile, please do it by yourself if you need to build a Docker image.
+Please keep in mind, that I WON'T update Dockerfile, please do it by yourself if you need to build a Docker image.
 
 So, this is an important note, please read it before installing or using ShortGPT:
 
