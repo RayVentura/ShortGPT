@@ -7,8 +7,10 @@ In short, you need to use:
 So, this is an important note, please read it before installing or using ShortGPT:
 
 ### 1. OS: Debian 11 x64
+```bash
 sudo apt update && sudo apt upgrade 
 sudo apt install wget git libltdl-dev libjpeg-dev libpng-dev libtiff-dev libgif-dev libfreetype6-dev liblcms2-dev libxml2-dev wget build-essential libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
+```
 
 ### 2. Install Python version: 3.11.3
 ```bash
