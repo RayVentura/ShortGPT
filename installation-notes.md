@@ -124,6 +124,10 @@ sudo ldconfig /usr/local/lib
 ```bash
 $ magick -version
 ```
+4.7. Fix Imagemagick policy.xml bug on Linux using MoviePy
+```bash
+!sed -i '/<policy domain="path" rights="none" pattern="@\*"/d' /etc/ImageMagick-6/policy.xml
+```
 
 ### 5. Upgrade openai-whisper:
 ```bash
