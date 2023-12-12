@@ -1,4 +1,8 @@
 # 🚀🎬 ShortGPT
+Son Tran (me) forked this repo to fix annoying bugs. The original program won't work on Python <3.11, but works with old ffmpeg :)
+
+Please read "installation-notes.md" for more details.
+
 <p align="center">
   <a href="https://discord.gg/uERx39ru3R">
     <img src="https://dcbadge.vercel.app/api/server/uERx39ru3R?compact=true&style=flat">
@@ -62,11 +66,11 @@ ShortGPT is a powerful framework for automating content creation. It simplifies 
 
 - 🧠 **Memory and persistency**: Ensures long-term persistency of automated editing variables with TinyDB.
 
-## 🚀 Quick Start: Run ShortGPT on Google Colab (https://colab.research.google.com/drive/1_2UKdpF6lqxCqWaAcZb3rwMVQqtbisdE?usp=sharing)
+## 🚀 Quick Start: Run ShortGPT on Google Colab (https://colab.research.google.com/drive/18WtSAnU5QwQXswKymOpNi2n331rQ2zzp?usp=sharing)
 
 If you prefer not to install the prerequisites on your local system, you can use the Google Colab notebook. This option is free and requires no installation setup.
 
-1. Click on the link to the Google Colab notebook: [https://colab.research.google.com/drive/1_2UKdpF6lqxCqWaAcZb3rwMVQqtbisdE?usp=sharing](https://colab.research.google.com/drive/1_2UKdpF6lqxCqWaAcZb3rwMVQqtbisdE?usp=sharing)
+1. Click on the link to the Google Colab notebook: [https://colab.research.google.com/drive/18WtSAnU5QwQXswKymOpNi2n331rQ2zzp?usp=sharing](https://colab.research.google.com/drive/18WtSAnU5QwQXswKymOpNi2n331rQ2zzp?usp=sharing)
 
 2. Once you're in the notebook, simply run the cells in order from top to bottom. You can do this by clicking on each cell and pressing the 'Play' button, or by using the keyboard . Enjoy using ShortGPT!
 
@@ -85,7 +89,7 @@ For the updated installation steps, please follow Step 1 and 2 in our official d
 1. Open a terminal or command prompt.
 2. Execute the following command to clone the shortGPT repository:
    ```
-   git clone https://github.com/rayventura/shortgpt.git
+   git clone https://github.com/transonit/shortgpt.git
    ```
 
 ### Step 4: Install Python Dependencies

@@ -81,9 +81,9 @@ class CoreEditingEngine:
             video.audio = audio
         if logger:
             my_logger = MoviepyProgressLogger(callBackFunction=logger)
-            video.write_videofile(output_file, codec='libx264', audio_codec='aac', logger=my_logger)
+            video.write_videofile(output_file, codec='libx264', audio_codec='aac', fps=25, preset='veryfast', logger=my_logger)
         else:
-            video.write_videofile(output_file, codec='libx264', audio_codec='aac')
+            video.write_videofile(output_file, codec='libx264', audio_codec='aac', fps=25, preset='veryfast')
         return output_file
     
     def generate_audio(self, schema:Dict[str, Any], output_file, logger=None) -> None:
