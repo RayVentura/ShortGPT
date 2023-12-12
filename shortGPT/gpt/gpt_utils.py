@@ -3,13 +3,12 @@ import os
 import re
 from time import sleep, time
 
-from openai import OpenAI
-from shortGPT.config.api_db import ApiKeyManager
-
+import openai
 import tiktoken
 import yaml
 
-client = OpenAI(api_key=ApiKeyManager.get_api_key("OPENAI"))
+from shortGPT.config.api_db import ApiKeyManager
+
 
 def num_tokens_from_messages(texts, model="gpt-3.5-turbo-0301"):
     """Returns the number of tokens used by a list of messages."""
@@ -71,7 +70,7 @@ def open_file(filepath):
 
 
 def gpt3Turbo_completion(chat_prompt="", system="You are an AI that can give the answer to anything", temp=0.7, model="gpt-3.5-turbo", max_tokens=1000, remove_nl=True, conversation=None):
-    
+    openai.api_key = ApiKeyManager.get_api_key("OPENAI")
     max_retry = 5
     retry = 0
     while True:
@@ -83,10 +82,11 @@ def gpt3Turbo_completion(chat_prompt="", system="You are an AI that can give the
                     {"role": "system", "content": system},
                     {"role": "user", "content": chat_prompt}
                 ]
-            response = client.chat.completions.create(model=model,
-            messages=messages,
-            max_tokens=max_tokens,
-            temperature=temp)
+            response = openai.ChatCompletion.create(
+                model=model,
+                messages=messages,
+                max_tokens=max_tokens,
+                temperature=temp)
             text = response['choices'][0]['message']['content'].strip()
             if remove_nl:
                 text = re.sub('\s+', ' ', text)

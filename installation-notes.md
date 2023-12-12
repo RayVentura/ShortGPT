@@ -1,14 +1,40 @@
-Son Tran (me) forked this repo to fix annoying bugs. The original program won't work on Python <3.11, but works with old ffmpeg :)
+** Thanks for Son Tran for the fixes on the installation guide. Here are the recommanded steps for installing ShortGPT:
+
+
+### You now need Docker to now run ShortGPT. If you can't run it with docker, please use the Google Colab.
+# To run ShortGPT docker:
+
+
+First make a .env file with the API keys like this:
+
+```bash
+OPENAI_API_KEY=sk-_put_your_openai_api_key_here
+ELEVENLABS_API_KEY=put_your_eleven_labs_api_key_here
+PEXELS_API_KEY=put_your_pexels_api_key_here
+```
+
+
+To run Dockerfile do this:
+```bash
+docker build -t short_gpt_docker:latest .
+docker run -p 31415:31415 --env-file .env short_gpt_docker:latest
+```
+Export Docker image:
+```bash
+docker save short_gpt_docker > short_gpt_docker.tar
+```
+
+
+
+
+
+### Here are the steps to install it from scratch on Linux, Debian 11 x64:
 
 In short, you need to use:
 - Python 3.11.3
 - openai package 0.28.0, then upgrade openai-whisper
 - ffmpeg 4.2.3
 - ImageMagick 7.1.1
-
-Please keep in mind, that I WON'T update Dockerfile, please do it yourself if you need to build a Docker image.
-
-So, this is an important note, please read it before installing or using ShortGPT:
 
 ### 1. OS: Debian 11 x64
 ```bash
@@ -161,5 +187,3 @@ torchaudio==2.1.0
 whisper-timestamped==1.12.20
 yt-dlp==2023.10.13
 ```
-
-Now you're ready to clone my forked repo and run ShortGPT without errors ;)

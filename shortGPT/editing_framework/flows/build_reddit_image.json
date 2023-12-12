@@ -21,7 +21,7 @@
 			"parameters": {
 				"text": null,
                 "fontsize": 32,
-                "font" : "Arial",
+                "font" : "Roboto",
                 "color": "rgb(129, 131, 132)",
                 "kerning": -0.7
 			},
@@ -41,7 +41,7 @@
 			"parameters": {
 				"text": null,
                 "fontsize": 34,
-                "font" : "Arial-Bold",
+                "font" : "Roboto-Bold",
                 "color": "rgb(129, 131, 132)",
                 "kerning": -0.7
 			},
@@ -61,7 +61,7 @@
 			"parameters": {
 				"text": null,
                 "fontsize": 36,
-                "font" : "Arial-Bold",
+                "font" : "Roboto-Bold",
                 "color": "rgb(26, 26 , 27)",
                 "kerning": -0.7
 			},
@@ -81,7 +81,7 @@
 			"parameters": {
 				"text": null,
                 "fontsize": 40,
-                "font" : "Arial-Bold",
+                "font" : "Roboto-Bold",
                 "color": "rgb(26, 26, 27)",
 				"size": [850, null],
 				"method": "caption",

@@ -8,7 +8,7 @@
 		"parameters": {
 			"text": null,
 			"fontsize": 80,
-			"font": "Berlin-Sans-FB-Demi-Bold",
+			"font": "Roboto-Bold",
 			"color": "white",
 			"stroke_width": 1,
 			"stroke_color": "black",

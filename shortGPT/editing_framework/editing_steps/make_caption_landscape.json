@@ -9,7 +9,7 @@
 		"parameters": {
 			"text": null,
 			"fontsize": 70,
-			"font": "Calibri-Bold",
+			"font": "Roboto-Bold",
 			"color": "white",
 			"stroke_width": 3,
 			"stroke_color": "black",
