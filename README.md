@@ -1,4 +1,7 @@
 # 🚀🎬 ShortGPT
+
+## (NEWS: The successor of ShortGPT, ShortX is out, an automation factory with way more capabilities than ShortGPT, check it out at [shortx.ai](https://shortx.ai?ref=sgpt))
+https://github.com/RayVentura/ShortGPT/assets/121462835/e9d9c87a-8a8c-45a0-a5fa-0baff0e067a6
 <p align="center">
   <a href="https://discord.gg/uERx39ru3R">
     <img src="https://dcbadge.vercel.app/api/server/uERx39ru3R?compact=true&style=flat">
@@ -130,9 +133,6 @@ As an open-source project in a rapidly developing field, we are extremely open t
 ## 🔗 Get in touch on Twitter 🐦
 
 Keep up with the latest happenings, announcements, and insights about Short-GPT by checking out our Twitter accounts. Spark a conversation with our developer and the AI's own account for fascinating dialogues, latest news about the project, and more.
-
-- **Developer**: Stay updated [@RayVentura](https://twitter.com/RayVenturaHQ). Deep-dive into behind-the-scenes, project news, and related topics from the person behind ShortGPT.
-
 We're eager to interact with you and listen to your feedback, concepts, and experiences with Short-GPT. Come on board on Twitter and let's navigate the future of AI as a team! 💡🤖
 <p align="center">
   <a href="https://star-history.com/#RayVentura/ShortGPT&Date">
