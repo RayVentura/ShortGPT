@@ -6,9 +6,6 @@ https://github.com/RayVentura/ShortGPT/assets/121462835/e9d9c87a-8a8c-45a0-a5fa-
   <a href="https://discord.gg/uERx39ru3R">
     <img src="https://dcbadge.vercel.app/api/server/uERx39ru3R?compact=true&style=flat">
   </a>
-  <a href="https://twitter.com/RayVenturaHQ">
-    <img src="https://img.shields.io/twitter/url/https/twitter.com/rayventurahq.svg?style=social&label=Follow%20%40RayVentura">
-  </a>
   <a href="https://star-history.com/#rayventura/shortgpt)">
     <img src="https://img.shields.io/github/stars/rayventura/shortgpt?style=social">
   </a>
@@ -129,11 +126,6 @@ These technologies work together to provide a seamless and efficient experience 
 ## 💁 Contributing
 
 As an open-source project in a rapidly developing field, we are extremely open to contributions, whether it would be in the form of a new feature, improved infrastructure, or better documentation.
-
-## 🔗 Get in touch on Twitter 🐦
-
-Keep up with the latest happenings, announcements, and insights about Short-GPT by checking out our Twitter accounts. Spark a conversation with our developer and the AI's own account for fascinating dialogues, latest news about the project, and more.
-We're eager to interact with you and listen to your feedback, concepts, and experiences with Short-GPT. Come on board on Twitter and let's navigate the future of AI as a team! 💡🤖
 <p align="center">
   <a href="https://star-history.com/#RayVentura/ShortGPT&Date">
     <img src="https://api.star-history.com/svg?repos=RayVentura/ShortGPT&type=Date" alt="Star History Chart">
