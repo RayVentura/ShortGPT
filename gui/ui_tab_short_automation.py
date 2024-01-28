@@ -8,9 +8,13 @@ from gui.ui_abstract_component import AbstractComponentUI
 from gui.ui_components_html import GradioComponentsHTML
 from shortGPT.audio.edge_voice_module import EdgeTTSVoiceModule
 from shortGPT.audio.eleven_voice_module import ElevenLabsVoiceModule
+from shortGPT.audio.coqui_voice_module import CoquiVoiceModule
 from shortGPT.config.api_db import ApiKeyManager
 from shortGPT.config.languages import (EDGE_TTS_VOICENAME_MAPPING,
-                                       ELEVEN_SUPPORTED_LANGUAGES, Language)
+                                       ELEVEN_SUPPORTED_LANGUAGES,
+                                       COQUI_SUPPORTED_LANGUAGES,
+                                       LANGUAGE_ACRONYM_MAPPING,
+                                       Language)
 from shortGPT.engine.facts_short_engine import FactsShortEngine
 from shortGPT.engine.reddit_short_engine import RedditShortEngine
 
@@ -29,18 +33,21 @@ class ShortAutomationUI(AbstractComponentUI):
                 short_type = gr.Radio(["Reddit Story shorts", "Historical Facts shorts", "Scientific Facts shorts", "Custom Facts shorts"], label="Type of shorts generated", value="Scientific Facts shorts", interactive=True)
                 facts_subject = gr.Textbox(label="Write a subject for your facts (example: Football facts)", interactive=True, visible=False)
                 short_type.change(lambda x: gr.update(visible=x == "Custom Facts shorts"), [short_type], [facts_subject])
-                tts_engine = gr.Radio([AssetComponentsUtils.ELEVEN_TTS, AssetComponentsUtils.EDGE_TTS], label="Text to speech engine", value=AssetComponentsUtils.ELEVEN_TTS, interactive=True)
+                tts_engine = gr.Radio([AssetComponentsUtils.ELEVEN_TTS, AssetComponentsUtils.EDGE_TTS, AssetComponentsUtils.COQUI_TTS], label="Text to speech engine", value=AssetComponentsUtils.ELEVEN_TTS, interactive=True)
                 self.tts_engine = tts_engine.value
                 with gr.Column(visible=True) as eleven_tts:
                     language_eleven = gr.Radio([lang.value for lang in ELEVEN_SUPPORTED_LANGUAGES], label="Language", value="English", interactive=True)
-                    AssetComponentsUtils.voiceChoice()
+                    voice_eleven = AssetComponentsUtils.voiceChoice(provider=AssetComponentsUtils.ELEVEN_TTS)
                 with gr.Column(visible=False) as edge_tts:
                     language_edge = gr.Dropdown([lang.value.upper() for lang in Language], label="Language", value="ENGLISH", interactive=True)
+                with gr.Column(visible=False) as coqui_tts:
+                    language_coqui = gr.Radio([lang.value for lang in COQUI_SUPPORTED_LANGUAGES], label="Language", value="English", interactive=True)
+                    voice_coqui = AssetComponentsUtils.voiceChoice(provider=AssetComponentsUtils.COQUI_TTS)
 
                 def tts_engine_change(x):
                     self.tts_engine = x
-                    return gr.update(visible=x == AssetComponentsUtils.ELEVEN_TTS), gr.update(visible=x == AssetComponentsUtils.EDGE_TTS)
-                tts_engine.change(tts_engine_change, tts_engine, [eleven_tts, edge_tts])
+                    return gr.update(visible=x == AssetComponentsUtils.ELEVEN_TTS), gr.update(visible=x == AssetComponentsUtils.EDGE_TTS), gr.update(visible=x == AssetComponentsUtils.COQUI_TTS)
+                tts_engine.change(tts_engine_change, tts_engine, [eleven_tts, edge_tts, coqui_tts])
 
                 useImages = gr.Checkbox(label="Use images", value=True)
                 numImages = gr.Radio([5, 10, 25], value=25, label="Number of images per short", visible=True, interactive=True)
@@ -67,17 +74,19 @@ class ShortAutomationUI(AbstractComponentUI):
                 tts_engine,
                 language_eleven,
                 language_edge,
+                language_coqui,
                 numImages,
                 watermark,
                 AssetComponentsUtils.background_video_checkbox(),
                 AssetComponentsUtils.background_music_checkbox(),
                 facts_subject,
-                AssetComponentsUtils.voiceChoice()
+                voice_eleven,
+                voice_coqui
             ], outputs=[output, video_folder, generation_error])
         self.short_automation = short_automation
         return self.short_automation
 
-    def create_short(self, numShorts, short_type, tts_engine, language_eleven, language_edge, numImages, watermark, background_video_list, background_music_list, facts_subject, voice, progress=gr.Progress()):
+    def create_short(self, numShorts, short_type, tts_engine, language_eleven, language_edge, language_coqui, numImages, watermark, background_video_list, background_music_list, facts_subject, voice_eleven, voice_coqui, progress=gr.Progress()):
         '''Creates a short'''
         try:
             numShorts = int(numShorts)
@@ -86,11 +95,13 @@ class ShortAutomationUI(AbstractComponentUI):
             background_musics = (background_music_list * ((numShorts // len(background_music_list)) + 1))[:numShorts]
             if tts_engine == AssetComponentsUtils.ELEVEN_TTS:
                 language = Language(language_eleven.lower().capitalize())
-                voice_module = ElevenLabsVoiceModule(ApiKeyManager.get_api_key('ELEVEN LABS'), voice, checkElevenCredits=True)
+                voice_module = ElevenLabsVoiceModule(ApiKeyManager.get_api_key('ELEVEN LABS'), voice_eleven, checkElevenCredits=True)
             elif tts_engine == AssetComponentsUtils.EDGE_TTS:
                 language = Language(language_edge.lower().capitalize())
                 voice_module = EdgeTTSVoiceModule(EDGE_TTS_VOICENAME_MAPPING[language]['male'])
-
+            elif tts_engine == AssetComponentsUtils.COQUI_TTS:
+                language = Language(language_coqui.lower().capitalize())
+                voice_module = CoquiVoiceModule(voice_coqui, LANGUAGE_ACRONYM_MAPPING[language])
             for i in range(numShorts):
                 shortEngine = self.create_short_engine(short_type=short_type, voice_module=voice_module, language=language, numImages=numImages, watermark=watermark,
                                                        background_video=background_videos[i], background_music=background_musics[i], facts_subject=facts_subject)
