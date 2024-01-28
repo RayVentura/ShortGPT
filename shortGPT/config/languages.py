@@ -87,6 +87,23 @@ ELEVEN_SUPPORTED_LANGUAGES=[Language.ENGLISH,
     Language.ITALIAN,
     Language.PORTUGUESE]
 
+COQUI_SUPPORTED_LANGUAGES=[Language.ENGLISH,
+Language.SPANISH,
+Language.FRENCH,
+Language.GERMAN,
+Language.ITALIAN,
+Language.PORTUGUESE,
+Language.POLISH,
+Language.TURKISH,
+Language.RUSSIAN,
+Language.DUTCH,
+Language.CZECH,
+Language.ARABIC,
+Language.CHINESE,
+Language.JAPANESE,
+Language.HUNGARIAN,
+Language.KOREAN]
+
 LANGUAGE_ACRONYM_MAPPING={
     Language.ENGLISH : "en",
     Language.SPANISH : "es",
