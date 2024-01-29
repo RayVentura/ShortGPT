@@ -38,7 +38,7 @@ class CoquiVoiceModule(VoiceModule):
                 text=text,
                 file_path=outputfile,
                 speaker=self.voiceName,
-                language="en",
+                language=self.language,
                 split_sentences=True,
             )
         except Exception as e:
