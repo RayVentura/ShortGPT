@@ -22,7 +22,6 @@ class CoquiVoiceModule(VoiceModule):
         self.device = "cuda" if is_available() else "cpu"
         self.language = language
         self.tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2")
-        self.tts.to(self.device)
 
         super().__init__()
 
@@ -34,6 +33,7 @@ class CoquiVoiceModule(VoiceModule):
 
     def generate_voice(self, text, outputfile):
         try:
+            self.tts.to(self.device)
             self.tts.tts_to_file(
                 text=text,
                 file_path=outputfile,
