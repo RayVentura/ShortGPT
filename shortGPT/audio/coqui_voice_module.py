@@ -21,6 +21,7 @@ class CoquiVoiceModule(VoiceModule):
         self.voiceName = voiceName
         self.device = "cuda" if is_available() else "cpu"
         self.language = language
+        os.environ["COQUI_TOS_AGREED"] = "1"
         self.tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2")
 
         super().__init__()
