@@ -9,9 +9,13 @@ from gui.ui_abstract_component import AbstractComponentUI
 from gui.ui_components_html import GradioComponentsHTML
 from shortGPT.audio.edge_voice_module import EdgeTTSVoiceModule
 from shortGPT.audio.eleven_voice_module import ElevenLabsVoiceModule
+from shortGPT.audio.coqui_voice_module import CoquiVoiceModule
 from shortGPT.config.api_db import ApiKeyManager
 from shortGPT.config.languages import (EDGE_TTS_VOICENAME_MAPPING,
-                                       ELEVEN_SUPPORTED_LANGUAGES, Language)
+                                        ELEVEN_SUPPORTED_LANGUAGES,
+                                        COQUI_SUPPORTED_LANGUAGES,
+                                        LANGUAGE_ACRONYM_MAPPING,
+                                        Language)
 from shortGPT.engine.content_video_engine import ContentVideoEngine
 from shortGPT.gpt import gpt_chat_video
 
@@ -92,7 +96,7 @@ class VideoAutomationUI(AbstractComponentUI):
                 else:
                     self.isVertical = "vertical" in message.lower() or "short" in message.lower()
                     self.state = Chatstate.ASK_VOICE_MODULE
-                    bot_message = "Which voice module do you want to use? Please type 'ElevenLabs' for high quality voice or 'EdgeTTS' for free but medium quality voice."
+                    bot_message = "Which voice module do you want to use? Please type 'ElevenLabs' for high quality, 'EdgeTTS' for free but medium quality voice or 'CoquiTTS' for free and good quality voice but requires a powerful GPU."
             elif self.state == Chatstate.ASK_VOICE_MODULE:
                 if "elevenlabs" in message.lower():
                     eleven_labs_key = ApiKeyManager.get_api_key("ELEVEN LABS")
@@ -104,6 +108,9 @@ class VideoAutomationUI(AbstractComponentUI):
                 elif "edgetts" in message.lower():
                     self.voice_module = EdgeTTSVoiceModule
                     language_choices = [lang.value for lang in Language]
+                elif "coquitts" in message.lower():
+                    self.voice_module = CoquiVoiceModule
+                    language_choices = [lang.value for lang in COQUI_SUPPORTED_LANGUAGES]
                 else:
                     bot_message = "Invalid voice module. Please type 'ElevenLabs' or 'EdgeTTS'."
                     return
@@ -116,6 +123,8 @@ class VideoAutomationUI(AbstractComponentUI):
                     self.voice_module = ElevenLabsVoiceModule(ApiKeyManager.get_api_key('ELEVEN LABS'), "Antoni", checkElevenCredits=True)
                 elif self.voice_module == EdgeTTSVoiceModule:
                     self.voice_module = EdgeTTSVoiceModule(EDGE_TTS_VOICENAME_MAPPING[self.language]['male'])
+                elif self.voice_module == CoquiVoiceModule:
+                    self.voice_module = CoquiVoiceModule("Ana Florence", LANGUAGE_ACRONYM_MAPPING[self.language])
                 self.state = Chatstate.ASK_DESCRIPTION
                 bot_message = "Amazing 🔥 ! 📝Can you describe thoroughly the subject of your video?📝 I will next generate you a script based on that description"
             elif self.state == Chatstate.ASK_DESCRIPTION:

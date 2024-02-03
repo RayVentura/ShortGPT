@@ -18,3 +18,4 @@ moviepy==1.0.3
 progress
 questionary
 edge-tts
+TTS==0.22.0
