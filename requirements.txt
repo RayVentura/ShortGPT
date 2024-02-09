@@ -1,6 +1,7 @@
 ffmpeg
 ffmpeg-python
 python-dotenv
+gradio_client==0.2.10
 gradio==3.38.0
 openai==1.10.0
 tiktoken
