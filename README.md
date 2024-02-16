@@ -1,5 +1,5 @@
-# 🚀🎬 ShortGPT, free AI youtube & content automation framework.
-
+# 🚀🎬 ShortGPT 
+## Free AI youtube/tiktok content automation framework.
 ## (NEWS: The successor of ShortGPT, ShortX is out, an automation factory with way more capabilities than ShortGPT, check it out at [shortx.ai](https://shortx.ai?ref=sgpt))
 https://github.com/RayVentura/ShortGPT/assets/121462835/e9d9c87a-8a8c-45a0-a5fa-0baff0e067a6
 <p align="center">
