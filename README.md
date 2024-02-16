@@ -48,7 +48,7 @@ We hope you find ShortGPT helpful! If you do, let us know by giving us a star �
 ## 🛠️ How it works
 ![alt text](https://github.com/RayVentura/ShortGPT/assets/121462835/fcee74d4-f856-4481-949f-244558bf3bfa)
 ## 📝 Introduction to ShortGPT 
-ShortGPT is a powerful framework for automating content creation. It simplifies video creation, footage sourcing, voiceover synthesis, and editing tasks.
+ShortGPT is a powerful framework for automating content creation. It simplifies video creation, footage sourcing, voiceover synthesis, and editing tasks. Of the most popular use-cases of ShortGPT is youtube automation and Tiktok creativity program automation.
 
 - 🎞️ **Automated editing framework**: Streamlines the video creation process with an LLM oriented video editing language.
 
