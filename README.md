@@ -1,5 +1,5 @@
 # 🚀🎬 ShortGPT 
-## (Note: ShortX is out, a paid premium automation factory with way more capabilities than ShortGPT, check it out at [shortx.ai](https://shortx.ai?ref=sgpt))
+## (Note: ShortX is out, a paid premium automation factory with more capabilities than ShortGPT, check it out at [shortx.ai](https://shortx.ai?ref=sgpt))
 <p align="center">
   <a href="https://discord.gg/uERx39ru3R">
     <img src="https://dcbadge.vercel.app/api/server/uERx39ru3R?compact=true&style=flat">
