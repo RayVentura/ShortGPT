@@ -1,38 +1,38 @@
 # Use an official Python runtime as the parent image
 FROM python:3.11-bullseye
-RUN apt-get update && apt-get install -y \
+
+# Update APT and install required system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
     ffmpeg \
     imagemagick \
     ghostscript \
     fonts-roboto \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 # Update font cache
 RUN fc-cache -f -v
 
+# Modify ImageMagick policy file to remove restrictions
 RUN sed -i '/<policy domain="path" rights="none" pattern="@\*"/d' /etc/ImageMagick-6/policy.xml
-# Clean up APT when done
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Set the working directory in the container to /app
+# Set the working directory in the container
 WORKDIR /app
 
-# Install any Python packages specified in requirements.txt
-# Copy requirements file
+# Copy requirements file into the container
 COPY requirements.txt .
 
-# Install dependencies
-RUN pip install -r requirements.txt
+# Upgrade pip and install necessary packages first
+RUN pip install --no-cache-dir --upgrade pip \
+    && pip install --no-cache-dir Cython numpy
 
-# Copy the local package directory content into the container at /app
-COPY . /app
+# Install other Python dependencies with legacy resolver
+RUN pip install --no-cache-dir -r requirements.txt --use-deprecated=legacy-resolver
 
+# Copy the entire application code into the container
+COPY . .
+
+# Expose the application port
 EXPOSE 31415
 
-# Define any environment variables
-# ENV KEY Value
-
-# Print environment variables (for debugging purposes, you can remove this line if not needed)
-RUN ["printenv"]
-
-# Run Python script when the container launches
-CMD ["python", "./runShortGPT.py"]
+# Command to run the Python script when the container launches
+CMD ["python", "runShortGPT.py"]
