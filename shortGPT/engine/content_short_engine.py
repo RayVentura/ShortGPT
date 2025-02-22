@@ -23,23 +23,23 @@ class ContentShortEngine(AbstractContentEngine):
                  num_images=None, watermark=None, language: Language = Language.ENGLISH,):
         super().__init__(short_id, short_type, language, voiceModule)
         if not short_id:
-            if (num_images):
+            if num_images:
                 self._db_num_images = num_images
-            if (watermark):
+            if watermark:
                 self._db_watermark = watermark
             self._db_background_video_name = background_video_name
             self._db_background_music_name = background_music_name
 
         self.stepDict = {
-            1:  self._generateScript,
-            2:  self._generateTempAudio,
-            3:  self._speedUpAudio,
-            4:  self._timeCaptions,
-            5:  self._generateImageSearchTerms,
-            6:  self._generateImageUrls,
-            7:  self._chooseBackgroundMusic,
-            8:  self._chooseBackgroundVideo,
-            9:  self._prepareBackgroundAssets,
+            1: self._generateScript,
+            2: self._generateTempAudio,
+            3: self._speedUpAudio,
+            4: self._timeCaptions,
+            5: self._generateImageSearchTerms,
+            6: self._generateImageUrls,
+            7: self._chooseBackgroundMusic,
+            8: self._chooseBackgroundVideo,
+            9: self._prepareBackgroundAssets,
             10: self._prepareCustomAssets,
             11: self._editAndRenderShort,
             12: self._addYoutubeMetadata
@@ -52,22 +52,22 @@ class ContentShortEngine(AbstractContentEngine):
     def _generateTempAudio(self):
         if not self._db_script:
             raise NotImplementedError("generateScript method must set self._db_script.")
-        if (self._db_temp_audio_path):
+        if self._db_temp_audio_path:
             return
         self.verifyParameters(text=self._db_script)
         script = self._db_script
-        if (self._db_language != Language.ENGLISH.value):
+        if self._db_language != Language.ENGLISH.value:
             self._db_translated_script = gpt_translate.translateContent(script, self._db_language)
             script = self._db_translated_script
         self._db_temp_audio_path = self.voiceModule.generate_voice(
             script, self.dynamicAssetDir + "temp_audio_path.wav")
 
     def _speedUpAudio(self):
-        if (self._db_audio_path):
+        if self._db_audio_path:
             return
         self.verifyParameters(tempAudioPath=self._db_temp_audio_path)
         self._db_audio_path = audio_utils.speedUpAudio(
-            self._db_temp_audio_path, self.dynamicAssetDir+"audio_voice.wav")
+            self._db_temp_audio_path, self.dynamicAssetDir + "audio_voice.wav")
 
     def _timeCaptions(self):
         self.verifyParameters(audioPath=self._db_audio_path)
@@ -119,22 +119,22 @@ class ContentShortEngine(AbstractContentEngine):
             video_duration=self._db_background_video_duration,
             music_url=self._db_background_music_url)
 
-        outputPath = self.dynamicAssetDir+"rendered_video.mp4"
-        if not (os.path.exists(outputPath)):
+        outputPath = self.dynamicAssetDir + "rendered_video.mp4"
+        if not os.path.exists(outputPath):
             self.logger("Rendering short: Starting automated editing...")
             videoEditor = EditingEngine()
             videoEditor.addEditingStep(EditingStep.ADD_VOICEOVER_AUDIO, {
-                                       'url': self._db_audio_path})
+                'url': self._db_audio_path})
             videoEditor.addEditingStep(EditingStep.ADD_BACKGROUND_MUSIC, {'url': self._db_background_music_url,
                                                                           'loop_background_music': self._db_voiceover_duration,
                                                                           "volume_percentage": 0.11})
             videoEditor.addEditingStep(EditingStep.CROP_1920x1080, {
-                                       'url': self._db_background_trimmed})
+                'url': self._db_background_trimmed})
             videoEditor.addEditingStep(EditingStep.ADD_SUBSCRIBE_ANIMATION, {'url': AssetDatabase.get_asset_link('subscribe animation')})
 
             if self._db_watermark:
                 videoEditor.addEditingStep(EditingStep.ADD_WATERMARK, {
-                                           'text': self._db_watermark})
+                    'text': self._db_watermark})
 
             caption_type = EditingStep.ADD_CAPTION_SHORT_ARABIC if self._db_language == Language.ARABIC.value else EditingStep.ADD_CAPTION_SHORT
             for timing, text in self._db_timed_captions:
@@ -149,57 +149,39 @@ class ContentShortEngine(AbstractContentEngine):
             print("***** SCHEMA FOR RENDERING ****")
             print(videoEditor.dumpEditingSchema())
             print("***** SCHEMA FOR RENDERING ****")
-            videoEditor.renderVideo(outputPath, logger= self.logger if self.logger is not self.default_logger else None)
+            videoEditor.renderVideo(outputPath, logger=self.logger if self.logger is not self.default_logger else None)
 
         self._db_video_path = outputPath
 
-  def _addYoutubeMetadata(self):
-      # Check if the videos directory exists, if not, create it
-      if not os.path.exists('videos/'):
-          os.makedirs('videos')
-      
-      # Hardcoded metadata (replace with your own hardcoded values)
-      self._db_yt_title = "Amazing Short Video Title"  # Example hardcoded title
-      self._db_yt_description = "This is an amazing short video showcasing incredible moments! Watch, like, and subscribe."  # Example description
-      
-      # You can also add hardcoded tags or other metadata
-      self._db_yt_tags = ["shorts", "amazing moments", "entertainment", "fun", "viral"]  # Example tags
-      
-      # Generate a timestamp for the filename
-      now = datetime.datetime.now()
-      date_str = now.strftime("%Y-%m-%d_%H-%M-%S")
-      
-      # Sanitize the title to ensure it's valid for filenames
-      newFileName = f"videos/{date_str} - " + \
-          re.sub(r"[^a-zA-Z0-9 '\n\.]", '', self._db_yt_title)
-  
-      # Move the rendered video to the new file with the sanitized name
-      shutil.move(self._db_video_path, newFileName + ".mp4")
-      
-      # Write the metadata to a text file
-      with open(newFileName + ".txt", "w", encoding="utf-8") as f:
-          f.write(f"---Youtube title---\n{self._db_yt_title}\n")
-          f.write(f"---Youtube description---\n{self._db_yt_description}\n")
-          f.write(f"---Youtube tags---\n{', '.join(self._db_yt_tags)}\n")
-      
-      # Update the video path and set it as ready for upload
-      self._db_video_path = newFileName + ".mp4"
-      self._db_ready_to_upload = True
+    def _addYoutubeMetadata(self):
+        # Check if the videos directory exists, if not, create it
+        if not os.path.exists('videos/'):
+            os.makedirs('videos')
+        
+        # Hardcoded metadata (replace with your own hardcoded values)
+        self._db_yt_title = "Amazing Short Video Title"  # Example hardcoded title
+        self._db_yt_description = "This is an amazing short video showcasing incredible moments! Watch, like, and subscribe."  # Example description
+        
+        # You can also add hardcoded tags or other metadata
+        self._db_yt_tags = ["shorts", "amazing moments", "entertainment", "fun", "viral"]  # Example tags
+        
+        # Generate a timestamp for the filename
+        now = datetime.datetime.now()
+        date_str = now.strftime("%Y-%m-%d_%H-%M-%S")
+        
+        # Sanitize the title to ensure it's valid for filenames
+        newFileName = f"videos/{date_str} - " + \
+            re.sub(r"[^a-zA-Z0-9 '\n\.]", '', self._db_yt_title)
 
-
-    # def _addYoutubeMetadata(self):
-    #     if not os.path.exists('videos/'):
-    #         os.makedirs('videos')
-    #     self._db_yt_title, self._db_yt_description = gpt_yt.generate_title_description_dict(self._db_script)
-
-    #     now = datetime.datetime.now()
-    #     date_str = now.strftime("%Y-%m-%d_%H-%M-%S")
-    #     newFileName = f"videos/{date_str} - " + \
-    #         re.sub(r"[^a-zA-Z0-9 '\n\.]", '', self._db_yt_title)
-
-    #     shutil.move(self._db_video_path, newFileName+".mp4")
-    #     with open(newFileName+".txt", "w", encoding="utf-8") as f:
-    #         f.write(
-    #             f"---Youtube title---\n{self._db_yt_title}\n---Youtube description---\n{self._db_yt_description}")
-    #     self._db_video_path = newFileName+".mp4"
-    #     self._db_ready_to_upload = True
+        # Move the rendered video to the new file with the sanitized name
+        shutil.move(self._db_video_path, newFileName + ".mp4")
+        
+        # Write the metadata to a text file
+        with open(newFileName + ".txt", "w", encoding="utf-8") as f:
+            f.write(f"---Youtube title---\n{self._db_yt_title}\n")
+            f.write(f"---Youtube description---\n{self._db_yt_description}\n")
+            f.write(f"---Youtube tags---\n{', '.join(self._db_yt_tags)}\n")
+        
+        # Update the video path and set it as ready for upload
+        self._db_video_path = newFileName + ".mp4"
+        self._db_ready_to_upload = True
