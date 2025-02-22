@@ -140,20 +140,40 @@ class ContentVideoEngine(AbstractContentEngine):
             videoEditor.renderVideo(outputPath, logger= self.logger if self.logger is not self.default_logger else None)
 
         self._db_video_path = outputPath
+      
+  def _addMetadata(self):
+      if not os.path.exists('videos/'):
+          os.makedirs('videos')
+    
+      # Hardcoded metadata
+      self._db_yt_title = "Sample Video Title"
+      self._db_yt_description = "This is a sample description for the video. It provides context and information about the content of the video."
+  
+      now = datetime.datetime.now()
+      date_str = now.strftime("%Y-%m-%d_%H-%M-%S")
+      newFileName = f"videos/{date_str} - " + \
+          re.sub(r"[^a-zA-Z0-9 '\n\.]", '', self._db_yt_title)
+  
+      shutil.move(self._db_video_path, newFileName+".mp4")
+      with open(newFileName+".txt", "w", encoding="utf-8") as f:
+          f.write(
+              f"---Youtube title---\n{self._db_yt_title}\n---Youtube description---\n{self._db_yt_description}")
+      self._db_video_path = newFileName+".mp4"
+      self._db_ready_to_upload = True
 
-    def _addMetadata(self):
-        if not os.path.exists('videos/'):
-            os.makedirs('videos')
-        self._db_yt_title, self._db_yt_description = gpt_yt.generate_title_description_dict(self._db_script)
+    # def _addMetadata(self):
+    #     if not os.path.exists('videos/'):
+    #         os.makedirs('videos')
+    #     self._db_yt_title, self._db_yt_description = gpt_yt.generate_title_description_dict(self._db_script)
 
-        now = datetime.datetime.now()
-        date_str = now.strftime("%Y-%m-%d_%H-%M-%S")
-        newFileName = f"videos/{date_str} - " + \
-            re.sub(r"[^a-zA-Z0-9 '\n\.]", '', self._db_yt_title)
+    #     now = datetime.datetime.now()
+    #     date_str = now.strftime("%Y-%m-%d_%H-%M-%S")
+    #     newFileName = f"videos/{date_str} - " + \
+    #         re.sub(r"[^a-zA-Z0-9 '\n\.]", '', self._db_yt_title)
 
-        shutil.move(self._db_video_path, newFileName+".mp4")
-        with open(newFileName+".txt", "w", encoding="utf-8") as f:
-            f.write(
-                f"---Youtube title---\n{self._db_yt_title}\n---Youtube description---\n{self._db_yt_description}")
-        self._db_video_path = newFileName+".mp4"
-        self._db_ready_to_upload = True
+    #     shutil.move(self._db_video_path, newFileName+".mp4")
+    #     with open(newFileName+".txt", "w", encoding="utf-8") as f:
+    #         f.write(
+    #             f"---Youtube title---\n{self._db_yt_title}\n---Youtube description---\n{self._db_yt_description}")
+    #     self._db_video_path = newFileName+".mp4"
+    #     self._db_ready_to_upload = True
