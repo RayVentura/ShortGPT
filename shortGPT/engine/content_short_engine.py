@@ -159,8 +159,8 @@ class ContentShortEngine(AbstractContentEngine):
             os.makedirs('videos')
         
         # Hardcoded metadata (replace with your own hardcoded values)
-        self._db_yt_title = "Amazing Short Video Title"  # Example hardcoded title
-        self._db_yt_description = "This is an amazing short video showcasing incredible moments! Watch, like, and subscribe."  # Example description
+        self._db_yt_title = "Shorts Video"  # Example hardcoded title
+        self._db_yt_description = "Watch, like, and subscribe."  # Example description
         
         # You can also add hardcoded tags or other metadata
         self._db_yt_tags = ["shorts", "amazing moments", "entertainment", "fun", "viral"]  # Example tags
