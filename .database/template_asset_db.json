@@ -17,14 +17,19 @@
         },
         "2": {
             "_id": "remote_assets",
-            "Music joakim karud dreams": {
+            "Lunatic Souls": {
                 "type": "background music",
-                "url": "https://www.youtube.com/watch?v=p56gqDhUYbU",
+                "url": "https://www.youtube.com/watch?v=F5MKvQ3IDNs",
                 "ts": "2023-07-05 04:35:03"
             },
-            "Music dj quads": {
+            "A Zen Moment": {
                 "type": "background music",
-                "url": "https://www.youtube.com/watch?v=uUu1NcSHg2E",
+                "url": "https://www.youtube.com/watch?v=I2GxfiD9TLo",
+                "ts": "2023-07-05 05:03:44"
+            },
+            "Fear of Dark": {
+                "type": "background music",
+                "url": "https://www.youtube.com/watch?v=Z1N2eHDY5DM",
                 "ts": "2023-07-05 05:03:44"
             },
             "Car race gameplay": {
