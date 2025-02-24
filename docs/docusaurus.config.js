@@ -6,7 +6,7 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 (
   module.exports = {
-    title: 'ShortGPT',
+    title: 'ShortGPT - Modified by @fahad-ali1',
     tagline:
       'Open-Source Framework for AI content automation',
     url: 'https://dev.shortgpt.ai',
