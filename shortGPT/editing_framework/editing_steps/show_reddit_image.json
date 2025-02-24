@@ -21,22 +21,12 @@
       },
       {
         "type": "set_time_end",
-        "param": 3.5
+        "param": 4
       },
       {
         "type": "screen_position",
         "param": {
           "pos": ["center", "center"]
-        }
-      },
-      {
-        "type": "animate_position",
-        "param": {
-          "start_time": 0,
-          "end_time": 3.5,
-          "motion_curve": "sinusoidal",
-          "initial_pos": ["center", "center"],
-          "final_pos": ["center", "center_offset"]
         }
       }
     ]

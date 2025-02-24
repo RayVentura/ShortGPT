@@ -12,7 +12,7 @@
 		"actions": [
 			{
 				"type": "set_time_start",
-				"param": 3.5
+				"param": 4
 			},
 			{
 				"type": "resize",
