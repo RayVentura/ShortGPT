@@ -1,31 +1,40 @@
 {
-	"reddit_image": {
-		"type": "image",
-		"inputs":{
-			"parameters": ["url"]
-		},
-		"z": 5,
-		"parameters": {
-			"url": null
-		},
-		"actions": [
-			{
-				"type": "set_time_start",
-				"param": 0
-			},
-			{
-				"type": "set_time_end",
-				"param": 3.5
-			},
-
-			{
-				"type": "screen_position",
-				"param": {
-					"pos": [
-						"center","center"
-					]
-				}
-			}
-		]
-	}
+  "reddit_image": {
+    "type": "image",
+    "inputs": {
+      "parameters": ["url"]
+    },
+    "z": 5,
+    "parameters": {
+      "url": null
+    },
+    "actions": [
+      {
+        "type": "set_time_start",
+        "param": 0
+      },
+      {
+        "type": "resize",
+        "param": {
+          "new_size": 0.8
+        }
+      },
+      {
+        "type": "set_time_end",
+        "param": 3.5
+      },
+      {
+        "type": "screen_position",
+        "param": {
+          "pos": ["center", "center"]
+        }
+      },
+      {
+        "type": "round_corners",
+        "param": {
+          "radius": 20
+        }
+      }
+    ]
+  }
 }

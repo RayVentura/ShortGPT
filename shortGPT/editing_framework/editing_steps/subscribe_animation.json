@@ -17,16 +17,16 @@
 			{
 				"type": "resize",
 				"param": {
-					"new_size": 0.4
+					"new_size": 0.6
 				}
 			},
 			{
 				"type": "green_screen",
 				"param": {
 					"color": [
-						52,
-						255,
-						20
+						100,
+						227,
+						3
 					],
 					"threshold": 100,
 					"stiffness": 5

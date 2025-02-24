@@ -9,9 +9,9 @@
 		"parameters": {
 			"text": null,
 			"font_size": 100,
-			"font": "fonts/LuckiestGuy-Regular.ttf",
+			"font": "fonts/Peach Days.ttf",
 			"color": "white",
-			"stroke_width": 3,
+			"stroke_width": 5,
 			"stroke_color": "black",
 			"method": "caption",
 			"size":[900, 450]
