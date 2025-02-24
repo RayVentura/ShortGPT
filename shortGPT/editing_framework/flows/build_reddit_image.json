@@ -82,7 +82,8 @@
                 "color": "rgb(26, 26, 27)",
 				"method": "label",
 				"text_align": "left",
-				"max_width": 500 
+				"max_width": 700,
+				"wrap": true
 	 		},
 			"actions": [
 				{
