@@ -77,7 +77,7 @@ class RedditShortEngine(ContentShortEngine):
                                        'url': self._db_audio_path})
             videoEditor.addEditingStep(EditingStep.ADD_BACKGROUND_MUSIC, {'url': self._db_background_music_url,
                                                                           'loop_background_music': self._db_voiceover_duration,
-                                                                          "volume_percentage": 0.11})
+                                                                          "volume_percentage": 0}) # 0 volume as I will add it externally for now
             videoEditor.addEditingStep(EditingStep.CROP_1920x1080, {
                                        'url': self._db_background_trimmed})
             videoEditor.addEditingStep(EditingStep.ADD_SUBSCRIBE_ANIMATION, {'url': AssetDatabase.get_asset_link('subscribe animation')})

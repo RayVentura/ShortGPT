@@ -76,10 +76,6 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
           disableSwitch: false,
           respectPrefersColorScheme: true,
         },
-        announcementBar: {
-          content:
-            '⭐️ If you like ShortGPT, give it a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/rayventura/shortgpt">GitHub</a>! ⭐️',
-        },
         footer: {
           links: [
             {
@@ -100,29 +96,7 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
                   to: 'https://github.com/RayVentura/ShortGPT/issues',
                 },
               ],
-            },
-            {
-              title: 'Community',
-              items: [
-                {
-                  label: 'Discord',
-                  to: 'https://discord.com/invite/bRTacwYrfX',
-                },
-              ],
-            },
-            {
-              title: 'Social',
-              items: [
-                {
-                  label: 'GitHub',
-                  to: 'https://github.com/RayVentura/ShortGPT',
-                },
-                {
-                  label: 'Twitter',
-                  to: 'https://twitter.com/RayVenturaHQ',
-                },
-              ],
-            },
+            }
           ],
           copyright: `ShortGPT ${new Date().getFullYear()}`,
         },

@@ -51,7 +51,7 @@ class VideoAutomationUI(AbstractComponentUI):
         openai_key = ApiKeyManager.get_api_key("OPENAI_API_KEY")
         gemini_key = ApiKeyManager.get_api_key("GEMINI_API_KEY")
         if not openai_key and not gemini_key:
-            return "Your Genmini or OpenAI key is missing. Please go to the config tab and enter the API key."
+            return "Your Gemini or OpenAI key is missing. Please go to the config tab and enter the API key."
 
         pexels_api_key = ApiKeyManager.get_api_key("PEXELS_API_KEY")
         if not pexels_api_key:

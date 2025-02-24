@@ -26,24 +26,24 @@ class ShortAutomationUI(AbstractComponentUI):
     def create_ui(self):
         with gr.Row(visible=False) as short_automation:
             with gr.Column():
-                numShorts = gr.Number(label="Number of shorts", minimum=1, value=1)
+                numShorts = gr.Number(label="Number of shorts", minimum=1, value=6) # Personal default value of 6
                 short_type = gr.Radio(["Reddit Story shorts", "Historical Facts shorts", "Scientific Facts shorts", "Custom Facts shorts"], label="Type of shorts generated", value="Reddit Story shorts", interactive=True)
                 facts_subject = gr.Textbox(label="Write a subject for your facts (example: Football facts)", interactive=True, visible=False)
                 short_type.change(lambda x: gr.update(visible=x == "Custom Facts shorts"), [short_type], [facts_subject])
                 tts_engine = gr.Radio([AssetComponentsUtils.ELEVEN_TTS, AssetComponentsUtils.EDGE_TTS], label="Text to speech engine", value=AssetComponentsUtils.EDGE_TTS, interactive=True)
                 self.tts_engine = tts_engine.value
-                with gr.Column(visible=False) as eleven_tts:
+                with gr.Column(visible=True) as eleven_tts:
                     language_eleven = gr.Radio([lang.value for lang in ELEVEN_SUPPORTED_LANGUAGES], label="Language", value="English", interactive=True)
                     voice_eleven = AssetComponentsUtils.voiceChoice(provider=AssetComponentsUtils.ELEVEN_TTS)
-                with gr.Column(visible=True) as edge_tts:
+                with gr.Column(visible=False) as edge_tts:
                     language_edge = gr.Dropdown([lang.value.upper() for lang in Language], label="Language", value="ENGLISH", interactive=True)
                 def tts_engine_change(x):
                     self.tts_engine = x
                     return gr.update(visible=x == AssetComponentsUtils.ELEVEN_TTS), gr.update(visible=x == AssetComponentsUtils.EDGE_TTS)
                 tts_engine.change(tts_engine_change, tts_engine, [eleven_tts, edge_tts])
 
-                useImages = gr.Checkbox(label="Use images", value=True)
-                numImages = gr.Radio([5, 10, 25], value=10, label="Number of images per short", visible=True, interactive=True)
+                useImages = gr.Checkbox(label="Use images", value=False)
+                numImages = gr.Radio([5, 10, 25], value=0, label="Number of images per short", visible=False, interactive=True) # Set images to 0 by default
                 useImages.change(lambda x: gr.update(visible=x), useImages, numImages)
 
                 addWatermark = gr.Checkbox(label="Add watermark")

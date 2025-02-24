@@ -144,8 +144,8 @@ class ContentVideoEngine(AbstractContentEngine):
             os.makedirs('videos')
 
         # Hardcoded metadata
-        self._db_yt_title = "Sample Video Title"
-        self._db_yt_description = "This is a sample description for the video. It provides context and information about the content of the video."
+        self._db_yt_title = "Interesting Short Story"
+        self._db_yt_description = "Sample description for the video."
 
         now = datetime.datetime.now()
         date_str = now.strftime("%Y-%m-%d_%H-%M-%S")

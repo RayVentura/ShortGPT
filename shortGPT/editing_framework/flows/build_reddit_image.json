@@ -81,7 +81,8 @@
                 "font" : "fonts/Roboto-Bold.ttf",
                 "color": "rgb(26, 26, 27)",
 				"method": "label",
-				"text_align": "left"
+				"text_align": "left",
+				"max_width": 500 
 	 		},
 			"actions": [
 				{
