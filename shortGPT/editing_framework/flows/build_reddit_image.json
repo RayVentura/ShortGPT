@@ -39,7 +39,7 @@
 			"z": 1,
 			"parameters": {
 				"text": null,
-                "font_size": 34,
+                "font_size": 32,
                 "font" : "fonts/Roboto-Bold.ttf",
                 "color": "rgb(129, 131, 132)"
 			},
@@ -47,7 +47,7 @@
 				{
 					"type": "screen_position",
 					"param": {
-						"pos":[222, 301],
+						"pos":[216, 308],
 						"relative": false
 					}
 				}
