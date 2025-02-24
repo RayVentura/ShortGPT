@@ -1,100 +1,98 @@
 {
-	"inputs":{
-		"username_text": "visual_assets/username_txt/parameters/text",
-		"ncomments_text": "visual_assets/ncomments_txt/parameters/text",
-		"nupvote_text": "visual_assets/nupvote_txt/parameters/text",
-		"question_text": "visual_assets/question_txt/parameters/text"
-	},
-	"visual_assets":{
-		"white_reddit_template_image": {
-			"type": "image",
-			"z": 0,
-			"parameters": {
-				"url": "public/white_reddit_template.png"
-			},
-			"actions": [
-			]
-		},
-		"username_txt": {
-			"type": "text",
-			"z": 1,
-			"parameters": {
-				"text": null,
-                "font_size": 32,
-                "font" : "fonts/Roboto-Bold.ttf",
-                "color": "rgb(129, 131, 132)"
-			},
-			"actions": [
-				{
-					"type": "screen_position",
-					"param": {
-						"pos":[350, 43],
-						"relative": false
-					}
-				}
-			]
-		},
-		"ncomments_txt":{
-			"type": "text",
-			"z": 1,
-			"parameters": {
-				"text": null,
-                "font_size": 32,
-                "font" : "fonts/Roboto-Bold.ttf",
-                "color": "rgb(129, 131, 132)"
-			},
-			"actions": [
-				{
-					"type": "screen_position",
-					"param": {
-						"pos":[216, 308],
-						"relative": false
-					}
-				}
-			]
-		},
-		"nupvote_txt":{
-			"type": "text",
-			"z": 1,
-			"parameters": {
-				"text": null,
-                "font_size": 36,
-                "font" : "fonts/Roboto-Bold.ttf",
-                "color": "rgb(26, 26 , 27)"
-			},
-			"actions": [
-				{
-					"type": "screen_position",
-					"param": {
-						"pos":[28, 115],
-						"relative": false
-					}
-				}
-			]
-		},
-		"question_txt": {
-			"type": "text",
-			"z": 1,
-			"parameters": {
-				"text": null,
-                "font_size": 40,
-                "font" : "fonts/Roboto-Bold.ttf",
-                "color": "rgb(26, 26, 27)",
-				"method": "label",
-				"text_align": "left",
-				"max_width": 100,
-				"wrap": true
-	 		},
-			"actions": [
-				{
-					"type": "screen_position",
-					"param": {
-						"pos":[150, 110],
-						"relative": false
-					}
-				}
-			]
-		}
-		
-	}
+  "inputs": {
+    "username_text": "visual_assets/username_txt/parameters/text",
+    "ncomments_text": "visual_assets/ncomments_txt/parameters/text",
+    "nupvote_text": "visual_assets/nupvote_txt/parameters/text",
+    "question_text": "visual_assets/question_txt/parameters/text"
+  },
+  "visual_assets": {
+    "white_reddit_template_image": {
+      "type": "image",
+      "z": 0,
+      "parameters": {
+        "url": "public/white_reddit_template.png"
+      },
+      "actions": []
+    },
+    "username_txt": {
+      "type": "text",
+      "z": 1,
+      "parameters": {
+        "text": null,
+        "font_size": 32,
+        "font": "fonts/Roboto-Bold.ttf",
+        "color": "rgb(129, 131, 132)"
+      },
+      "actions": [
+        {
+          "type": "screen_position",
+          "param": {
+            "pos": [350, 43],
+            "relative": false
+          }
+        }
+      ]
+    },
+    "ncomments_txt": {
+      "type": "text",
+      "z": 1,
+      "parameters": {
+        "text": null,
+        "font_size": 32,
+        "font": "fonts/Roboto-Bold.ttf",
+        "color": "rgb(129, 131, 132)"
+      },
+      "actions": [
+        {
+          "type": "screen_position",
+          "param": {
+            "pos": [216, 308],
+            "relative": false
+          }
+        }
+      ]
+    },
+    "nupvote_txt": {
+      "type": "text",
+      "z": 1,
+      "parameters": {
+        "text": null,
+        "font_size": 36,
+        "font": "fonts/Roboto-Bold.ttf",
+        "color": "rgb(26, 26 , 27)"
+      },
+      "actions": [
+        {
+          "type": "screen_position",
+          "param": {
+            "pos": [28, 115],
+            "relative": false
+          }
+        }
+      ]
+    },
+    "question_txt": {
+      "type": "text",
+      "z": 1,
+      "parameters": {
+        "text": null,
+        "font_size": 36,
+        "font": "fonts/Roboto-Bold.ttf",
+        "color": "rgb(26, 26, 27)",
+        "method": "label",
+        "text_align": "left",
+        "max_width": 600,
+        "wrap": true
+      },
+      "actions": [
+        {
+          "type": "screen_position",
+          "param": {
+            "pos": [150, 110],
+            "relative": false
+          }
+        }
+      ]
+    }
+  }
 }
