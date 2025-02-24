@@ -18,7 +18,7 @@ class ShortGptUI(AbstractBaseUI):
 
     def create_interface(self):
         '''Create Gradio interface'''
-        with gr.Blocks(theme=gr.themes.Default(spacing_size=gr.themes.sizes.spacing_sm), css="footer {visibility: hidden}", title="ShortGPT Demo") as shortGptUI:
+        with gr.Blocks(theme=gr.themes.Default(spacing_size=gr.themes.sizes.spacing_sm), css="footer {visibility: hidden}", title="ShortGPT Modified By @fahad-ali1 On Github") as shortGptUI:
             with gr.Row(variant='compact'):
                 gr.HTML(GradioComponentsHTML.get_html_header())
 
