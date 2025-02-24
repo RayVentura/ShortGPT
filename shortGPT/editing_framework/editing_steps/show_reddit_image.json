@@ -16,24 +16,39 @@
       {
         "type": "resize",
         "param": {
-          "new_size": 0.8
+          "new_size": 0.5
+        }
+      },
+      {
+        "type": "opacity",
+        "param": {
+          "start": 0,
+          "end": 1,
+          "duration": 1.5,
+          "easing": "easeOutQuad"
+        }
+      },
+      {
+        "type": "scale",
+        "param": {
+          "start": 0.5,
+          "end": 1.0,
+          "duration": 1.5,
+          "easing": "easeOutBack"
+        }
+      },
+      {
+        "type": "screen_position",
+        "param": {
+          "start_pos": ["center", "120%"],
+          "end_pos": ["center", "85%"],
+          "duration": 1.5,
+          "easing": "easeOutBack"
         }
       },
       {
         "type": "set_time_end",
         "param": 3.5
-      },
-      {
-        "type": "screen_position",
-        "param": {
-          "pos": ["center", "center"]
-        }
-      },
-      {
-        "type": "round_corners",
-        "param": {
-          "radius": 20
-        }
       }
     ]
   }
