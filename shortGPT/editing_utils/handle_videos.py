@@ -44,6 +44,7 @@ def extract_random_clip_from_video(video_url, video_duration, clip_duration, out
         '-loglevel', 'error',
         '-ss', str(start_time),
         '-t', str(clip_duration),
+         '-threads', '4',  # Add more threads faster rendering
         '-i', video_url,
         '-c:v', 'libx264',
         '-preset', 'ultrafast',

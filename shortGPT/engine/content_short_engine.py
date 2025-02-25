@@ -150,8 +150,9 @@ class ContentShortEngine(AbstractContentEngine):
             print(videoEditor.dumpEditingSchema())
             print("***** SCHEMA FOR RENDERING ****")
             videoEditor.renderVideo(outputPath, logger=self.logger if self.logger is not self.default_logger else None)
-
+        self.logger.info("outputPath = %s", outputPath)
         self._db_video_path = outputPath
+        self.logger.info("self._db_video_path = %s", self._db_video_path)
 
     def _addYoutubeMetadata(self):
         # Check if the videos directory exists, if not, create it
@@ -161,18 +162,18 @@ class ContentShortEngine(AbstractContentEngine):
         # Hardcoded metadata (replace with your own hardcoded values)
         self._db_yt_title = "Shorts Video"  # Example hardcoded title
         self._db_yt_description = "Watch, like, and subscribe."  # Example description
-        
-        # You can also add hardcoded tags or other metadata
-        self._db_yt_tags = ["shorts", "amazing moments", "entertainment", "fun", "viral"]  # Example tags
-        
+                
         # Generate a timestamp for the filename
         now = datetime.datetime.now()
         date_str = now.strftime("%Y-%m-%d_%H-%M-%S")
         
         # Sanitize the title to ensure it's valid for filenames
-        newFileName = f"videos/{date_str} - " + \
+        # newFileName = f"videos/{date_str} - " + \
+        #     re.sub(r"[^a-zA-Z0-9 '\n\.]", '', self._db_yt_title)
+        newFileName = f"/app/videos/{date_str} - " + \
             re.sub(r"[^a-zA-Z0-9 '\n\.]", '', self._db_yt_title)
-
+        print("Source Path:", self._db_video_path)
+        print("Destination Path:", newFileName + ".mp4")
         # Move the rendered video to the new file with the sanitized name
         shutil.move(self._db_video_path, newFileName + ".mp4")
         
@@ -180,7 +181,6 @@ class ContentShortEngine(AbstractContentEngine):
         with open(newFileName + ".txt", "w", encoding="utf-8") as f:
             f.write(f"---Youtube title---\n{self._db_yt_title}\n")
             f.write(f"---Youtube description---\n{self._db_yt_description}\n")
-            f.write(f"---Youtube tags---\n{', '.join(self._db_yt_tags)}\n")
         
         # Update the video path and set it as ready for upload
         self._db_video_path = newFileName + ".mp4"

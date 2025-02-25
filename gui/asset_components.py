@@ -2,6 +2,7 @@ import os
 import platform
 import random
 import subprocess
+import socket
 
 import gradio as gr
 
@@ -37,15 +38,21 @@ class AssetComponentsUtils:
         api_key = ApiKeyManager.get_api_key("ELEVENLABS_API_KEY")
         voices = list(reversed(ElevenLabsAPI(api_key).get_voices().keys()))
         return voices
-
+    
+    # @classmethod
+    # def start_file(cls, path):
+    #     if platform.system() == "Windows":
+    #         os.startfile(path)
+    #     elif platform.system() == "Darwin":
+    #         subprocess.Popen(["open", path])
+    #     else:
+    #         subprocess.Popen(["xdg-open", path])
     @classmethod
-    def start_file(cls, path):
-        if platform.system() == "Windows":
-            os.startfile(path)
-        elif platform.system() == "Darwin":
-            subprocess.Popen(["open", path])
-        else:
-            subprocess.Popen(["xdg-open", path])
+    def start_file(cls, filename):
+        file_path = os.path.join("/app/videos", filename)
+        if os.path.exists(file_path):
+            return f"http://192.168.1.50:31415/file={file_path}" #Local host IP
+        return "File not found!"
 
     @classmethod
     def background_video_checkbox(cls):
