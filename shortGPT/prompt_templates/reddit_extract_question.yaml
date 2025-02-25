@@ -19,6 +19,6 @@ system_prompt: |
 chat_prompt: |
   -Transcript:
   <<STORY>>
-  The question should ALWAYS START with "What"
+  The question should ALWAYS START with "What" or sometimes "Have you ever..."
   -Most probable very short and conssise open-ended question from the transcript (50 characters MAXIMUM):
   

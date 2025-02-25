@@ -70,9 +70,11 @@ class ContentVideoEngine(AbstractContentEngine):
         max_len = 15
         if not self._db_format_vertical:
             max_len = 30
+        # self._db_timed_captions = captions.getCaptionsWithTime(
+        #     whisper_analysis, maxCaptionSize=max_len)
         self._db_timed_captions = captions.getCaptionsWithTime(
-            whisper_analysis, maxCaptionSize=max_len)
-
+            whisper_analysis) # remove caption max len
+        
     def _generateVideoSearchTerms(self):
         self.verifyParameters(captionsTimed=self._db_timed_captions)
         # Returns a list of pairs of timing (t1, t2) + 3 search video queries, such as: [[t1, t2], [search_query_1, search_query_2, search_query_3]]
@@ -120,7 +122,7 @@ class ContentVideoEngine(AbstractContentEngine):
             if self._db_background_music_url:
                 videoEditor.addEditingStep(EditingStep.ADD_BACKGROUND_MUSIC, {'url': self._db_background_music_url,
                                                                               'loop_background_music': self._db_voiceover_duration,
-                                                                              "volume_percentage": 0.08})
+                                                                              "volume_percentage": 0}) # NOTE: 0 For Now
             for (t1, t2), video_url in self._db_timed_video_urls:
                 videoEditor.addEditingStep(EditingStep.ADD_BACKGROUND_VIDEO, {'url': video_url,
                                                                               'set_time_start': t1,

@@ -12,25 +12,22 @@ RUN apt-get update && apt-get install -y \
 # Set the working directory in the container to /app
 WORKDIR /app
 
-# Copy requirements file
+# Copy requirements.txt first (to optimize cache usage)
 COPY requirements.txt .
 
 # Upgrade pip before installing dependencies
 RUN python -m pip install --upgrade pip
 
-# Install dependencies
+# Install dependencies, this will use cache if requirements.txt hasn't changed
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the local package directory content into the container at /app
+# Copy the rest of the application code
 COPY . /app
 
 EXPOSE 31415
 
-# Define any environment variables
-# ENV KEY Value
-
 # Print environment variables (for debugging purposes, can be removed)
-RUN printenv
+# RUN printenv
 
 # Run Python script when the container launches
 CMD ["python", "-u", "./runShortGPT.py"]

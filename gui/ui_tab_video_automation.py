@@ -111,7 +111,7 @@ class VideoAutomationUI(AbstractComponentUI):
                     bot_message = "Invalid voice module. Please type 'ElevenLabs' or 'EdgeTTS'."
                     return
                 self.state = Chatstate.ASK_LANGUAGE
-                bot_message = f"🌐What language will be used in the video?🌐 Choose from one of these ({', '.join(language_choices)})"
+                bot_message = f"🌐What language will be used in the video? 🌐 Choose from one of these ({', '.join(language_choices)})"
             elif self.state == Chatstate.ASK_LANGUAGE:
                 self.language = next((lang for lang in Language if lang.value.lower() in message.lower()), None)
                 self.language = self.language if self.language else Language.ENGLISH
@@ -120,7 +120,7 @@ class VideoAutomationUI(AbstractComponentUI):
                 elif self.voice_module == EdgeTTSVoiceModule:
                     self.voice_module = EdgeTTSVoiceModule(EDGE_TTS_VOICENAME_MAPPING[self.language]['male'])
                 self.state = Chatstate.ASK_DESCRIPTION
-                bot_message = "Amazing 🔥 ! 📝Can you describe thoroughly the subject of your video?📝 I will next generate you a script based on that description"
+                bot_message = "🔥 Amazing! 📝 Can you describe thoroughly the subject of your video? 📝 I will next generate you a script based on that description!"
             elif self.state == Chatstate.ASK_DESCRIPTION:
                 self.script = self.generate_script(message, self.language.value)
                 self.state = Chatstate.ASK_SATISFACTION

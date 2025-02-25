@@ -127,7 +127,7 @@ class ContentShortEngine(AbstractContentEngine):
                 'url': self._db_audio_path})
             videoEditor.addEditingStep(EditingStep.ADD_BACKGROUND_MUSIC, {'url': self._db_background_music_url,
                                                                           'loop_background_music': self._db_voiceover_duration,
-                                                                          "volume_percentage": 0.11})
+                                                                          "volume_percentage": 0}) # NOTE: 0 For Now
             videoEditor.addEditingStep(EditingStep.CROP_1920x1080, {
                 'url': self._db_background_trimmed})
             videoEditor.addEditingStep(EditingStep.ADD_SUBSCRIBE_ANIMATION, {'url': AssetDatabase.get_asset_link('subscribe animation')})
@@ -150,9 +150,7 @@ class ContentShortEngine(AbstractContentEngine):
             print(videoEditor.dumpEditingSchema())
             print("***** SCHEMA FOR RENDERING ****")
             videoEditor.renderVideo(outputPath, logger=self.logger if self.logger is not self.default_logger else None)
-        self.logger.info("outputPath = %s", outputPath)
         self._db_video_path = outputPath
-        self.logger.info("self._db_video_path = %s", self._db_video_path)
 
     def _addYoutubeMetadata(self):
         # Check if the videos directory exists, if not, create it

@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "31415:31415"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
