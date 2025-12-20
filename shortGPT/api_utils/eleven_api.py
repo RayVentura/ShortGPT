@@ -16,8 +16,18 @@ class ElevenLabsAPI:
         headers = {'accept': 'application/json'}
         if self.api_key:
             headers['xi-api-key'] = self.api_key
-        response = requests.get(url, headers=headers)
-        self.voices = {voice['name']: voice['voice_id'] for voice in response.json()['voices']}
+        try:
+            response = requests.get(url, headers=headers)
+            data = response.json()
+            if 'voices' in data:
+                self.voices = {voice['name']: voice['voice_id'] for voice in data['voices']}
+            else:
+                # API returned an error (e.g., invalid key)
+                print(f"ElevenLabs API error: {data}")
+                self.voices = {}
+        except Exception as e:
+            print(f"Error fetching ElevenLabs voices: {e}")
+            self.voices = {}
         return self.voices
 
     def get_remaining_characters(self):
