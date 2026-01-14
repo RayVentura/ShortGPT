@@ -153,6 +153,8 @@ class MovieClipperEngine(AbstractContentEngine):
                 '-t', str(duration),
                 '-map', '0:v:0',
                 '-map', '0:a:0?',
+                '-map_chapters', '-1',
+                '-dn',
                 '-c:v', 'libx264',
                 '-c:a', 'aac',
                 '-preset', 'fast',
@@ -177,31 +179,54 @@ class MovieClipperEngine(AbstractContentEngine):
         if self._db_clips_captions:
             return
         
-        self.logger("Generating captions for clips...")
+        self.logger("Generating captions from existing transcription...")
         clips_captions = []
         
         for i, clip in enumerate(self._db_extracted_clips):
-            clip_audio = self.dynamicAssetDir + f"clip_{i}_audio.wav"
+            clip_start = clip['start_time']
+            clip_end = clip['end_time']
             
-            command = [
-                'ffmpeg', '-y',
-                '-loglevel', 'error',
-                '-i', clip['path'],
-                '-vn',
-                '-acodec', 'pcm_s16le',
-                '-ar', '16000',
-                '-ac', '1',
-                clip_audio
-            ]
-            subprocess.run(command, check=True)
+            clip_whisper = self._extractWhisperSegmentForClip(
+                self._db_whisper_analysis,
+                clip_start,
+                clip_end
+            )
             
-            whisper_result = audio_utils.audioToText(clip_audio)
-            timed_captions = captions.getCaptionsWithTime(whisper_result, maxCaptionSize=15)
+            timed_captions = captions.getCaptionsWithTime(clip_whisper, maxCaptionSize=15)
             
             clips_captions.append(timed_captions)
             self.logger(f"Generated captions for clip {i + 1}")
         
         self._db_clips_captions = clips_captions
+    
+    def _extractWhisperSegmentForClip(self, whisper_analysis, clip_start, clip_end):
+        clip_segments = []
+        
+        for segment in whisper_analysis.get('segments', []):
+            if segment['end'] < clip_start or segment['start'] > clip_end:
+                continue
+            
+            if 'words' not in segment:
+                continue
+            
+            clip_words = []
+            for word in segment['words']:
+                if word['start'] >= clip_start and word['end'] <= clip_end:
+                    clip_words.append({
+                        'text': word['text'],
+                        'start': word['start'] - clip_start,
+                        'end': word['end'] - clip_start
+                    })
+            
+            if clip_words:
+                clip_segments.append({
+                    'start': max(0, segment['start'] - clip_start),
+                    'end': segment['end'] - clip_start,
+                    'text': ' '.join(w['text'] for w in clip_words),
+                    'words': clip_words
+                })
+        
+        return {'segments': clip_segments}
     
     def _chooseBackgroundMusic(self):
         if self._db_background_music_name:
@@ -290,6 +315,8 @@ class MovieClipperEngine(AbstractContentEngine):
             '-i', input_path,
             '-map', '0:v:0',
             '-map', '0:a:0?',
+            '-map_chapters', '-1',
+            '-dn',
             '-vf', 'scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2,setsar=1',
             '-c:v', 'libx264',
             '-c:a', 'aac',
