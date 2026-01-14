@@ -76,20 +76,20 @@ class ConfigUI(AbstractComponentUI):
             with gr.Row():
                 with gr.Column():
                     with gr.Row():
-                        openai_textbox = gr.Textbox(value=self.api_key_manager.get_api_key("OPENAI_API_KEY"), label=f"OPENAI API KEY", show_label=True, interactive=True, show_copy_button=True, type="password", scale=40)
+                        openai_textbox = gr.Textbox(value=self.api_key_manager.get_api_key("OPENAI_API_KEY"), label=f"OPENAI API KEY", show_label=True, interactive=True, type="password", scale=40)
                         show_openai_key = gr.Button("Show", size="sm", scale=1)
                         show_openai_key.click(self.on_show, [show_openai_key], [openai_textbox, show_openai_key])
                     with gr.Row():
-                        eleven_labs_textbox = gr.Textbox(value=self.api_key_manager.get_api_key("ELEVENLABS_API_KEY"), label=f"ELEVENLABS_API_KEY", show_label=True, interactive=True, show_copy_button=True, type="password", scale=40)
+                        eleven_labs_textbox = gr.Textbox(value=self.api_key_manager.get_api_key("ELEVENLABS_API_KEY"), label=f"ELEVENLABS_API_KEY", show_label=True, interactive=True, type="password", scale=40)
                         eleven_characters_remaining = gr.Textbox(value=self.get_eleven_remaining(), label=f"CHARACTERS REMAINING", show_label=True, interactive=False, type="text", scale=40)
                         show_eleven_key = gr.Button("Show", size="sm", scale=1)
                         show_eleven_key.click(self.on_show, [show_eleven_key], [eleven_labs_textbox, show_eleven_key])
                     with gr.Row():
-                        pexels_textbox = gr.Textbox(value=self.api_key_manager.get_api_key("PEXELS_API_KEY"), label=f"PEXELS KEY", show_label=True, interactive=True, show_copy_button=True, type="password", scale=40)
+                        pexels_textbox = gr.Textbox(value=self.api_key_manager.get_api_key("PEXELS_API_KEY"), label=f"PEXELS KEY", show_label=True, interactive=True, type="password", scale=40)
                         show_pexels_key = gr.Button("Show", size="sm", scale=1)
                         show_pexels_key.click(self.on_show, [show_pexels_key], [pexels_textbox, show_pexels_key])
                     with gr.Row():
-                        gemini_textbox = gr.Textbox(value=self.api_key_manager.get_api_key("GEMINI_API_KEY"), label=f"GEMINI API KEY", show_label=True, interactive=True, show_copy_button=True, type="password", scale=40)
+                        gemini_textbox = gr.Textbox(value=self.api_key_manager.get_api_key("GEMINI_API_KEY"), label=f"GEMINI API KEY", show_label=True, interactive=True, type="password", scale=40)
                         show_gemini_key = gr.Button("Show", size="sm", scale=1)
                         show_gemini_key.click(self.on_show, [show_gemini_key], [gemini_textbox, show_gemini_key])
 

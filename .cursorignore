@@ -1,0 +1,13 @@
+
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# secrets
+.env
+youtube_credentials.json
+youtube_token.pickle

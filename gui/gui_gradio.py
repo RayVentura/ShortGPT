@@ -1,3 +1,5 @@
+import os
+
 import gradio as gr
 
 from gui.content_automation_ui import GradioContentAutomationUI
@@ -8,17 +10,20 @@ from gui.ui_tab_config import ConfigUI
 from shortGPT.utils.cli import CLI
 
 
+def is_running_in_docker():
+    return os.path.exists('/.dockerenv') or os.environ.get('DOCKER_CONTAINER', False)
+
+
 class ShortGptUI(AbstractBaseUI):
-    '''Class for the GUI. This class is responsible for creating the UI and launching the server.'''
 
     def __init__(self, colab=False):
         super().__init__(ui_name='gradio_shortgpt')
-        self.colab = colab
+        self.colab = colab or is_running_in_docker()
         CLI.display_header()
 
     def create_interface(self):
         '''Create Gradio interface'''
-        with gr.Blocks(theme=gr.themes.Default(spacing_size=gr.themes.sizes.spacing_sm), css="footer {visibility: hidden}", title="ShortGPT Demo") as shortGptUI:
+        with gr.Blocks(title="ShortGPT Demo") as shortGptUI:
             with gr.Row(variant='compact'):
                 gr.HTML(GradioComponentsHTML.get_html_header())
 
@@ -34,7 +39,7 @@ class ShortGptUI(AbstractBaseUI):
                     print("\n\n********************* STARTING SHORGPT **********************")
                     print("\nShortGPT is running here 👉 http://localhost:31415\n")
                     print("********************* STARTING SHORGPT **********************\n\n")
-        shortGptUI.queue().launch(server_port=31415, height=1000, allowed_paths=["public/","videos/","fonts/"], share=self.colab, server_name="0.0.0.0")
+        shortGptUI.queue().launch(server_port=31415, allowed_paths=["public/","videos/","fonts/"], share=self.colab, server_name="0.0.0.0", theme=gr.themes.Default(spacing_size=gr.themes.sizes.spacing_sm))
 
 
 

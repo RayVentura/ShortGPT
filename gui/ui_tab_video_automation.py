@@ -79,6 +79,7 @@ class VideoAutomationUI(AbstractComponentUI):
         return video_path
 
     def reset_components(self):
+        self.reset_conversation()
         return gr.update(value=self.initialize_conversation()), gr.update(visible=True), gr.update(value="", visible=False), gr.update(value="", visible=False)
 
     def chatbot_conversation(self):
@@ -129,7 +130,7 @@ class VideoAutomationUI(AbstractComponentUI):
                 if "yes" in message.lower():
                     self.state = Chatstate.MAKE_VIDEO
                     inputVisible = False
-                    yield gr.update(visible=False), gr.update(value=[[None, "Your video is being made now! 🎬"]]), gr.update(value="", visible=False), gr.update(value=error_html, visible=errorVisible), gr.update(visible=folderVisible), gr.update(visible=False)
+                    yield gr.update(visible=False), gr.update(value=[{"role": "assistant", "content": "Your video is being made now! 🎬"}]), gr.update(value="", visible=False), gr.update(value=error_html, visible=errorVisible), gr.update(visible=folderVisible), gr.update(visible=False)
                     try:
                         video_path = self.make_video(self.script, self.voice_module, self.isVertical, progress=progress)
                         file_name = video_path.split("/")[-1].split("\\")[-1]
@@ -156,7 +157,7 @@ class VideoAutomationUI(AbstractComponentUI):
                         error_html = gradio_content_automation_ui_error_template.format(error_message=error_name, stack_trace=traceback_str)
                         bot_message = "We encountered an error while making this video ❌"
                         print("Error", traceback_str)
-                        yield gr.update(visible=False), gr.update(value=[[None, "Your video is being made now! 🎬"]]), gr.update(value="", visible=False), gr.update(value=error_html, visible=errorVisible), gr.update(visible=folderVisible), gr.update(visible=True)
+                        yield gr.update(visible=False), gr.update(value=[{"role": "assistant", "content": "Your video is being made now! 🎬"}]), gr.update(value="", visible=False), gr.update(value=error_html, visible=errorVisible), gr.update(visible=folderVisible), gr.update(visible=True)
 
                 else:
                     self.state = Chatstate.ASK_CORRECTION  # change self.state to ASK_CORRECTION
@@ -165,7 +166,8 @@ class VideoAutomationUI(AbstractComponentUI):
                 self.script = self.correct_script(self.script, message)  # call generateScript with correct=True
                 self.state = Chatstate.ASK_SATISFACTION
                 bot_message = f"📝 Here is your corrected script: \n\n--------------\n{self.script}\n\n・Are you satisfied with the script and ready to proceed with creating the video? Please respond with 'YES' or 'NO'. 👍👎"
-            chat_history.append((message, bot_message))
+            chat_history.append({"role": "user", "content": message})
+            chat_history.append({"role": "assistant", "content": bot_message})
             yield gr.update(value="", visible=inputVisible), gr.update(value=chat_history), gr.update(value=self.video_html, visible=self.videoVisible), gr.update(value=error_html, visible=errorVisible), gr.update(visible=folderVisible), gr.update(visible=True)
 
         return respond
@@ -177,7 +179,7 @@ class VideoAutomationUI(AbstractComponentUI):
         self.script = ""
         self.video_html = ""
         self.videoVisible = False
-        return [[None, "🤖 Welcome to ShortGPT! 🚀 I'm a python framework aiming to simplify and automate your video editing tasks.\nLet's get started! 🎥🎬\n\n Do you want your video to be in landscape or vertical format? (landscape OR vertical)"]]
+        return [{"role": "assistant", "content": "🤖 Welcome to ShortGPT! 🚀 I'm a python framework aiming to simplify and automate your video editing tasks.\nLet's get started! 🎥🎬\n\n Do you want your video to be in landscape or vertical format? (landscape OR vertical)"}]
 
     def reset_conversation(self):
         self.state = Chatstate.ASK_ORIENTATION
