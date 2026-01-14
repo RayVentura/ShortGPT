@@ -151,6 +151,8 @@ class MovieClipperEngine(AbstractContentEngine):
                 '-ss', str(start_time),
                 '-i', self._db_prepared_video_path,
                 '-t', str(duration),
+                '-map', '0:v:0',
+                '-map', '0:a:0?',
                 '-c:v', 'libx264',
                 '-c:a', 'aac',
                 '-preset', 'fast',
@@ -209,13 +211,16 @@ class MovieClipperEngine(AbstractContentEngine):
         if self._db_rendered_clips:
             return
         
-        self.logger("Rendering clips with subtitles in 16:9 format...")
+        total_clips = len(self._db_extracted_clips)
+        print(f"[RenderClips] Starting to render {total_clips} clips...")
         rendered_clips = []
         
         for i, clip in enumerate(self._db_extracted_clips):
+            print(f"[RenderClips] Processing clip {i + 1}/{total_clips}: {clip['title']}")
             output_path = self.dynamicAssetDir + f"rendered_clip_{i}.mp4"
             
             if os.path.exists(output_path):
+                print(f"[RenderClips] Clip {i + 1} already exists, skipping...")
                 rendered_clips.append({
                     'path': output_path,
                     'title': clip['title']
@@ -223,8 +228,11 @@ class MovieClipperEngine(AbstractContentEngine):
                 continue
             
             resized_clip = self.dynamicAssetDir + f"resized_clip_{i}.mp4"
+            print(f"[RenderClips] Resizing clip {i + 1} to 1080x1920...")
             self._resize_to_short(clip['path'], resized_clip)
+            print(f"[RenderClips] Resize complete for clip {i + 1}")
             
+            print(f"[RenderClips] Setting up editing steps for clip {i + 1}...")
             videoEditor = EditingEngine()
             
             videoEditor.addEditingStep(EditingStep.ADD_BACKGROUND_VIDEO, {
@@ -249,6 +257,7 @@ class MovieClipperEngine(AbstractContentEngine):
             caption_type = EditingStep.ADD_CAPTION_SHORT_ARABIC if self._db_language == Language.ARABIC.value else EditingStep.ADD_CAPTION_SHORT
             
             clip_captions = self._db_clips_captions[i]
+            print(f"[RenderClips] Adding {len(clip_captions)} captions to clip {i + 1}...")
             for (t1, t2), text in clip_captions:
                 videoEditor.addEditingStep(caption_type, {
                     'text': text.upper(),
@@ -261,7 +270,9 @@ class MovieClipperEngine(AbstractContentEngine):
                     'text': self._db_watermark
                 })
             
+            print(f"[RenderClips] Rendering clip {i + 1} with EditingEngine...")
             videoEditor.renderVideo(output_path, logger=self.logger if self.logger is not self.default_logger else None)
+            print(f"[RenderClips] Finished rendering clip {i + 1}")
             
             rendered_clips.append({
                 'path': output_path,
@@ -269,6 +280,7 @@ class MovieClipperEngine(AbstractContentEngine):
             })
             self.logger(f"Rendered clip {i + 1}: {clip['title']}")
         
+        print(f"[RenderClips] All {total_clips} clips rendered successfully")
         self._db_rendered_clips = rendered_clips
     
     def _resize_to_short(self, input_path, output_path):
@@ -276,6 +288,8 @@ class MovieClipperEngine(AbstractContentEngine):
             'ffmpeg', '-y',
             '-loglevel', 'error',
             '-i', input_path,
+            '-map', '0:v:0',
+            '-map', '0:a:0?',
             '-vf', 'scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2,setsar=1',
             '-c:v', 'libx264',
             '-c:a', 'aac',
