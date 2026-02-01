@@ -56,9 +56,18 @@ def detect_interesting_moments(whisper_analysis, min_duration=15, max_duration=4
     validated_moments = []
     for moment in moments:
         if all(key in moment for key in ['start_time', 'end_time']):
+            start = float(moment['start_time'])
+            end = float(moment['end_time'])
+            duration = end - start
+            
+            if duration < min_duration:
+                continue
+            if duration > max_duration:
+                continue
+            
             validated_moments.append({
-                'start_time': float(moment['start_time']),
-                'end_time': float(moment['end_time']),
+                'start_time': start,
+                'end_time': end,
                 'reason': moment.get('reason', ''),
                 'clip_title': moment.get('clip_title', 'Untitled Clip')
             })
