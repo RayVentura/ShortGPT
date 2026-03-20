@@ -6,6 +6,7 @@ import subprocess
 import gradio as gr
 
 from shortGPT.api_utils.eleven_api import ElevenLabsAPI
+from shortGPT.audio.minimax_voice_module import MINIMAX_TTS_VOICES
 from shortGPT.config.api_db import ApiKeyManager
 from shortGPT.config.asset_db import AssetDatabase
 
@@ -13,6 +14,7 @@ from shortGPT.config.asset_db import AssetDatabase
 class AssetComponentsUtils:
     EDGE_TTS = "Free EdgeTTS (lower quality)"
     ELEVEN_TTS = "ElevenLabs(Very High Quality)"
+    MINIMAX_TTS = "MiniMax TTS (High Quality)"
 
 
     instance_background_video_checkbox = None
@@ -72,6 +74,10 @@ class AssetComponentsUtils:
         return cls.instance_background_music_checkbox
 
     @classmethod
+    def getMiniMaxVoices(cls):
+        return list(MINIMAX_TTS_VOICES.keys())
+
+    @classmethod
     def voiceChoice(cls, provider: str = None):
         if provider == None:
             provider = cls.ELEVEN_TTS
@@ -81,6 +87,13 @@ class AssetComponentsUtils:
                     cls.getElevenlabsVoices(),
                     label="Elevenlabs voice",
                     value="Chris",
+                    interactive=True,
+                )
+            elif provider == cls.MINIMAX_TTS:
+                cls.instance_voiceChoice[provider] = gr.Radio(
+                    cls.getMiniMaxVoices(),
+                    label="MiniMax voice",
+                    value="English_Graceful_Lady",
                     interactive=True,
                 )
         return cls.instance_voiceChoice[provider]
@@ -95,6 +108,13 @@ class AssetComponentsUtils:
                     cls.getElevenlabsVoices(),
                     label="Elevenlabs voice",
                     value="Chris",
+                    interactive=True,
+                )
+            elif provider == cls.MINIMAX_TTS:
+                cls.instance_voiceChoiceTranslation[provider] = gr.Radio(
+                    cls.getMiniMaxVoices(),
+                    label="MiniMax voice",
+                    value="English_Graceful_Lady",
                     interactive=True,
                 )
         return cls.instance_voiceChoiceTranslation[provider]

@@ -9,6 +9,7 @@ from gui.ui_abstract_component import AbstractComponentUI
 from gui.ui_components_html import GradioComponentsHTML
 from shortGPT.audio.edge_voice_module import EdgeTTSVoiceModule
 from shortGPT.audio.eleven_voice_module import ElevenLabsVoiceModule
+from shortGPT.audio.minimax_voice_module import MiniMaxVoiceModule
 from shortGPT.config.api_db import ApiKeyManager
 from shortGPT.config.languages import (EDGE_TTS_VOICENAME_MAPPING,
                                        ELEVEN_SUPPORTED_LANGUAGES,
@@ -30,17 +31,19 @@ class ShortAutomationUI(AbstractComponentUI):
                 short_type = gr.Radio(["Reddit Story shorts", "Historical Facts shorts", "Scientific Facts shorts", "Custom Facts shorts"], label="Type of shorts generated", value="Reddit Story shorts", interactive=True)
                 facts_subject = gr.Textbox(label="Write a subject for your facts (example: Football facts)", interactive=True, visible=False)
                 short_type.change(lambda x: gr.update(visible=x == "Custom Facts shorts"), [short_type], [facts_subject])
-                tts_engine = gr.Radio([AssetComponentsUtils.ELEVEN_TTS, AssetComponentsUtils.EDGE_TTS], label="Text to speech engine", value=AssetComponentsUtils.EDGE_TTS, interactive=True)
+                tts_engine = gr.Radio([AssetComponentsUtils.ELEVEN_TTS, AssetComponentsUtils.EDGE_TTS, AssetComponentsUtils.MINIMAX_TTS], label="Text to speech engine", value=AssetComponentsUtils.EDGE_TTS, interactive=True)
                 self.tts_engine = tts_engine.value
                 with gr.Column(visible=False) as eleven_tts:
                     language_eleven = gr.Radio([lang.value for lang in ELEVEN_SUPPORTED_LANGUAGES], label="Language", value="English", interactive=True)
                     voice_eleven = AssetComponentsUtils.voiceChoice(provider=AssetComponentsUtils.ELEVEN_TTS)
                 with gr.Column(visible=True) as edge_tts:
                     language_edge = gr.Dropdown([lang.value.upper() for lang in Language], label="Language", value="ENGLISH", interactive=True)
+                with gr.Column(visible=False) as minimax_tts:
+                    voice_minimax = AssetComponentsUtils.voiceChoice(provider=AssetComponentsUtils.MINIMAX_TTS)
                 def tts_engine_change(x):
                     self.tts_engine = x
-                    return gr.update(visible=x == AssetComponentsUtils.ELEVEN_TTS), gr.update(visible=x == AssetComponentsUtils.EDGE_TTS)
-                tts_engine.change(tts_engine_change, tts_engine, [eleven_tts, edge_tts])
+                    return gr.update(visible=x == AssetComponentsUtils.ELEVEN_TTS), gr.update(visible=x == AssetComponentsUtils.EDGE_TTS), gr.update(visible=x == AssetComponentsUtils.MINIMAX_TTS)
+                tts_engine.change(tts_engine_change, tts_engine, [eleven_tts, edge_tts, minimax_tts])
 
                 useImages = gr.Checkbox(label="Use images", value=True)
                 numImages = gr.Radio([5, 10, 25], value=10, label="Number of images per short", visible=True, interactive=True)
@@ -72,11 +75,12 @@ class ShortAutomationUI(AbstractComponentUI):
                 AssetComponentsUtils.background_music_checkbox(),
                 facts_subject,
                 voice_eleven,
+                voice_minimax,
             ], outputs=[output, video_folder, generation_error])
         self.short_automation = short_automation
         return self.short_automation
 
-    def create_short(self, numShorts, short_type, tts_engine, language_eleven, language_edge, numImages, watermark, background_video_list, background_music_list, facts_subject, voice_eleven, progress=gr.Progress()):
+    def create_short(self, numShorts, short_type, tts_engine, language_eleven, language_edge, numImages, watermark, background_video_list, background_music_list, facts_subject, voice_eleven, voice_minimax, progress=gr.Progress()):
         '''Creates a short'''
 
         try:
@@ -87,6 +91,9 @@ class ShortAutomationUI(AbstractComponentUI):
             if tts_engine == AssetComponentsUtils.ELEVEN_TTS:
                 language = Language(language_eleven.lower().capitalize())
                 voice_module = ElevenLabsVoiceModule(ApiKeyManager.get_api_key('ELEVENLABS_API_KEY'), voice_eleven, checkElevenCredits=True)
+            elif tts_engine == AssetComponentsUtils.MINIMAX_TTS:
+                language = Language.ENGLISH
+                voice_module = MiniMaxVoiceModule(ApiKeyManager.get_api_key('MINIMAX_API_KEY'), voice_id=voice_minimax or 'English_Graceful_Lady')
             elif tts_engine == AssetComponentsUtils.EDGE_TTS:
                 language = Language(language_edge.lower().capitalize())
                 voice_module = EdgeTTSVoiceModule(EDGE_TTS_VOICENAME_MAPPING[language]['male'])
@@ -145,11 +152,14 @@ class ShortAutomationUI(AbstractComponentUI):
 
         openai_key = ApiKeyManager.get_api_key("OPENAI_API_KEY")
         gemini_key = ApiKeyManager.get_api_key("GEMINI_API_KEY")
-        if not openai_key and not gemini_key:
-            raise gr.Error("GEMINI OR OPENAI API key is missing. Please go to the config tab and enter the API key.")
+        minimax_key = ApiKeyManager.get_api_key("MINIMAX_API_KEY")
+        if not openai_key and not gemini_key and not minimax_key:
+            raise gr.Error("GEMINI, OPENAI, or MINIMAX API key is missing. Please go to the config tab and enter an API key.")
         eleven_labs_key = ApiKeyManager.get_api_key("ELEVENLABS_API_KEY")
         if self.tts_engine == AssetComponentsUtils.ELEVEN_TTS and not eleven_labs_key:
             raise gr.Error("ELEVENLABS_API_KEY API key is missing. Please go to the config tab and enter the API key.")
+        if self.tts_engine == AssetComponentsUtils.MINIMAX_TTS and not minimax_key:
+            raise gr.Error("MINIMAX_API_KEY is missing. Please go to the config tab and enter the API key.")
         return gr.update(visible=False)
 
     def create_short_engine(self, short_type, voice_module, language, numImages, watermark, background_video, background_music, facts_subject):

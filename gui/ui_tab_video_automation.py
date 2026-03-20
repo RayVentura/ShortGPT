@@ -9,6 +9,7 @@ from gui.ui_abstract_component import AbstractComponentUI
 from gui.ui_components_html import GradioComponentsHTML
 from shortGPT.audio.edge_voice_module import EdgeTTSVoiceModule
 from shortGPT.audio.eleven_voice_module import ElevenLabsVoiceModule
+from shortGPT.audio.minimax_voice_module import MiniMaxVoiceModule
 from shortGPT.config.api_db import ApiKeyManager
 from shortGPT.config.languages import (EDGE_TTS_VOICENAME_MAPPING,
                                         ELEVEN_SUPPORTED_LANGUAGES,
@@ -50,8 +51,9 @@ class VideoAutomationUI(AbstractComponentUI):
     def is_key_missing(self):
         openai_key = ApiKeyManager.get_api_key("OPENAI_API_KEY")
         gemini_key = ApiKeyManager.get_api_key("GEMINI_API_KEY")
-        if not openai_key and not gemini_key:
-            return "Your Genmini or OpenAI key is missing. Please go to the config tab and enter the API key."
+        minimax_key = ApiKeyManager.get_api_key("MINIMAX_API_KEY")
+        if not openai_key and not gemini_key and not minimax_key:
+            return "Your Gemini, OpenAI, or MiniMax key is missing. Please go to the config tab and enter an API key."
 
         pexels_api_key = ApiKeyManager.get_api_key("PEXELS_API_KEY")
         if not pexels_api_key:
@@ -95,7 +97,7 @@ class VideoAutomationUI(AbstractComponentUI):
                 else:
                     self.isVertical = "vertical" in message.lower() or "short" in message.lower()
                     self.state = Chatstate.ASK_VOICE_MODULE
-                    bot_message = "Which voice module do you want to use? Please type 'ElevenLabs' for high quality, 'EdgeTTS' for free medium quality voice."
+                    bot_message = "Which voice module do you want to use? Please type 'ElevenLabs' for high quality, 'MiniMax' for high quality TTS, or 'EdgeTTS' for free medium quality voice."
             elif self.state == Chatstate.ASK_VOICE_MODULE:
                 if "elevenlabs" in message.lower():
                     eleven_labs_key = ApiKeyManager.get_api_key("ELEVENLABS_API_KEY")
@@ -104,11 +106,18 @@ class VideoAutomationUI(AbstractComponentUI):
                         return
                     self.voice_module = ElevenLabsVoiceModule
                     language_choices = [lang.value for lang in ELEVEN_SUPPORTED_LANGUAGES]
+                elif "minimax" in message.lower():
+                    minimax_key = ApiKeyManager.get_api_key("MINIMAX_API_KEY")
+                    if not minimax_key:
+                        bot_message = "Your MINIMAX_API_KEY is missing. Please go to the config tab and enter the API key."
+                        return
+                    self.voice_module = MiniMaxVoiceModule
+                    language_choices = ["English"]
                 elif "edgetts" in message.lower():
                     self.voice_module = EdgeTTSVoiceModule
                     language_choices = [lang.value for lang in Language]
                 else:
-                    bot_message = "Invalid voice module. Please type 'ElevenLabs' or 'EdgeTTS'."
+                    bot_message = "Invalid voice module. Please type 'ElevenLabs', 'MiniMax', or 'EdgeTTS'."
                     return
                 self.state = Chatstate.ASK_LANGUAGE
                 bot_message = f"🌐What language will be used in the video?🌐 Choose from one of these ({', '.join(language_choices)})"
@@ -117,6 +126,8 @@ class VideoAutomationUI(AbstractComponentUI):
                 self.language = self.language if self.language else Language.ENGLISH
                 if self.voice_module == ElevenLabsVoiceModule:
                     self.voice_module = ElevenLabsVoiceModule(ApiKeyManager.get_api_key('ELEVENLABS_API_KEY'), "Chris", checkElevenCredits=True)
+                elif self.voice_module == MiniMaxVoiceModule:
+                    self.voice_module = MiniMaxVoiceModule(ApiKeyManager.get_api_key('MINIMAX_API_KEY'), voice_id='English_Graceful_Lady')
                 elif self.voice_module == EdgeTTSVoiceModule:
                     self.voice_module = EdgeTTSVoiceModule(EDGE_TTS_VOICENAME_MAPPING[self.language]['male'])
                 self.state = Chatstate.ASK_DESCRIPTION
