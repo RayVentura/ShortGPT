@@ -111,6 +111,8 @@ ShortGPT utilizes the following technologies to power its functionality:
 
 - **Openai**: Openai is used for automating the entire process, including generating scripts and prompts for LLM automated editing processes.
 
+- **MiniMax**: [MiniMax](https://platform.minimax.io/) is supported as an alternative LLM provider (MiniMax-M2.7) via OpenAI-compatible API, and as a high-quality TTS engine (speech-2.8-hd) with 12 built-in voices.
+
 - **ElevenLabs**: ElevenLabs is used for voice synthesis, supporting multiple languages for voiceover creation.
 
 - **EdgeTTS**: Microsoft's FREE EdgeTTS is used for voice synthesis, supporting way many more language than ElevenLabs currently.

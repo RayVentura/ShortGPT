@@ -16,16 +16,12 @@ def num_tokens_from_messages(texts, model="gpt-4o-mini"):
         encoding = tiktoken.encoding_for_model(model)
     except KeyError:
         encoding = tiktoken.get_encoding("cl100k_base")
-    if model == "gpt-4o-mini":  # note: future models may deviate from this
-        if isinstance(texts, str):
-            texts = [texts]
-        score = 0
-        for text in texts:
-            score += 4 + len(encoding.encode(text))
-        return score
-    else:
-        raise NotImplementedError(f"""num_tokens_from_messages() is not presently implemented for model {model}.
-        See https://github.com/openai/openai-python/blob/main/chatml.md for information""")
+    if isinstance(texts, str):
+        texts = [texts]
+    score = 0
+    for text in texts:
+        score += 4 + len(encoding.encode(text))
+    return score
 
 
 def extract_biggest_json(string):
@@ -70,19 +66,28 @@ def open_file(filepath):
 from openai import OpenAI
 
 def llm_completion(chat_prompt="", system="", temp=0.7, max_tokens=2000, remove_nl=True, conversation=None):
-    openai_key= ApiKeyManager.get_api_key("OPENAI_API_KEY")
+    openai_key = ApiKeyManager.get_api_key("OPENAI_API_KEY")
     gemini_key = ApiKeyManager.get_api_key("GEMINI_API_KEY")
+    minimax_key = ApiKeyManager.get_api_key("MINIMAX_API_KEY")
     if gemini_key:
-        client = OpenAI( 
+        client = OpenAI(
             api_key=gemini_key,
             base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
         )
-        model="gemini-2.0-flash-lite-preview-02-05"
+        model = "gemini-2.0-flash-lite-preview-02-05"
+    elif minimax_key:
+        client = OpenAI(
+            api_key=minimax_key,
+            base_url="https://api.minimax.io/v1"
+        )
+        model = "MiniMax-M2.7"
+        # MiniMax requires temperature in (0.0, 1.0]
+        temp = max(0.01, min(temp, 1.0))
     elif openai_key:
-        client = OpenAI( api_key=openai_key)
-        model="gpt-4o-mini"
+        client = OpenAI(api_key=openai_key)
+        model = "gpt-4o-mini"
     else:
-        raise Exception("No OpenAI or Gemini API Key found for LLM request")
+        raise Exception("No OpenAI, Gemini, or MiniMax API Key found for LLM request")
     max_retry = 5
     retry = 0
     error = ""

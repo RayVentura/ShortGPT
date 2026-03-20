@@ -6,6 +6,7 @@ load_dotenv('./.env')
 class ApiProvider(enum.Enum):
     OPENAI = "OPENAI_API_KEY"
     GEMINI = "GEMINI_API_KEY"
+    MINIMAX = "MINIMAX_API_KEY"
     ELEVEN_LABS = "ELEVENLABS_API_KEY"
     PEXELS = "PEXELS_API_KEY"
 
