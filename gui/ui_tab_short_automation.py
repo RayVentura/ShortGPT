@@ -16,6 +16,9 @@ from shortGPT.config.languages import (EDGE_TTS_VOICENAME_MAPPING,
                                        Language)
 from shortGPT.engine.facts_short_engine import FactsShortEngine
 from shortGPT.engine.reddit_short_engine import RedditShortEngine
+from shortGPT.api_utils.upload_post_api import UploadPostAPI
+
+
 class ShortAutomationUI(AbstractComponentUI):
     def __init__(self, shortGptUI: gr.Blocks):
         self.shortGptUI = shortGptUI
@@ -50,6 +53,21 @@ class ShortAutomationUI(AbstractComponentUI):
                 watermark = gr.Textbox(label="Watermark (your channel name)", visible=False)
                 addWatermark.change(lambda x: gr.update(visible=x), [addWatermark], [watermark])
 
+                # Upload-Post cross-posting option
+                crosspost_enabled = gr.Checkbox(label="📱 Cross-post to TikTok/Instagram (via Upload-Post)", value=False)
+                with gr.Column(visible=False) as crosspost_options:
+                    crosspost_platforms = gr.CheckboxGroup(
+                        ["tiktok", "instagram"], 
+                        label="Platforms", 
+                        value=["tiktok", "instagram"]
+                    )
+                    crosspost_caption = gr.Textbox(
+                        label="Caption (optional - will use video title if empty)",
+                        placeholder="Your caption here... #shorts #viral",
+                        lines=2
+                    )
+                crosspost_enabled.change(lambda x: gr.update(visible=x), [crosspost_enabled], [crosspost_options])
+
                 AssetComponentsUtils.background_video_checkbox()
                 AssetComponentsUtils.background_music_checkbox()
                 createButton = gr.Button("Create Shorts")
@@ -60,7 +78,7 @@ class ShortAutomationUI(AbstractComponentUI):
 
             video_folder.click(lambda _: AssetComponentsUtils.start_file(os.path.abspath("videos/")))
 
-            createButton.click(self.inspect_create_inputs, inputs=[AssetComponentsUtils.background_video_checkbox(), AssetComponentsUtils.background_music_checkbox(), watermark, short_type, facts_subject], outputs=[generation_error]).success(self.create_short, inputs=[
+            createButton.click(self.inspect_create_inputs, inputs=[AssetComponentsUtils.background_video_checkbox(), AssetComponentsUtils.background_music_checkbox(), watermark, short_type, facts_subject, crosspost_enabled], outputs=[generation_error]).success(self.create_short, inputs=[
                 numShorts,
                 short_type,
                 tts_engine,
@@ -72,11 +90,39 @@ class ShortAutomationUI(AbstractComponentUI):
                 AssetComponentsUtils.background_music_checkbox(),
                 facts_subject,
                 voice_eleven,
+                crosspost_enabled,
+                crosspost_platforms,
+                crosspost_caption,
             ], outputs=[output, video_folder, generation_error])
         self.short_automation = short_automation
         return self.short_automation
 
-    def create_short(self, numShorts, short_type, tts_engine, language_eleven, language_edge, numImages, watermark, background_video_list, background_music_list, facts_subject, voice_eleven, progress=gr.Progress()):
+    def crosspost_video(self, video_path: str, title: str, platforms: list, custom_caption: str = None):
+        """Cross-post video to TikTok/Instagram via Upload-Post API."""
+        api_key = ApiKeyManager.get_api_key("UPLOAD_POST_API_KEY")
+        username = ApiKeyManager.get_api_key("UPLOAD_POST_USERNAME")
+        
+        if not api_key or not username:
+            return None, "Upload-Post API key or username not configured"
+        
+        caption = custom_caption if custom_caption else title
+        
+        try:
+            upload_post = UploadPostAPI(api_key, username)
+            result = upload_post.upload_video(
+                video_path=video_path,
+                title=caption,
+                platforms=platforms
+            )
+            
+            if result.get('success'):
+                return result.get('request_id'), None
+            else:
+                return None, result.get('error', 'Unknown error')
+        except Exception as e:
+            return None, str(e)
+
+    def create_short(self, numShorts, short_type, tts_engine, language_eleven, language_edge, numImages, watermark, background_video_list, background_music_list, facts_subject, voice_eleven, crosspost_enabled, crosspost_platforms, crosspost_caption, progress=gr.Progress()):
         '''Creates a short'''
 
         try:
@@ -108,6 +154,22 @@ class ShortAutomationUI(AbstractComponentUI):
                 current_url = self.shortGptUI.share_url+"/" if self.shortGptUI.share else self.shortGptUI.local_url
                 file_url_path = f"{current_url}gradio_api/file={video_path}"
                 file_name = video_path.split("/")[-1].split("\\")[-1]
+                
+                # Cross-post to TikTok/Instagram if enabled
+                crosspost_status = ""
+                if crosspost_enabled and crosspost_platforms:
+                    progress(0.95, f"Cross-posting to {', '.join(crosspost_platforms)}...")
+                    request_id, error = self.crosspost_video(
+                        video_path=video_path,
+                        title=file_name.replace('.mp4', ''),
+                        platforms=crosspost_platforms,
+                        custom_caption=crosspost_caption if crosspost_caption else None
+                    )
+                    if request_id:
+                        crosspost_status = f'<p style="color: green; font-size: 0.9em;">✅ Cross-posted to {", ".join(crosspost_platforms)}</p>'
+                    else:
+                        crosspost_status = f'<p style="color: orange; font-size: 0.9em;">⚠️ Cross-post failed: {error}</p>'
+                
                 self.embedHTML += f'''
                 <div style="display: flex; flex-direction: column; align-items: center;">
                     <video width="{250}" height="{500}" style="max-height: 100%;" controls>
@@ -117,6 +179,7 @@ class ShortAutomationUI(AbstractComponentUI):
                     <a href="{file_url_path}" download="{file_name}" style="margin-top: 10px;">
                         <button style="font-size: 1em; padding: 10px; border: none; cursor: pointer; color: white; background: #007bff;">Download Video</button>
                     </a>
+                    {crosspost_status}
                 </div>'''
                 yield self.embedHTML + '</div>', gr.update(visible=True), gr.update(visible=False)
         except Exception as e:
@@ -125,7 +188,8 @@ class ShortAutomationUI(AbstractComponentUI):
             print("Error", traceback_str)
             error_html = GradioComponentsHTML.get_html_error_template().format(error_message=error_name, stack_trace=traceback_str)
             yield self.embedHTML + '</div>', gr.update(visible=True), gr.update(value=error_html, visible=True)
-    def inspect_create_inputs(self, background_video_list, background_music_list, watermark, short_type, facts_subject, progress=gr.Progress()):
+
+    def inspect_create_inputs(self, background_video_list, background_music_list, watermark, short_type, facts_subject, crosspost_enabled, progress=gr.Progress()):
         if short_type == "Custom Facts shorts":
             if not facts_subject:
                 raise gr.Error("Please write down your facts short's subject")
@@ -150,6 +214,14 @@ class ShortAutomationUI(AbstractComponentUI):
         eleven_labs_key = ApiKeyManager.get_api_key("ELEVENLABS_API_KEY")
         if self.tts_engine == AssetComponentsUtils.ELEVEN_TTS and not eleven_labs_key:
             raise gr.Error("ELEVENLABS_API_KEY API key is missing. Please go to the config tab and enter the API key.")
+        
+        # Check Upload-Post credentials if cross-posting is enabled
+        if crosspost_enabled:
+            upload_post_key = ApiKeyManager.get_api_key("UPLOAD_POST_API_KEY")
+            upload_post_user = ApiKeyManager.get_api_key("UPLOAD_POST_USERNAME")
+            if not upload_post_key or not upload_post_user:
+                raise gr.Error("Upload-Post API key or username is missing. Please go to the config tab and enter them, or disable cross-posting.")
+        
         return gr.update(visible=False)
 
     def create_short_engine(self, short_type, voice_module, language, numImages, watermark, background_video, background_music, facts_subject):
