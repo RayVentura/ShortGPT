@@ -1,4 +1,7 @@
 # 🚀🎬 ShortGPT 
+
+[![Listed on TakoAPI](https://img.shields.io/badge/Listed%20on-TakoAPI-7c3aed)](https://takoapi.com/agents/rayventura-shortgpt)
+
 ## AI video automation framework
 <p align="center">
   <a href="https://discord.gg/uERx39ru3R">
