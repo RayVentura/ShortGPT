@@ -1,4 +1,4 @@
-# 🚀🎬 ShortGPT 
+# 🚀🎬 ShortGPT
 ## AI video automation framework
 <p align="center">
   <a href="https://discord.gg/uERx39ru3R">
@@ -12,7 +12,7 @@
   </a>
   <a href="https://docs.shortgpt.ai/">
     <img src="https://img.shields.io/badge/docs-visit-blue">
-  </a>  
+  </a>
 </p>
 
 <div align="center" style="border-radius: 20px;" width="18%">
@@ -29,7 +29,7 @@
 </div>
 </br>
 
-Follow the installation steps below for running the web app locally (running the google Colab is highly recommanded). 
+Follow the installation steps below for running the web app locally (running the google Colab is highly recommanded).
 Please read "installation-notes.md" for more details.
 ## 🎥 Showcase ([Full video on YouTube](https://youtu.be/hpoSHq-ER8U))
 
@@ -40,12 +40,12 @@ https://github.com/RayVentura/ShortGPT/assets/121462835/a802faad-0fd7-4fcb-aa82-
 https://github.com/RayVentura/ShortGPT/assets/121462835/06f51b2d-f8b1-4a23-b299-55e0e18902ef
 
 ## 🌟 Show Your Support
-We hope you find ShortGPT helpful! If you do, let us know by giving us a star ⭐ on the repo. It's easy, just click on the 'Star' button at the top right of the page. Your support means a lot to us and keeps us motivated to improve and expand ShortGPT. Thank you and happy content creating! 🎉 
+We hope you find ShortGPT helpful! If you do, let us know by giving us a star ⭐ on the repo. It's easy, just click on the 'Star' button at the top right of the page. Your support means a lot to us and keeps us motivated to improve and expand ShortGPT. Thank you and happy content creating! 🎉
 
 [![GitHub star chart](https://img.shields.io/github/stars/rayventura/shortgpt?style=social)](https://github.com/RayVentura/ShortGPT/stargazers)
 ## 🛠️ How it works
 ![alt text](https://github.com/RayVentura/ShortGPT/assets/121462835/fcee74d4-f856-4481-949f-244558bf3bfa)
-## 📝 Introduction to ShortGPT 
+## 📝 Introduction to ShortGPT
 ShortGPT is a powerful framework for automating content creation. It simplifies video creation, footage sourcing, voiceover synthesis, and editing tasks. Of the most popular use-cases of ShortGPT is youtube automation and Tiktok creativity program automation.
 
 - 🎞️ **Automated editing framework**: Streamlines the video creation process with an LLM oriented video editing language.
@@ -84,7 +84,7 @@ docker run -p 31415:31415 --env-file .env short_gpt_docker:latest
 ## Running runShortGPT.py Web Interface
 
 2. After running the script, a Gradio interface should open at your local host on port 31415 (http://localhost:31415)
- 
+
 
 ## Framework overview
 

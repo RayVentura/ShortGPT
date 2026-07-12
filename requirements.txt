@@ -10,7 +10,7 @@ proglog
 yt-dlp>=2025.1.12
 torch
 torchaudio
-### whisper timestamped 
+### whisper timestamped
 whisper-timestamped
 protobuf==3.20.3
 pillow==10.4.0

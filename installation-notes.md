@@ -38,15 +38,15 @@ In short, you need to use:
 
 ### 1. OS: Debian 11 x64
 ```bash
-sudo apt update && sudo apt upgrade 
+sudo apt update && sudo apt upgrade
 sudo apt install wget git libltdl-dev libjpeg-dev libpng-dev libtiff-dev libgif-dev libfreetype6-dev liblcms2-dev libxml2-dev wget build-essential libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
 ```
 
 ### 2. Install Python version: 3.10.3
 ```bash
-wget https://www.python.org/ftp/python/3.10.3/Python-3.10.3.tgz 
-tar xzf Python-3.10.3.tgz 
-cd Python-3.10.3 
+wget https://www.python.org/ftp/python/3.10.3/Python-3.10.3.tgz
+tar xzf Python-3.10.3.tgz
+cd Python-3.10.3
 ./configure --enable-optimizations
 make install
 ```
