@@ -39,6 +39,15 @@ class AssetComponentsUtils:
         return voices
 
     @classmethod
+    def _pickDefaultVoice(cls, choices, preferred="Chris"):
+        '''Pick a default voice from choices, tolerating ElevenLabs' descriptive
+        voice names (e.g. "Chris - Charming, Down-to-Earth") instead of a bare match.'''
+        for choice in choices:
+            if choice == preferred or choice.startswith(f"{preferred} -") or choice.startswith(f"{preferred} "):
+                return choice
+        return choices[0] if choices else None
+
+    @classmethod
     def start_file(cls, path):
         if platform.system() == "Windows":
             os.startfile(path)
@@ -77,10 +86,11 @@ class AssetComponentsUtils:
             provider = cls.ELEVEN_TTS
         if cls.instance_voiceChoice.get(provider, None) is None:
             if provider == cls.ELEVEN_TTS:
+                choices = cls.getElevenlabsVoices()
                 cls.instance_voiceChoice[provider] = gr.Radio(
-                    cls.getElevenlabsVoices(),
+                    choices,
                     label="Elevenlabs voice",
-                    value="Chris",
+                    value=cls._pickDefaultVoice(choices),
                     interactive=True,
                 )
         return cls.instance_voiceChoice[provider]
@@ -91,10 +101,11 @@ class AssetComponentsUtils:
             provider = cls.ELEVEN_TTS
         if cls.instance_voiceChoiceTranslation.get(provider, None) is None:
             if provider == cls.ELEVEN_TTS:
+                choices = cls.getElevenlabsVoices()
                 cls.instance_voiceChoiceTranslation[provider] = gr.Radio(
-                    cls.getElevenlabsVoices(),
+                    choices,
                     label="Elevenlabs voice",
-                    value="Chris",
+                    value=cls._pickDefaultVoice(choices),
                     interactive=True,
                 )
         return cls.instance_voiceChoiceTranslation[provider]
