@@ -83,7 +83,9 @@ class AssetDatabase:
         cls.sync_local_assets()
         data = []
         if source is None or source == 'local':
-            for key, asset in cls.local_assets._get().items():
+            # TinyMongo can transiently return None right after a write from
+            # sync_local_assets() above; treat that as "no assets yet" rather than crash.
+            for key, asset in (cls.local_assets._get() or {}).items():
                 data.append({'name': key,
                              'type': asset['type'],
                              'link': asset['path'],
@@ -91,7 +93,7 @@ class AssetDatabase:
                              'ts': asset.get('ts')
                              })
         if source is None or source == 'youtube':
-            for key, asset in cls.remote_assets._get().items():
+            for key, asset in (cls.remote_assets._get() or {}).items():
                 data.append({'name': key,
                             'type': asset['type'],
                              'link': asset['url'],
